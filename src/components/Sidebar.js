@@ -6,7 +6,7 @@ const Sidebar = (props) => {
   
     return (
     <div className="sidewrapper">
-            <TopControls/>
+            <TopControls search={true}/>
             <div className="sidebar">
                 <ul>
                     <li>

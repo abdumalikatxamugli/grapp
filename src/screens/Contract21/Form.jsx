@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import Transport from "../../components/Transport";
+import {Transport, TopControls} from "../../components";
 import Anketa from "./Anketa";
 
 const Form = () => {
     const [active, setActive] = useState(1)
     return (
-
+        <>
+        <div class="topbar">
+            <TopControls search={false}/>
+            <h1>21.Страхование транспортных средств, выставляемых в залог</h1>
+        </div>
         <div className="form-main">
             <div className="stepwizard">
                 <ul className="stepwizard-navigators">
@@ -29,6 +33,7 @@ const Form = () => {
             </div>
 
         </div>
+        </>
     )
 }
 export default Form;

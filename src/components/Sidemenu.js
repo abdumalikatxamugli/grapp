@@ -2,6 +2,7 @@ import React from 'react';
 import addImg from '../assets/icons/add.svg';
 import translateImg from '../assets/icons/translate.svg';
 import exitImg from '../assets/icons/exit.svg';
+import contractImg from '../assets/icons/contracts.svg';
 
 
 const Sidemenu = (props) => {
@@ -30,6 +31,16 @@ const Sidemenu = (props) => {
             </div>
         </div>
         <ul>
+             <li>
+                <div  className="list-item" onClick={e=>props.setMenu(21)}>
+                    <div className="img">
+                        <img src={contractImg} alt=""/>
+                    </div>
+                    <div className="text">
+                        Все договара
+                    </div>
+                </div>
+            </li>
             <li>
                 <div  className="list-item" onClick={(ev)=>drop(ev)}>
                     <div className="img">

@@ -15,7 +15,7 @@ const TopControls = (props) => {
                 <span className="hamburger" onClick={open_sidemenu}>
                     <img src={menu} alt="" />
                 </span>
-                <input type="text" className="search"/>
+                {props.search&&<input type="text" className="search"/>}
                 <span className="lock">
                     <img src={lock?lock_closed:lock_open} alt="" onClick={()=>setLock(!lock)}/>
                 </span>

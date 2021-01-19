@@ -17,7 +17,7 @@ function App() {
   return (
 	<>
   		<Sidemenu setMenu={changeMenu}/>
-    	{menu===0&&<Main/>}
+      {menu===0&&<Main/>}
   		{menu===21&&<Contract21/>}
     </>
  );

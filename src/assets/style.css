@@ -41,9 +41,6 @@ body{
     max-width: 10%;
     text-align: left;
 }
-.top-control .hamburger img{
-    width:100%;
-}
 .top-control .lock{
    cursor:pointer;
    flex: 0 0 10%;
@@ -271,4 +268,15 @@ body{
     border:1px solid silver;
     padding: 5px 10px;
     outline:none;
+}
+.topbar{
+    display: flex;
+}
+.topbar h1{
+    font-size: 22px;
+    font-weight: 400;
+    text-align: right;
+    flex-grow: 1;
+    padding-right: 20px;
+    color: #066686;
 }
