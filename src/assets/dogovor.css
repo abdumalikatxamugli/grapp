@@ -77,10 +77,10 @@
     background: deepskyblue
 }
 
-input:valid~label,
-textarea:valid~label,
-input:focus~label,
-textarea:focus~label {
+input.mrdn:valid~label,
+textarea.mrdn:valid~label,
+input.mrdn:focus~label,
+textarea.mrdn:focus~label {
     font-size: 0.75em;
     color: #8e44ad;
     top: -2.25rem;
@@ -89,7 +89,7 @@ textarea:focus~label {
 
 .styled-input {
     float: left;
-    width: 33.3333%;
+    width: 100%;
     margin: 2rem 0 1rem;
     position: relative;
 }
@@ -108,16 +108,16 @@ textarea:focus~label {
     width: 100%;
 }
 
-input,
-textarea {
+input.mrdn,
+textarea.mrdn {
     padding: 1rem 1rem;
     border: 0;
     width: 100%;
     font-size: 1rem;
 }
 
-input~span,
-textarea~span {
+input.mrdn~span,
+textarea.mrdn~span {
     display: block;
     width: 0;
     height: 3px;
@@ -128,18 +128,22 @@ textarea~span {
     transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
 }
 
-input:focus,
-textarea:focus {
+input.mrdn:focus,
+textarea.mrdn:focus {
     outline: 0;
 }
 
-input:focus~span,
-textarea:focus~span {
+input.mrdn:focus~span,
+textarea.mrdn:focus~span {
     width: 100%;
     transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
 }
 
-textarea {
+textarea.mrdn {
     width: 100%;
     min-height: 15em;
+}
+
+* {
+    box-sizing: border-box;
 }

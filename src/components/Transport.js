@@ -5,7 +5,10 @@ const Transport = () => {
     return (
         <div>
             <h5><a href="#">ТРАНСПОРТНОЕ СРЕДСТВО</a></h5>
-                <Input name="needed" label="needed"/>
+                <div>
+                    <label>Гос.номер</label>
+                    <input type="text"/>
+                </div>
             <button>Submit</button>
         </div>
     )
