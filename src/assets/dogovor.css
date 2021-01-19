@@ -1,0 +1,145 @@
+* {
+    font-family: sans-serif;
+}
+
+.form-main {
+    background-color: #f7f7f7;
+    padding: 10px;
+}
+
+.stepwizard {
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 18px 0 rgba(50, 50, 50, .1);
+    background-color: #fff;
+}
+
+.stepwizard-navigators {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding-left: 0;
+}
+
+.stepwizard-navigators li {
+    flex: 0 0 20%;
+    width: 20%;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.stepwizard-navigators .active {
+    color: #000000;
+}
+
+.stepwizard-navigators li strong {
+    font-size: 18px;
+}
+
+.stepwizard-navigators li span {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    background-color: skyblue;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 50px;
+}
+
+.stepwizard-navigators li.active span {
+    background-color: deepskyblue;
+}
+
+
+.stepwizard-navigators li:before {
+    content: '';
+    width: 100%;
+    height: 5px;
+    background: skyblue;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.stepwizard-navigators li.active:before,
+.stepwizard-navigators li.active:after {
+    background: deepskyblue
+}
+
+input:valid~label,
+textarea:valid~label,
+input:focus~label,
+textarea:focus~label {
+    font-size: 0.75em;
+    color: #8e44ad;
+    top: -2.25rem;
+    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+}
+
+.styled-input {
+    float: left;
+    width: 33.3333%;
+    margin: 2rem 0 1rem;
+    position: relative;
+}
+
+.styled-input label {
+    color: #999;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.25s cubic-bezier(0.2, 0, 0.03, 1);
+    pointer-events: none;
+}
+
+.styled-input.wide {
+    width: 100%;
+}
+
+input,
+textarea {
+    padding: 1rem 1rem;
+    border: 0;
+    width: 100%;
+    font-size: 1rem;
+}
+
+input~span,
+textarea~span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #8e44ad;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+}
+
+input:focus,
+textarea:focus {
+    outline: 0;
+}
+
+input:focus~span,
+textarea:focus~span {
+    width: 100%;
+    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+}
+
+textarea {
+    width: 100%;
+    min-height: 15em;
+}
