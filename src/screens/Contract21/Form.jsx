@@ -5,6 +5,7 @@ import Anketa from "./Anketa";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (
+
         <div className="form-main">
             <div className="stepwizard">
                 <ul className="stepwizard-navigators">
@@ -26,6 +27,7 @@ const Form = () => {
                 {active == 1 && <Anketa />}
                 {active == 2 && <Transport />}
             </div>
+
         </div>
     )
 }

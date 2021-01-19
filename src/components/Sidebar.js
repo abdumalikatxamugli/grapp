@@ -1,17 +1,10 @@
-import {React, useEffect} from 'react';
+import React from 'react';
 import TopControls from './TopControls'
 
 const Sidebar = (props) => {
 
-   	const sidebar=()=>{
-        document.getElementsByTagName("body")[0].classList.remove('closed-sidemenu');
-    }
-
-    const close_sidebar=()=>{
-        document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');
-    }
-    
-  return (
+  
+    return (
     <div className="sidewrapper">
             <TopControls/>
             <div className="sidebar">

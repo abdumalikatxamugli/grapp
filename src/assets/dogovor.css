@@ -37,37 +37,44 @@
 }
 
 .stepwizard-navigators li strong {
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #06161b;
 }
 
 .stepwizard-navigators li span {
+    height: 35px;
     display: flex;
-    width: 50px;
-    height: 50px;
-    background-color: skyblue;
+    width: 35px;
+    height: 35px;
+    background-color: #efefef;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 20px;
+    color: #06161b;
+    font-size: 17px;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .stepwizard-navigators li.active span {
     background-color: deepskyblue;
+    background-color: #0091c1;
+    box-shadow: 0 0 2px 2px #2a829e00;
+    color: white;
 }
 
 
 .stepwizard-navigators li:before {
     content: '';
     width: 100%;
-    height: 5px;
-    background: skyblue;
+    height: .5px;
+    background: #efefef;
     position: absolute;
     left: 0;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     z-index: 0;
 }
