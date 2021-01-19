@@ -5,13 +5,22 @@ import exitImg from '../assets/icons/exit.svg';
 
 
 const Sidemenu = (props) => {
-  const drop = (ev) =>{
-        let elem=ev.target;
-        elem.parentNode.classList.toggle("open-drop");
+    
+    const drop = (ev) => {
+        ev.currentTarget.parentNode.classList.toggle("open-drop");
     }
-  return (
-    <>
-    <div className="sidemenu" id="sidemenu">
+    const exit = () => {
+        let exit = window.confirm("Вы хотите выйти? Для повторного входа вам потребуется онлайн-вход.");
+        if (exit) {
+            alert("goodbye");
+        }
+    }
+    const close_sidebar = () => {
+        document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');
+    }
+    return ( 
+        <>
+        <div className="sidemenu" id="sidemenu">
         <div className="ava">
             <div className="name">
                 Abduganiev Abdumalik
@@ -22,7 +31,7 @@ const Sidemenu = (props) => {
         </div>
         <ul>
             <li>
-                <div className="list-item" onClick={ev=>drop(ev)}>
+                <div  className="list-item" onClick={(ev)=>drop(ev)}>
                     <div className="img">
                         <img src={addImg} alt=""/>
                     </div>
@@ -39,7 +48,7 @@ const Sidemenu = (props) => {
                 </ul>
             </li>
             <li>
-                <div className="list-item" onclick="drop(this)">
+                <div className="list-item" onClick={ev=>drop(ev)}>
                     <div className="img">
                         <img src={translateImg} alt=""/>
                     </div>
@@ -56,7 +65,7 @@ const Sidemenu = (props) => {
                     <div className="img">
                         <img src={exitImg} alt=""/>
                     </div>
-                    <div className="text" onclick="exit()">
+                    <div className="text" onClick={exit}>
                         Выйти
                     </div>
                 </div>
@@ -66,10 +75,10 @@ const Sidemenu = (props) => {
             <div className="org">Gross offline app</div>
             <div className="version">Version: 0.0.1</div>
         </div>
-    </div>
-    <div className="over" onclick="close_sidebar()"></div>
+    </div> 
+    <div className = "over" onClick = { close_sidebar } > < /div> 
     </>
-  )
+    )
 }
 
 export default Sidemenu;

@@ -23,13 +23,12 @@ body{
 .top-control .search{
     border-radius: 5px;
     flex-grow: 1;
-    height: 20px;
+    height: 25px;
     background-color: #efefef;
     border: 0;
-    padding: 6px;
     outline: 0;
-    flex: 0 0 80%;
-    max-width: 80%;
+    flex: 0 0 calc(80% - 30px);
+    max-width: calc(80% - 30px);
     padding: 0 10px;
 }
 .top-control .hamburger{

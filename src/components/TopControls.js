@@ -7,10 +7,12 @@ import lock_closed from '../assets/icons/lock.svg';
 const TopControls = (props) => {
 
   const [lock, setLock]=useState(false);
-  
+  const open_sidemenu=()=>{
+    document.getElementsByTagName("body")[0].classList.remove('closed-sidemenu');
+  }
   return (
     		<div className="top-control">
-                <span className="hamburger">
+                <span className="hamburger" onClick={open_sidemenu}>
                     <img src={menu} alt="" />
                 </span>
                 <input type="text" className="search"/>
