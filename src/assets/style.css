@@ -244,6 +244,7 @@ body{
 .anketaCnt .row .input{
     flex: 0 0 60%;
     padding-left: 10px;
+
 }
 .anketaCnt .row .input input{
     border: 1px solid silver !important;
@@ -259,6 +260,15 @@ body{
     margin-right:5px;
 }
 .anketaCnt button{
-        padding: 5px 13px;
+    padding: 5px 13px;
     border: 1px solid #cbe4f5;
+    outline:none !important;
+}
+.anketaCnt input{
+    padding: 5px 10px;
+}
+.anketaCnt select{
+    border:1px solid silver;
+    padding: 5px 10px;
+    outline:none;
 }
