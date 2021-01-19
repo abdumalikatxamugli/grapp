@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 body{
     margin:0;
 }
@@ -8,6 +11,7 @@ body{
 }
 .row{
     display: flex;
+    flex-wrap: wrap;
 }
 .controls{
     background-color: #eee;
@@ -222,4 +226,39 @@ body{
 .sidemenu .open-drop .drop{
     margin-top: 0;
     transition: 0.4s;
+}
+.anketaCnt{
+    width: 80%;
+    margin:20px auto;
+    font-family: sans-serif;
+}
+.anketaCnt .row>*{
+    padding-bottom: 10px;
+}
+.anketaCnt .row .label{
+    flex: 0 0 40%;
+    text-align: right;
+    padding-right: 10px;
+    border-right: 1px solid #cecece;
+}
+.anketaCnt .row .input{
+    flex: 0 0 60%;
+    padding-left: 10px;
+}
+.anketaCnt .row .input input{
+    border: 1px solid silver !important;
+    outline: none;
+}
+.anketaCnt button{
+    cursor: pointer;
+}
+.anketaCnt .date input:nth-child(2){
+    width:100px;
+}
+.anketaCnt .date>*{
+    margin-right:5px;
+}
+.anketaCnt button{
+        padding: 5px 13px;
+    border: 1px solid #cbe4f5;
 }

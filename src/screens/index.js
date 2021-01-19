@@ -1,3 +1,4 @@
 import Main from './Main';
+import Contract21 from './Contract21';
 
-export {Main};
+export {Main, Contract21};

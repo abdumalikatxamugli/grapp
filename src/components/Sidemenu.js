@@ -40,7 +40,7 @@ const Sidemenu = (props) => {
                     </div>
                 </div>
                 <ul className="drop">
-                    <li>
+                    <li onClick={e=>props.setMenu(21)}>
                         <abbr title="21.Страхование транспортных средств, выставляемых в залог">
                             21.Страхование транспортных средств, выставляемых в залог
                         </abbr>

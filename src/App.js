@@ -1,25 +1,26 @@
-import React from 'react';
-<<<<<<< HEAD
+import React,{useState} from 'react';
 import {Main} from './screens';
 import {Sidemenu} from './components';
-=======
-import { Main } from './screens';
->>>>>>> 52ff10c7e45979707cf6d101156cea9adb1993c5
+import { Contract21 } from "./screens";
 import './assets/style.css';
 import './assets/dogovor.css';
-import { Form } from "./screens/Contract21";
+
+
 function App() {
+  const [menu, setMenu]=useState(0);
+
+  const changeMenu=(idx)=>{
+  	document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');
+  	setMenu(idx);
+  }
+
   return (
-<<<<<<< HEAD
-  	<>
-  	<Sidemenu/>
-    <Main/>
-  	</>
-=======
-    // <Main/>
-    <Form />
->>>>>>> 52ff10c7e45979707cf6d101156cea9adb1993c5
-  );
+	<>
+  		<Sidemenu setMenu={changeMenu}/>
+    	{menu===0&&<Main/>}
+  		{menu===21&&<Contract21/>}
+    </>
+ );
 }
 
 export default App;
