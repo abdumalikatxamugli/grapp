@@ -1,29 +1,29 @@
 body{
-	margin:0;
+    margin:0;
 }
 .sidewrapper{
-	flex: 0 0 25%;
+    flex: 0 0 25%;
     border-right:.5px solid #efefef;
     height: 100vh;
 }
 .row{
-	display: flex;
+    display: flex;
 }
 .controls{
-	background-color: #eee;
+    background-color: #eee;
 
 }
 
 .top-control{
-	display: flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 15px;	
+    padding: 10px 15px; 
 }
 .top-control .search{
-	border-radius: 5px;
+    border-radius: 5px;
     flex-grow: 1;
-    height: 25px;
+    height: 20px;
     background-color: #efefef;
     border: 0;
     padding: 6px;
@@ -33,13 +33,13 @@ body{
     padding: 0 10px;
 }
 .top-control .hamburger{
-	cursor: pointer;
-	flex: 0 0 10%;
+    cursor: pointer;
+    flex: 0 0 10%;
     max-width: 10%;
     text-align: left;
 }
 .top-control .hamburger img{
-	width:100%;
+    width:100%;
 }
 .top-control .lock{
    cursor:pointer;
@@ -48,23 +48,23 @@ body{
    text-align: right;
 }
 .sidebar ul{
-	padding: 0;
-	list-style: none;
-	margin:0;
+    padding: 0;
+    list-style: none;
+    margin:0;
 }
 .sidebar ul li{
-	padding: 10px 15px;
-	display: flex;
+    padding: 10px 15px;
+    display: flex;
 }
 .sidebar ul li:hover{
-	background-color: #efefef;
-	cursor: pointer;
+    background-color: #efefef;
+    cursor: pointer;
 }
 .sidebar ul li .ituri{
-	flex: 0 0 calc(10% + 10px);
+    flex: 0 0 calc(10% + 10px);
 }
 .sidebar .ituri div{
-	width: 40px;
+    width: 40px;
     height: 40px;
     background-color: deepskyblue;
     display: flex;
@@ -74,7 +74,7 @@ body{
     border-radius: 50%;
 }
 .sidebar .title{
-	flex-grow: 1;
+    flex-grow: 1;
     padding-left: 10px;
     font-family: sans-serif;
     display: flex;
@@ -82,17 +82,17 @@ body{
     justify-content: space-between;
 } 
 .sidebar .title .insurant{
-	margin: 0;
+    margin: 0;
     font-size: 14px;
     font-weight: 400;
 }
 .sidebar .title .bottom{
-	display: flex;
-	font-size:12px;
-	font-weight: 100;
+    display: flex;
+    font-size:12px;
+    font-weight: 100;
 }
 .sidebar .bottom{
-	display: flex;
+    display: flex;
     font-size: 12px;
     justify-content: space-between;
     font-weight: 100;
@@ -115,7 +115,7 @@ body{
     z-index: 1;
 }
 .sidemenu .ava{
-    background-image: url(images/ava.jpeg);
+    background-image: url(./images/ava.jpeg);
     height: 150px;
     background-size: cover;
     background-repeat: no-repeat;

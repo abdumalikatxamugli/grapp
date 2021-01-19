@@ -2,70 +2,161 @@
 
 <head>
     <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body class="closed-sidemenu">
+    <div class="sidemenu" id="sidemenu">
+        <div class="ava">
+            <div class="name">
+                Abduganiev Abdumalik
+            </div>
+            <div class="division">
+                Центральный офис Гросс
+            </div>
+        </div>
+        <ul>
+            <li>
+                <div class="list-item" onclick="drop(this)">
+                    <div class="img">
+                        <img src="icons/add.svg" alt="">
+                    </div>
+                    <div class="text">
+                        Новый договор
+                    </div>
+                </div>
+                <ul class="drop">
+                    <li>
+                        <abbr title="21.Страхование транспортных средств, выставляемых в залог">
+                            21.Страхование транспортных средств, выставляемых в залог
+                        </abbr>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="list-item" onclick="drop(this)">
+                    <div class="img">
+                        <img src="icons/translate.svg" alt="">
+                    </div>
+                    <div class="text">
+                        Русский
+                    </div>
+                </div>
+                <ul class="drop">
+                    <li>O'zbekcha</li>
+                </ul>
+            </li>
+            <li>
+                <div class="list-item">
+                    <div class="img">
+                        <img src="icons/exit.svg" alt="">
+                    </div>
+                    <div class="text" onclick="exit()">
+                        Выйти
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="orgname">
+            <div class="org">Gross offline app</div>
+            <div class="version">Version: 0.0.1</div>
+        </div>
+    </div>
+    <div class="over" onclick="close_sidebar()"></div>
     <div class="header">
         <div class="control">
         </div>
     </div>
     <div class="row">
-        <div class="sidebar">
+        <div class="sidewrapper">
             <div class="top-control">
-                <span class="hamburger">
+                <span class="hamburger" onclick="sidebar()">
                     <img src="icons/menu.svg" alt="">
                 </span>
                 <input type="text" class="search">
                 <span class="lock">
-                    <img src="icons/lock_open.svg" alt="">
+                    <img src="icons/lock_open.svg" alt="" onclick="lock(this)">
                 </span>
             </div>
-            <ul>
-                <li>
-                    <div class="ituri">
-                    	<div>
-                       		21
+            <div class="sidebar">
+                <ul>
+                    <li>
+                        <div class="ituri">
+                            <div>
+                                21
+                            </div>
                         </div>
-                    </div>
-                    <div class="title">
-                        <h4 class="insurant">ХАМКОРБАНК АКЦ.ТИЖ.БАНК</h4>
-                        <div class="bottom">
-	                        <div class="dognum">10/21/1000</div>
-	                        <div class="date">17.01.2021</div>
+                        <div class="title">
+                            <h4 class="insurant">ХАМКОРБАНК АКЦ.ТИЖ.БАНК</h4>
+                            <div class="bottom">
+                                <div class="dognum">10/21/1000</div>
+                                <div class="date">17.01.2021</div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ituri">
-                    	<div>
-                       		21
+                    </li>
+                    <li>
+                        <div class="ituri">
+                            <div>
+                                21
+                            </div>
                         </div>
-                    </div>
-                    <div class="title">
-                        <h4 class="insurant">ТЕРМИЗ-БОЙСУН КУРИЛИШ МЧЖ</h4>
-                        <div class="bottom">
-	                        <div class="dognum">10/21/1000</div>
-	                        <div class="date">17.01.2021</div>
+                        <div class="title">
+                            <h4 class="insurant">ТЕРМИЗ-БОЙСУН КУРИЛИШ МЧЖ</h4>
+                            <div class="bottom">
+                                <div class="dognum">10/21/1000</div>
+                                <div class="date">17.01.2021</div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ituri">
-                    	<div>
-                       		21
+                    </li>
+                    <li>
+                        <div class="ituri">
+                            <div>
+                                21
+                            </div>
                         </div>
-                    </div>
-                    <div class="title">
-                        <h4 class="insurant">MANNAPOV BATIR</h4>
-                        <div class="bottom">
-	                        <div class="dognum">10/21/1000</div>
-	                        <div class="date">17.01.2021</div>
+                        <div class="title">
+                            <h4 class="insurant">MANNAPOV BATIR</h4>
+                            <div class="bottom">
+                                <div class="dognum">10/21/1000</div>
+                                <div class="date">17.01.2021</div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    <script>
+    function sidebar() {
+        document.getElementsByTagName("body")[0].classList.remove('closed-sidemenu');
+    }
+
+    function close_sidebar() {
+        document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');
+    }
+
+    function drop(elem) {
+        elem.parentNode.classList.toggle("open-drop");
+    }
+
+    function exit() {
+        let exit = confirm("Вы хотите выйти? Для повторного входа вам потребуется онлайн-вход.");
+        if (exit) {
+            alert("goodbye");
+        }
+    }
+
+    function lock(elem) {
+
+        if (elem.dataset.lock == "locked") {
+            elem.src = "icons/lock_open.svg";
+            elem.dataset.lock = "open";
+        } else {
+            elem.src = "icons/lock.svg";
+            elem.dataset.lock = "locked";
+        }
+    }
+    </script>
 </body>
 
 </html>
