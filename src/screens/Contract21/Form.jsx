@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import {TopControls, Client} from "../../components";
+import {TopControls} from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
-import Transport from "../../components/Transport";
+import Payment from "./Payment";
+import TransportTable from "./TransportTable";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (
         <>
-        <div class="topbar">
+        <div className="topbar">
             <TopControls search={false}/>
             <h1>21.Страхование транспортных средств, выставляемых в залог</h1>
         </div>
@@ -21,7 +22,7 @@ const Form = () => {
                         { id: 4, label: 'Оплата' },
                         { id: 5, label: 'Полис' }
                     ].map((item, idx) => (
-                        <li className={active == item.id ? 'active' : ''} onClick={() => setActive(item.id)} key={idx}>
+                        <li className={active === item.id ? 'active' : ''} onClick={() => setActive(item.id)} key={idx}>
                             <span>{item.id}</span>
                             <strong>
                                 {item.label}
@@ -29,9 +30,10 @@ const Form = () => {
                         </li>
                     ))}
                 </ul>
-                {active == 1 && <Anketa />}
-                {active == 2 && <Transport />}
-                {active == 3 && <Contract />}
+                {active === 1 && <Anketa />}
+                {active === 2 && <TransportTable />}
+                {active === 3 && <Contract />}
+                {active === 4 && <Payment />}
             </div>
 
         </div>

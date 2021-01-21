@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-// const { ipcRenderer } = window.require('electron');
+import React  from "react";
+
+
 function Create(props) {
 
     return (

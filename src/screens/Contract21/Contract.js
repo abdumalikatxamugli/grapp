@@ -8,7 +8,7 @@ const Dogovor = () => {
                 <h4>Дата подписания</h4>
                 <span>10.12.2020г</span>
                 <h4>Период страхования</h4>
-                с <span>10.12.2020</span> по <span>09.12.2020г</span>
+                с <span> 10.12.2020</span> по <span>09.12.2020г</span>
                 <h4>Срок действия:</h4>
                 <span>1095 </span>дня(ей)
             </div>
@@ -20,19 +20,21 @@ const Dogovor = () => {
                         <button>Сохранить</button>
                     </div>
                 </div>
-                <div style={{ overflowX: 'auto' }}>
-                    <table>
-                        <tr>
-                            <th>Вид страхования</th>
-                            <th>Страховая сумма</th>
-                            <th>Премия %</th>
-                            <th>Премия</th>
-                            <th>Количество объектов</th>
-                            <th>Франшиза</th>
-                            <th>Фр.условная</th>
-                            <th>Франшиза %</th>
-                            <th>Фр.сумма</th>
-                        </tr>
+                <div>
+                    <table class="premiya-table">
+                        <thead>
+                            <tr>
+                                <th>Вид страхования</th>
+                                <th>Страховая сумма</th>
+                                <th>Премия %</th>
+                                <th>Премия</th>
+                                <th>Количество объектов</th>
+                                <th>Франшиза</th>
+                                <th>Фр.условная</th>
+                                <th>Франшиза %</th>
+                                <th>Фр.сумма</th>
+                            </tr>
+                        </thead>
                         <tr>
                             <td colspan="9"><b>BENTLEY TURBO R(2020|204735)</b></td>
                         </tr>

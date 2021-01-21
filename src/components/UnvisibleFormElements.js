@@ -6,7 +6,7 @@ const UnvisibleFormElements = (props) => {
     return (
         <div className="UnvisibleFormElements">
             <span className="toggler" onClick={() => setIsOpen(!isOpen)}>
-            <img className={isOpen ? 'visible' : 'unvisible'} src={customArrow} /> {props.label}</span>
+            <img className={isOpen ? 'visible' : 'unvisible'} src={customArrow} alt="open"/> {props.label}</span>
             <div className={isOpen ? `content visible` : `content`}>
                 {props.children}
             </div>

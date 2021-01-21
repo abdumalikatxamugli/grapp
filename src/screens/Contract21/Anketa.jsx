@@ -56,18 +56,11 @@ const Anketa=()=>{
         			</div>
         			<div className="input">
         				<input type="radio" id="sobst" name="source"/>
-        				<label for="sobst">Собственные средства</label>	
+        				<label htmlFor="sobst">Собственные средства</label>	
         				<input type="radio" id="budget" name="source"/>
-        				<label for="budget">Бюджетные средства</label>	
+        				<label htmlFor="budget">Бюджетные средства</label>	
         			</div>
-        			
-        			 
-        			
-
         		</div>
-        		
-        		
-
         	</div>
         </>
     )
