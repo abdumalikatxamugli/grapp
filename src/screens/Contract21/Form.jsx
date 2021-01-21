@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {TopControls, Client} from "../../components";
+import {TopControls} from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Transport from "../../components/Transport";
@@ -22,7 +22,7 @@ const Form = () => {
                         { id: 4, label: 'Оплата' },
                         { id: 5, label: 'Полис' }
                     ].map((item, idx) => (
-                        <li className={active == item.id ? 'active' : ''} onClick={() => setActive(item.id)} key={idx}>
+                        <li className={active === item.id ? 'active' : ''} onClick={() => setActive(item.id)} key={idx}>
                             <span>{item.id}</span>
                             <strong>
                                 {item.label}

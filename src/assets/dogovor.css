@@ -89,7 +89,7 @@
 /*** Stepwizard styles*/
 
 
-label {
+.hyper-form label {
     display: block;
 }
 
@@ -315,3 +315,14 @@ label {
     position: relative;
 }
 /*** Contract UnvisibleFormElements  Form Styles */
+.premiya-table{
+    overflow-x: scroll;
+    display: block;
+}
+.premiya-table thead *{
+    font-size:14px;
+    font-weight: 400;
+}
+.premiya-table input{
+    width:125px;
+}

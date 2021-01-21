@@ -4,7 +4,7 @@ import {Sidebar} from '../components';
 const Main=(props)=>{
 	return (
 		
-		<div className="row">
+		<div className="myrow">
 			<Sidebar/>
 		</div>
 	)

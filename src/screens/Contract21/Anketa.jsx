@@ -60,14 +60,7 @@ const Anketa=()=>{
         				<input type="radio" id="budget" name="source"/>
         				<label htmlFor="budget">Бюджетные средства</label>	
         			</div>
-        			
-        			 
-        			
-
         		</div>
-        		
-        		
-
         	</div>
         </>
     )
