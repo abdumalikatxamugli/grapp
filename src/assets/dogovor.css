@@ -2,6 +2,7 @@
     font-family: sans-serif;
 }
 
+/* Stepwizard styles*/
 .form-main {
     background-color: #f7f7f7;
     padding: 10px;
@@ -12,6 +13,7 @@
     border-radius: 10px;
     box-shadow: 0 3px 18px 0 rgba(50, 50, 50, .1);
     background-color: #fff;
+    min-height: 100vh;
 }
 
 .stepwizard-navigators {
@@ -84,69 +86,228 @@
     background: deepskyblue
 }
 
-input:valid~label,
-textarea:valid~label,
-input:focus~label,
-textarea:focus~label {
-    font-size: 0.75em;
-    color: #8e44ad;
-    top: -2.25rem;
-    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+/*** Stepwizard styles*/
+
+
+label {
+    display: block;
 }
 
-.styled-input {
-    float: left;
-    width: 33.3333%;
-    margin: 2rem 0 1rem;
+.form-inline {
+    display: inline-block;
+}
+
+/* Global Form Styles */
+.hyper-form input {
+    border: 1px solid silver;
+    font-size: 15px;
+    outline: none;
+    padding: 7.5px 7px;
     position: relative;
 }
 
-.styled-input label {
-    color: #999;
-    padding: 1rem;
+.hyper-form label {
+    position: relative;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.hyper-form label.required {
+    padding-right: 27px;
+}
+
+.hyper-form label.required::after {
+    content: " *";
+    color: red !important;
     position: absolute;
-    top: 0;
-    left: 0;
-    transition: all 0.25s cubic-bezier(0.2, 0, 0.03, 1);
-    pointer-events: none;
+    right: 15px;
+    font-size: 25px;
 }
 
-.styled-input.wide {
+.hyper-form .input-group input {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.hyper-form .input-group input[type="date"] {
+    height: 34px;
+}
+
+.hyper-form .input-group select {
+    border: 1px solid silver;
+    padding: 6.5px;
+    font-size: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    outline: none;
+}
+
+.hyper-form .input-group {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.hyper-form .input-group textarea {
     width: 100%;
+    border: 1px solid silver;
+    font-size: 15px;
+    outline: none;
+    padding: 7.5px 7px;
+    position: relative;
+    margin-right: 15px;
+    margin-left: 10px;
 }
 
-input.mrdn,
-textarea.mrdn {
-    padding: 1rem 1rem;
-    border: 0;
+.hyper-form .input-cols {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.hyper-form .input-cols input {
+    margin-bottom: 15px;
+    width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.hyper-form button {
+    padding: 5px 13px;
+    border: 1px solid #cbe4f5;
+    outline: none !important;
+}
+
+/*** Global Form Styles */
+
+
+/* Transport Form Styles */
+.transport-form {
+    display: flex;
+    justify-content: center;
+}
+
+.transport-form form {
+    max-width: 1440px;
+
+}
+
+.transport-form form table {
+    font-size: 16px;
+}
+
+/*** Transport Form Styles */
+
+/* Global UnvisibleFormElements  Form Styles */
+
+.UnvisibleFormElements * {}
+
+.UnvisibleFormElements span.toggler {
+    display: flex;
     width: 100%;
-    font-size: 1rem;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-input.mrdn~span,
-textarea.mrdn~span {
+.UnvisibleFormElements span.toggler img {
+    margin-right: 15px;
+    padding: 7px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #efefef;
+    transition: all 0.5s;
+}
+
+.UnvisibleFormElements span.toggler img.visible {
+    transform: rotate(90deg);
+    transition: all 0.5s;
+}
+
+.UnvisibleFormElements span.toggler img svg {
+    fill: #efefef;
+}
+
+.UnvisibleFormElements .content {
     display: block;
-    width: 0;
-    height: 3px;
-    background: #8e44ad;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+    transition: all 2s;
 }
 
-input.mrdn:focus,
-textarea.mrdn:focus {
-    outline: 0;
+.UnvisibleFormElements .content.visible {
+    display: none;
+    transition: all 2s;
 }
 
-input.mrdn:focus~span,
-textarea.mrdn:focus~span {
+/*** Global UnvisibleFormElements  Form Styles */
+
+/* Client UnvisibleFormElements  Form Styles */
+.client-form {
+    display: flex;
+    justify-content: center;
+}
+
+.client-form form {
+    max-width: 1440px;
+
+}
+
+/*** Client UnvisibleFormElements  Form Styles */
+
+/* Contract UnvisibleFormElements  Form Styles */
+.contract-form {}
+
+.contract-form .contract-top {
+    display: flex;
+    align-items: center;
+}
+.contract-top h4{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.contract-top h4, .contract-top span{
+    font-size: 15px;
+}
+
+.contract-form .form-main .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.contract-form table {
+    border-collapse: collapse;
     width: 100%;
-    transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
+    max-width: 100%;
 }
 
-textarea.mrdn {
-    width: 100%;
-    min-height: 15em;
+
+.contract-form table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #fff;
+    color: #000;
 }
+
+.contract-form table td,
+.contract-form table th {
+    border: 1px solid #fff;
+    padding: 8px;
+}
+
+.contract-form table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.contract-form table tr:hover {
+    background-color: #ddd;
+}
+.contract-form input{
+    border: 1px solid silver;
+    font-size: 15px;
+    outline: none;
+    padding: 7.5px 7px;
+    position: relative;
+}
+/*** Contract UnvisibleFormElements  Form Styles */

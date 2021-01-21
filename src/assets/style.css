@@ -40,7 +40,7 @@ body{
     flex: 0 0 10%;
     max-width: 10%;
     text-align: left;
-}
+}   
 .top-control .lock{
    cursor:pointer;
    flex: 0 0 10%;

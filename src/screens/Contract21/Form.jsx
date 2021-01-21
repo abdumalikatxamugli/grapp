@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {Transport, TopControls} from "../../components";
 import Anketa from "./Anketa";
-
+import Client from "../../components/Client"
+import Contract from "./Contract";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (
@@ -29,7 +30,8 @@ const Form = () => {
                     ))}
                 </ul>
                 {active == 1 && <Anketa />}
-                {active == 2 && <Transport />}
+                {active == 2 && <Client />}
+                {active == 3 && <Contract />}
             </div>
 
         </div>
