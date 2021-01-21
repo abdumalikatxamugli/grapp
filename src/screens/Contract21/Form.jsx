@@ -4,6 +4,8 @@ import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Transport from "../../components/Transport";
 import Polis from "./Polis";
+import Client from "../../components/Client";
+import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (

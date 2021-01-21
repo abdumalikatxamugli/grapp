@@ -326,3 +326,27 @@
 .premiya-table input{
     width:125px;
 }
+.big-btn{
+    padding: 15px 10px;
+}
+
+/* Polis Form Styles */
+.polis-main{
+
+}
+.polis-main .polis-info{
+
+}
+.polis-main .polis-info label{
+    margin-right: 15px;
+}
+.polis-main .polis-info .col-6 label{
+    width: calc(50% - 7.5px);
+    display: inline-block;
+}
+.polis-main .polis-info .col-6 span{
+    width: calc(50% - 7.5px);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+/*** Polis Form Styles */
