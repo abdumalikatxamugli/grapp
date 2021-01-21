@@ -32,7 +32,7 @@ const Sidemenu = (props) => {
         </div>
         <ul>
              <li>
-                <div  className="list-item" onClick={e=>props.setMenu(21)}>
+                <div  className="list-item" onClick={e=>props.setMenu(0)}>
                     <div className="img">
                         <img src={contractImg} alt=""/>
                     </div>

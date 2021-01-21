@@ -4,7 +4,7 @@ const Transport = () => {
     return (
         <div className="transport-form hyper-form">
             <form>
-                <h5><a>ТРАНСПОРТНОЕ СРЕДСТВО</a></h5>
+                <h5>ТРАНСПОРТНОЕ СРЕДСТВО</h5>
                 <div className="input-group">
                     <div className="form-inline">
                         <label className="required">Владелец/Залогодатель/Лизингополучатель</label>
@@ -81,21 +81,21 @@ const Transport = () => {
                     </div>
                 </div>
                 <div className="input-group">
-                    <label>Примечание</label>
-                    <textarea></textarea>
+                    <div className="form-block">
+                        <label>Примечание</label>
+                        <textarea></textarea>
+                    </div>
                 </div>
-                <h5>Коэффициенты</h5>
+                <h5>КОЭФФИЦЕНТЫ</h5>
                 <UnvisibleFormElements label="Дополнительно">
+                    <div className="inline-children mb-20">
+                        <label>Дефекты</label>
+                        <input type="checkbox"/>
+                    </div>
                     <div className="input-cols">
+                        
                         <div>
-                            <div className="form-inline">
-                                <label>Наличие повреждений</label>
-                                <span>1</span><input type="text" />
-                            </div>
-                            <div className="form-inline">
-                                <label>Дефекты</label>
-                                <input type="checkbox" />
-                            </div>
+                            <span>1</span><input type="text" />
                         </div>
                         <div>
                             <span>2</span><input type="text" />

@@ -4,6 +4,11 @@
 body{
     margin:0;
 }
+input{
+    border:1px solid silver;
+   outline:none;
+   padding:5px;
+}
 .sidewrapper{
     flex: 0 0 25%;
     border-right:.5px solid #efefef;
@@ -279,4 +284,7 @@ body{
     flex-grow: 1;
     padding-right: 20px;
     color: #066686;
+}
+.mb-20{
+    margin-bottom:15px;
 }

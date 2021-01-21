@@ -7,7 +7,7 @@ import './assets/dogovor.css';
 
 
 function App() {
-  const [menu, setMenu]=useState(0);
+  const [menu, setMenu]=useState(21);
 
   const changeMenu=(idx)=>{
   	document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');

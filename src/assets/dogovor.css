@@ -196,11 +196,16 @@ label {
 .transport-form form table {
     font-size: 16px;
 }
-
+.transport-form textarea{
+    width:100%;
+    height: 80px;
+}
+.inline-children>*{
+    display: inline;
+}
 /*** Transport Form Styles */
 
 /* Global UnvisibleFormElements  Form Styles */
-
 .UnvisibleFormElements * {}
 
 .UnvisibleFormElements span.toggler {
@@ -229,13 +234,12 @@ label {
 }
 
 .UnvisibleFormElements .content {
-    display: block;
-    transition: all 2s;
+    display: none;
 }
 
 .UnvisibleFormElements .content.visible {
-    display: none;
-    transition: all 2s;
+    display: block;
+    
 }
 
 /*** Global UnvisibleFormElements  Form Styles */
