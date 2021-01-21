@@ -5,6 +5,7 @@ import Transport from './Transport';
 import Client from './Client';
 import Voditel from './Voditel';
 import Transh from './Transh';
+import PaymentForm from './PaymentForm';
 
 export {
 			TopControls, 
@@ -13,5 +14,6 @@ export {
 			Transport,
 			Client,
 			Voditel,
-			Transh
+			Transh,
+			PaymentForm
 	   }

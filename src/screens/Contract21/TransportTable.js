@@ -1,8 +1,7 @@
 import React from 'react';
-import {Voditel} from '../../components';
 import addImage from '../../assets/icons/add.svg';
 import editImg from '../../assets/icons/edit.svg';
-import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
+
 
 const TransportTable = (props) => {
 	const drop = (ev) => {
@@ -10,8 +9,9 @@ const TransportTable = (props) => {
     }
   return (
     <div>
-    	{/*<table className="transportTable bordered-table" border="1">
+    	{<table className="transportTable bordered-table" border="1">
     		<thead >
+    		<tr>
     		    <th width="3%">
     		   	
     		    </th>
@@ -24,7 +24,7 @@ const TransportTable = (props) => {
     			<th>
     				Год выпуска
     			</th>
-    			
+   			</tr>
     		</thead>
     		<tbody>
     			<tr className="closed">
@@ -113,15 +113,14 @@ const TransportTable = (props) => {
 	    					</div>
 	    					<div className="editBtnCnt">
 	    						<button>
-	    							<img src={editImg} alt="edit" class="cursor-pointer"/>
+	    							<img src={editImg} alt="edit" className="cursor-pointer"/>
 	    						</button>	
 	    					</div>
     					</div>
     				</td>
     			</tr>
     		</tbody>	
-    	</table>*/}
-    	<Voditel/>
+    	</table>}
     </div>
   )
 }

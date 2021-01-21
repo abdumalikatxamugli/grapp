@@ -394,16 +394,61 @@ select{
     padding:5px 10px;
     padding-top:0px;
 }
-.transh h4{
+.transh .head{
     background-color: #efefef;
-    font-weight: 400;
-    padding:10px 5px;
+    padding:10px 10px;
     margin:0  -10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
+    display: flex;
+    justify-content: space-between;
+}
+.transh .head h4{
+    margin:0;
+    font-weight: 400;
+    
 }
 .transh-table{
+    border-spacing: 0px;
+    border-collapse:collapse;
+    border:1px solid silver;
     width:100%;
-    border-collapse: collapse;
-    margin-top:20px;
-    border:1px solid black;
+    margin: 20px 0;
+}
+.transh-table th, .transh-table td{
+    padding:5px;
+}
+
+.transh button{
+    background-color: #dfdfdf;
+}
+.transh button:hover{
+    background-color:#cfcfcf;
+}
+.h-right{
+    display: flex;
+    justify-content: flex-end;
+}
+.paymentForm{
+    background-color: #efefef;
+    padding:20px;
+    margin:15px 0;
+}
+.paymentForm button{
+    background-color: forestgreen;
+    color:white;
+    width:200px;
+    padding:10px;
+}
+.paymentForm input{
+    max-width: 100%;
+}
+.v-bottom{
+    display: flex;
+    align-items: flex-end;
+}
+.bottom .status{
+    display: flex;
+}
+.bottom .status>*{
+    margin-left:5px;
 }

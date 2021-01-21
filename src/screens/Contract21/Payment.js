@@ -1,7 +1,8 @@
-import React from 'react';
-import {Transh} from '../../components/'
+import React, {useState} from 'react';
+import {Transh, PaymentForm} from '../../components/'
 
 const Payment = (props) => {
+  const [transh, setTranshState]=useState(false);
   return (
   	<>
     <div className="row">
@@ -11,13 +12,13 @@ const Payment = (props) => {
 	    	</div>
 	    	<div >
 	    		<div className="mb-10">
-		    		<input type="radio" id="once" name="oplata"/>
+		    		<input type="radio" onClick={()=>setTranshState(false)} id="once" name="oplata" checked={!transh?true:false}/>
 		    		<label htmlFor="once">
 		    			Единовременная оплата
 		    		</label>
 	    		</div>
 	    		<div className="mb-10">
-		    		<input type="radio" id="transh" name="oplata"/>
+		    		<input type="radio" onClick={()=>setTranshState(true)} id="transh" name="oplata" checked={transh?true:false}/>
 		    		<label htmlFor="transh">
 		    			Оплата траншами
 		    		</label>
@@ -26,7 +27,7 @@ const Payment = (props) => {
 	    </div>
 	    <div className="col-md-6">
 	    	<div className="mb-10">
-    		Страховая сумма: 100 000,00	
+    			Страховая сумма: 100 000,00	
 			</div>
 			<div className="mb-10">
 	    		Премия:	1 000,01
@@ -39,7 +40,15 @@ const Payment = (props) => {
 			</div>
 	    </div>
     </div>
-    <Transh/>
+    {
+    	transh&&<Transh/>
+    }
+    <div>
+    	<h4>Оплата</h4>
+    	<div>Оплата не произведена</div>
+    	<div>Остаток:	<b>1 232 222,21</b></div>
+    </div>
+    <PaymentForm/>
     </>
   )
 }

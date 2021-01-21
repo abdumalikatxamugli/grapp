@@ -8,20 +8,20 @@ const Dogovor = () => {
                 <h4>Дата подписания</h4>
                 <span>10.12.2020г</span>
                 <h4>Период страхования</h4>
-                с <span> 10.12.2020</span> по <span>09.12.2020г</span>
+                с &n <span> 10.12.2020</span> по <span>09.12.2020г</span>
                 <h4>Срок действия:</h4>
                 <span>1095 </span>дня(ей)
             </div>
             <div className="form-main">
                 <div className="form-header">
                     <h4>Страховые покрытия</h4>
-                    <div>
+                    <div className="sparse">
                         <button>Отмена</button>
                         <button>Сохранить</button>
                     </div>
                 </div>
                 <div>
-                    <table class="premiya-table">
+                    <table className="premiya-table">
                         <thead>
                             <tr>
                                 <th>Вид страхования</th>
@@ -35,8 +35,9 @@ const Dogovor = () => {
                                 <th>Фр.сумма</th>
                             </tr>
                         </thead>
+                        <tbody>
                         <tr>
-                            <td colspan="9"><b>BENTLEY TURBO R(2020|204735)</b></td>
+                            <td colSpan="9"><b>BENTLEY TURBO R(2020|204735)</b></td>
                         </tr>
                         <tr>
                             <td>Страхование транспортных средств, выставляемых в залог</td>
@@ -65,6 +66,7 @@ const Dogovor = () => {
                                 <input value="5 000 000,00" />
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
 

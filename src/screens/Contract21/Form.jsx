@@ -4,6 +4,7 @@ import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Payment from "./Payment";
 import TransportTable from "./TransportTable";
+import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (

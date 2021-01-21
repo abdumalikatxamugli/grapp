@@ -4,7 +4,20 @@ const Transh = (props) => {
   return (
     <div className="transh">
     	<div className="sparse">
-	    	<h4>Ожидаемые транши</h4>
+	    	<div className="head">
+	    		<h4>Ожидаемые транши</h4>
+	    		<div className="sparse">
+	    			<button>
+	    				Отмена
+	    			</button>
+	    			<button>
+	    				Удалить
+	    			</button>
+	    			<button>
+	    				Сохранить
+	    			</button>
+	    		</div>
+	    	</div>
 	    	<span>Период оплат (в днях):</span>	
 	    	<input type="number"/>
 	    	<span>Количество траншов:</span>	
@@ -16,7 +29,7 @@ const Transh = (props) => {
 	    	</select>
 	    	<button>Распределить</button>
     	</div>
-    	<table class="transh-table">
+    	<table className="transh-table" border="1">
     		<thead>
     			<tr>
     				<td>
@@ -43,7 +56,25 @@ const Transh = (props) => {
     				</td>
     			</tr>
     		</tbody>
+    		<tfoot>
+    			<tr>
+    				<td>
+    					Сумма:
+    				</td>
+    				<td>
+    					
+    				</td>
+    				<td>
+    					123 321.09
+    				</td>
+    			</tr>
+    		</tfoot>
     	</table>
+    	<div class="h-right">
+    		<button>
+    			Добавить
+    		</button>
+    	</div>
     </div>
   )
 }
