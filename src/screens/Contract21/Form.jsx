@@ -3,11 +3,12 @@ import {TopControls, Client} from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Transport from "../../components/Transport";
+import Polis from "./Polis";
 const Form = () => {
     const [active, setActive] = useState(1)
     return (
         <>
-        <div class="topbar">
+        <div className="topbar">
             <TopControls search={false}/>
             <h1>21.Страхование транспортных средств, выставляемых в залог</h1>
         </div>
@@ -30,8 +31,9 @@ const Form = () => {
                     ))}
                 </ul>
                 {active == 1 && <Anketa />}
-                {active == 2 && <Transport />}
+                {active == 2 && <Client juridic={true} />}
                 {active == 3 && <Contract />}
+                {active == 5 && <Polis />}
             </div>
 
         </div>
