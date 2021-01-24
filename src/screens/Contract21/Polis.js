@@ -58,7 +58,7 @@ const Polis = () => {
                         <div className="form-row">
                             <label><b>Объект страхования:</b></label>
                             <input />
-                            <span className="d-block">строка (строки) 1-1 с 1</span>
+                            {/* <span className="d-block">строка (строки) 1-1 с 1</span> */}
                         </div>
                         <label><b>Платеж(и):</b></label>
                         <table>
@@ -82,7 +82,6 @@ const Polis = () => {
                     <table class="premiya-table">
                         <thead>
                             <tr>
-                                <th>Оплата</th>
                                 <th>Вид страхования</th>
                                 <th>Страховая сумма</th>
                                 <th>Премия</th>
@@ -94,62 +93,59 @@ const Polis = () => {
                             <td colspan="6"><b>Полис: GSS9999995 Период: с 14.01.2021г. по 29.05.2021г. Дата выдачи: 13.01.2021</b></td>
                         </tr>
                         <tr>
-                            <td>13.01.2021 (7 200,00)</td>
+                            <td> Гаровга қўйиладиган транспорт воситаларини суғурта қилиш</td>
                             <td>
-                                Гаровга қўйиладиган транспорт воситаларини суғурта қилиш
-                            </td>
-                            <td>
-                                120 000,00
-                            </td>
-                            <td>
-                                7 200,00
+                               500 000 000,00
                             </td>
                             <td>
                                 1
                             </td>
-                            <td>-</td>
+                            <td>
+                                7 500 000,00
+                            </td>
+                            <td>
+                                5 000 000,00
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 Оплата сумма:
                             </td>
                             <td>
-
+                               500 000 000,00
                             </td>
                             <td>
-
+                                1
                             </td>
                             <td>
-
+                                7 500 000,00
                             </td>
                             <td>
-                                7 200,00
+                                5 000 000,00
                             </td>
-                            <td></td>
                         </tr>
                         <tr>
                             <td>
                                 Полис сумма:
                             </td>
                             <td>
-
+                               500 000 000,00
                             </td>
                             <td>
-
+                                1
                             </td>
                             <td>
-
+                                7 500 000,00
                             </td>
                             <td>
-                                7 200,00
+                                5 000 000,00
                             </td>
-                            <td></td>
                         </tr>
                         <tr>
-                            <td colspan="6"><b>Полис: GSS9999996 Период: с 30.05.2021г. по 12.01.2022г. Дата выдачи: 13.01.2021</b></td>
+                            <td colspan="6"><b>Итого:</b></td>
                         </tr>
                     </table>
-                    <table class="premiya-table">
+                    {/* <table class="premiya-table mt-5">
                         <thead>
                             <tr>
                                 <th>Оплата</th>
@@ -230,7 +226,7 @@ const Polis = () => {
                             <td></td>
                             <td></td>
                         </tr>
-                    </table>
+                    </table> */}
 
                 </div>
             </div>
