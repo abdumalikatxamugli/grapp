@@ -4,6 +4,10 @@ import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Payment from "./Payment";
 import TransportTable from "./TransportTable";
+import Transport from "../../components/Transport";
+import Polis from "./Polis";
+import Client from "../../components/Client";
+
 import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 const Form = () => {
     const [active, setActive] = useState(1)
@@ -31,10 +35,10 @@ const Form = () => {
                         </li>
                     ))}
                 </ul>
-                {active === 1 && <Anketa />}
-                {active === 2 && <TransportTable />}
-                {active === 3 && <Contract />}
-                {active === 4 && <Payment />}
+                {active == 1 && <Anketa />}
+                {active == 2 && <Client juridic={true} />}
+                {active == 3 && <Contract />}
+                {active == 5 && <Polis />}
             </div>
 
         </div>
