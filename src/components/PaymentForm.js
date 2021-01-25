@@ -18,10 +18,9 @@ const PaymentForm = (props) => {
 	    			<option value="">Счет агента</option>
 	    		</select>	
     		</div>
-
-    		<div className="col-md-3 mb-10">
+            <div className="col-md-3 mb-10">
 	    		<div className="mb-10">№ плат.документа / Примечание:</div>
-	    		<input type="date"/>
+	    		<input/>
     		</div>
     		<div className="col-md-2 mb-10 v-bottom">
     			<button>Оплата</button>

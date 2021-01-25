@@ -1,56 +1,63 @@
-import React from "react";
-import {Client} from '../../components/';
+import React, {useState} from "react";
+import {ClientList, Modal,Countries, Period} from '../../components/';
+import CURRENCYCONDITIONS from '../../constants/currencyConditions';
+import getMaxDate from '../../helpers/getMaxDate';
 
 const Anketa=()=>{
+    const [clientModalState, setClientModalState]=useState(false);
+    const [countryModalState, setCountryModalState]=useState(false);
+    
     return(
         <>
+            <Modal show={clientModalState} setShow={setClientModalState}>
+                <ClientList/>
+            </Modal>
+            <Modal show={countryModalState} setShow={setCountryModalState}>
+              <Countries/>  
+            </Modal>
+
         	<div className="anketaCnt">
         		<div className="row">
         			<div className="label">
         				<span>Дата заключения:</span>
         			</div>
         			<div className="input">
-        				<input type="date"/>
+        				<input type="date" max={getMaxDate()}/>
         			</div>
-        			<div className="label">
-        				<span>Период:</span>
-        			</div>
-        			<div className="input date">
-        				<input type="date"/>
-        				<input type="number"/>
-        				<input type="date"/>			
-        			</div>
-        			<div className="label">
-        				<span>Срок:</span>
-        			</div>
-        			<div className="input">
-        				1 год		
-        			</div>
+        			<Period/>
         			<div className="label">
         				<span>Страхователь:</span>
         			</div>
         			<div className="input">
-        				<button>ХАМКОРБАНК АКЦ.ТИЖ.БАНК</button>		
+        				<button onClick={()=>setClientModalState(true)}>Выберите...</button>		
         			</div>
         			<div className="label">
         				<span>Бенефициар:</span>
         			</div>
         			<div className="input">
-        				<button>ХАМКОРБАНК АКЦ.ТИЖ.БАНК</button>	
+        				<button onClick={()=>setClientModalState(true)}>Выберите...</button>	
         			</div>
         			<div className="label">
         				<span>Валютные условия:</span>
         			</div>
         			<div className="input">
         				<select name="" id="">
-                           <option>Option 1</option>	
+                           {
+                            CURRENCYCONDITIONS.map((item, index)=>{
+                                return(
+                                    <option key={index} value={index} title={item}>
+                                          {item.slice(0,100)} ...
+                                    </option>
+                                    )
+                                })
+                           }
         				</select>
         			</div>
         			<div className="label">
         				<span>Географическая зона:</span>
         			</div>
         			<div className="input">
-        				<button>Узбекистан</button>	
+        				<button onClick={()=>setCountryModalState(true)}>Узбекистан</button>	
         			</div>
         			<div className="label">
         				<span>Источник оплаты:</span>

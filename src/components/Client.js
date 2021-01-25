@@ -12,14 +12,14 @@ function Create(props) {
                 {props.juridic && <div className="juridic">
                     <div className="input-group">
                         <label >Резидент</label>
-                        <div className=" form-check">
-                            <input type="checkbox" type="radio" name="TB_REZIDENT" value="1" />
+                        <div className="form-check">
+                            <input type="radio" name="TB_REZIDENT" value="1" />
                             <label className="form-check-label">
                                 Да
         </label>
                         </div>
                         <div className=" form-check">
-                            <input type="checkbox" type="radio" name="TB_REZIDENT" value="0" />
+                            <input  type="radio" name="TB_REZIDENT" value="0" />
                             <label className="form-check-label">
                                 Нет
         </label>
@@ -93,18 +93,18 @@ function Create(props) {
                         </div>
                     </div>
                 </div>}
-                {props.juridic == false &&
+                {props.juridic === false &&
                     <div className="juridic">
                         <div className="input-group">
                             <label >Резидент</label>
                             <div className=" form-check">
-                                <input type="checkbox" type="radio" name="rez" onChange={(e) => isRezident(e)} value="1" />
+                                <input type="radio" name="rez" onChange={(e) => isRezident(e)} value="1" />
                                 <label className="form-check-label">
                                     Да
         </label>
                             </div>
                             <div className=" form-check">
-                                <input type="checkbox" type="radio" name="rez" onChange={(e) => isRezident(e)} value="0" />
+                                <input type="radio" name="rez" onChange={(e) => isRezident(e)} value="0" />
                                 <label className="form-check-label">
                                     Нет
         </label>
@@ -116,13 +116,13 @@ function Create(props) {
                                 <input name="TB_ORGINN" type="text" placeholder="AA" />
                                 <input name="PASSPORT" type="text" placeholder="777 77 77" />
                             </div>
-                            {rez==1 &&<div>
+                            {rez===1 &&<div>
                                 <label >ПИНФЛ</label><br />
                                 <input name="TB_ORGINN" type="text" />
                             </div>}
                             <div>
                                 <label>Паспорт выдан</label><br />
-                                <input name="TB_KOD_OKONX" type="text" />
+                                <input name="TB_KOD_OKONX" type="date" />
                             </div>
                         </div>
                         <div className="input-group">

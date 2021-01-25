@@ -242,19 +242,20 @@ input{
     text-align: right;
     padding-right: 10px;
     border-right: 1px solid #cecece;
+    max-width: 40%;
 }
 .anketaCnt .row .input{
     flex: 0 0 60%;
     padding-left: 10px;
+    max-width: 60%;
 
 }
 .anketaCnt .row .input input{
     border: 1px solid silver !important;
     outline: none;
 }
-button{
-    cursor: pointer;
-}
+
+    
 .anketaCnt .date input:nth-child(2){
     width:100px;
 }
@@ -265,6 +266,7 @@ button{
     padding: 5px 13px;
     border: 1px solid #cbe4f5;
     outline:none !important;
+    cursor: pointer;
 }
 .anketaCnt input{
     padding: 5px 10px;
@@ -380,6 +382,9 @@ select{
     width:50px;
     margin-right: 10px;
 }
+.voditel{
+    padding:30px;
+}
 .voditel select{
     border:1px solid silver;
     padding: 5px 10px;
@@ -451,4 +456,76 @@ select{
 }
 .bottom .status>*{
     margin-left:5px;
+}
+.modal{
+    position: fixed;
+    width:80%;
+    left:10%;
+    z-index: 2;
+    border:1px solid grey;
+    box-shadow: 0 0 5px 1px #777;
+    background-color: white;
+    top:10%;
+    height: 80%;
+    overflow-y: scroll;
+}
+.modal-over{
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+    position: fixed;
+    width:100%;
+    height: 100%;
+    top: 0;
+    left:0;
+}
+.counties-component ul{
+    list-style: none;
+    padding:0;
+}
+.counties-component ul li{
+    background-color: #f3f3f3;
+    border: 1px solid #dcd2d2;
+    padding: 7px;
+    cursor:pointer;
+}
+.pb-10{
+    padding-bottom: 10px;
+}
+.pt-10{
+    padding-top: 10px;
+}
+.sticky{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 2;
+}
+.border-bottom{
+    border-bottom:1px solid lightgrey;
+}
+.counties-component{
+    padding:20px;
+}
+.bg-skyblue{
+    background-color: skyblue;
+}
+.head-text{
+    display:inline-block; 
+    font-size: 18px;
+    color: #066686;
+    margin:0;
+}
+.h-center{
+    display: flex;
+    justify-content: center;
+}
+.j-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+.p-10{
+    padding: 10px;
+}
+.mt-20{
+    margin-top:20px;
 }

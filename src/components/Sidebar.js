@@ -1,6 +1,6 @@
 import React from 'react';
 import TopControls from './TopControls';
-import done from '../assets/icons/done.svg';
+// import done from '../assets/icons/done.svg';
 import done_all from '../assets/icons/done_all.svg';
 
 const Sidebar = (props) => {
