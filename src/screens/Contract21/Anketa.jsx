@@ -1,4 +1,5 @@
 import React from "react";
+import {Client} from '../../components/';
 
 const Anketa=()=>{
     return(
