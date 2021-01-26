@@ -1,5 +1,7 @@
 import React from 'react';
-import TopControls from './TopControls'
+import TopControls from './TopControls';
+// import done from '../assets/icons/done.svg';
+import done_all from '../assets/icons/done_all.svg';
 
 const Sidebar = (props) => {
 
@@ -19,7 +21,10 @@ const Sidebar = (props) => {
                             <h4 className="insurant">ХАМКОРБАНК АКЦ.ТИЖ.БАНК</h4>
                             <div className="bottom">
                                 <div className="dognum">10/21/1000</div>
-                                <div className="date">17.01.2021</div>
+                                <div className="status">
+                                    <img src={done_all} alt=""/>
+                                    <div className="date">17.01.2021</div>
+                                </div>
                             </div>
                         </div>
                     </li>

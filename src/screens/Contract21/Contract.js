@@ -1,5 +1,41 @@
-import React from "react";
+import React,{useState} from "react";
 const Dogovor = () => {
+    const [premiyas, setPremiyas]=useState([
+            {
+                name:"BENTLEY TURBO R(2020|204735)",
+                insuranceAmount:0,
+                premiyaPercent:0,
+                premiyaAmount:0,
+                franchise:false,
+                franchiseCond:false,
+                franchisePercent:0,
+                franchiseAmount:0
+            }
+        ]);
+    const changePremiya=(e,index, prop)=>{
+        console.log(prop);
+        let tempObj=[...premiyas];
+        let target=Number(e.target.value);
+        console.log(target);
+        switch(prop){
+            case 'insuranceAmount':
+                tempObj[index]['insuranceAmount']=target;
+                tempObj[index]['premiyaAmount']=tempObj[index]['premiyaPercent']*target/100;
+                tempObj[index]['franchiseAmount']=tempObj[index]['franchise']?
+                        tempObj[index]['franchisePercent']*target/100:0;
+                setPremiyas(tempObj)
+                break;
+            case 'premiyaPercent':
+                tempObj[index]['premiyaPercent']=target;
+                tempObj[index]['premiyaAmount']=tempObj[index]['insuranceAmount']*target/100;
+                setPremiyas(tempObj);
+                break;
+            case 'franchisePercent':
+                tempObj[index]['franchisePercent']=target;
+                tempObj[index]['franchiseAmount']=target*tempObj[index]['insuranceAmount'];
+                setPremiyas(tempObj);
+        }  
+    }
     return (
         <div className="contract-form">
             <div className="contract-top">
@@ -8,20 +44,25 @@ const Dogovor = () => {
                 <h4>Дата подписания</h4>
                 <span>10.12.2020г</span>
                 <h4>Период страхования</h4>
-                с <span> 10.12.2020</span> по <span>09.12.2020г</span>
+                <div className="sparse">
+                    <span>с</span> 
+                    <span> 10.12.2020</span>
+                    <span>по</span>
+                    <span>09.12.2020г</span>
+                </div>
                 <h4>Срок действия:</h4>
                 <span>1095 </span>дня(ей)
             </div>
             <div className="form-main">
                 <div className="form-header">
                     <h4>Страховые покрытия</h4>
-                    <div>
-                        <button>Отмена</button>
-                        <button>Сохранить</button>
+                    <div className="sparse">
+                        {/*<button>Отмена</button>*/}
+                        <button className="bg-skyblue">Сохранить</button>
                     </div>
                 </div>
                 <div>
-                    <table class="premiya-table">
+                    <table className="premiya-table">
                         <thead>
                             <tr>
                                 <th>Вид страхования</th>
@@ -35,36 +76,55 @@ const Dogovor = () => {
                                 <th>Фр.сумма</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td colspan="9"><b>BENTLEY TURBO R(2020|204735)</b></td>
+                        <tbody>
+                        {premiyas.map((item, index)=>
+                        <>
+                        <tr key={"name"+index}>
+                            <td colSpan="9"><h5>{item.name}</h5></td>
                         </tr>
-                        <tr>
+                        <tr key={"info"+index}>
                             <td>Страхование транспортных средств, выставляемых в залог</td>
                             <td>
-                                <input value="500 000 000.00" />
+                                <input type="number" 
+                                       value={item.insuranceAmount}
+                                       onChange={e=>changePremiya(e, index, 'insuranceAmount')}
+                                />
                             </td>
                             <td>
-                                <input value="0,50" />
+                                <input type="number" 
+                                       value={item.premiyaPercent}
+                                       onChange={e=>changePremiya(e, index, 'premiyaPercent')}
+                                />
                             </td>
                             <td>
-                                <input value="7 500 000.00" />
+                                <input type="number"  value={item.premiyaAmount} readOnly/>
                             </td>
                             <td>
-                                <input value="1" />
+                                <input value="1" disabled/>
                             </td>
                             <td>
-                                <input type="checkbox" />
+                                <input  type="checkbox"
+                                        value={item.franchise}
+
+                                />
                             </td>
                             <td>
-                                <input type="checkbox" />
+                                <input type="checkbox" 
+                                       value={item.franchiseCond}/>
                             </td>
                             <td>
-                                <input value="1,00" />
+                                <input type="number" 
+                                       value={item.franchisePercent}
+                                       onChange={e=>changePremiya(e, index, 'franchisePercent')}
+                                />
                             </td>
                             <td>
-                                <input value="5 000 000,00" />
+                                <input   type="number" value={item.franchiseAmount} readOnly/>
                             </td>
                         </tr>
+                        </>
+                        )}
+                        </tbody>
                     </table>
                 </div>
 

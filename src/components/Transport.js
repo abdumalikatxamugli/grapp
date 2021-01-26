@@ -2,9 +2,11 @@ import React from "react";
 import UnvisibleFormElements from "./UnvisibleFormElements";
 const Transport = () => {
     return (
-        <div className="transport-form hyper-form">
+        <>
+
+        <div className="transport-form hyper-form mt-20">
             <form>
-                <h5>ТРАНСПОРТНОЕ СРЕДСТВО</h5>
+                
                 <div className="ml--10">
                     <div className="input-group">
                         <div className="form-inline">
@@ -136,132 +138,134 @@ const Transport = () => {
                         </div>
                         <h5>Дополнительное оборудование</h5>
                         <table>
-                            <tr>
-                                <th>Наименование</th>
-                                <th>Спецификация</th>
-                                <th>Кол-во</th>
-                                <th>Стоимость</th>
-                            </tr>
-                            <tr>
-                                <td>Автомагнитола</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Колонки задние</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Колонки передние</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Противоугонное устройство</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>CD-changer</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Саб-буфер</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Усилитель</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Диски</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Шины</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Иное</td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Наименование</th>
+                                    <th>Спецификация</th>
+                                    <th>Кол-во</th>
+                                    <th>Стоимость</th>
+                                </tr>
+                                <tr>
+                                    <td>Автомагнитола</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Колонки задние</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Колонки передние</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Противоугонное устройство</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CD-changer</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Саб-буфер</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Усилитель</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Диски</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Шины</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Иное</td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </UnvisibleFormElements>
                     <UnvisibleFormElements label="Предыдущее страхование">
@@ -274,49 +278,55 @@ const Transport = () => {
                             </div>
                         </div>
                         <table>
-                            <tr>
-                                <th>Год</th>
-                                <th>Сумма убытков</th>
-                                <th>Основная причина</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                                <td>
-                                    <input type="text" />
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Год</th>
+                                    <th>Сумма убытков</th>
+                                    <th>Основная причина</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </UnvisibleFormElements>
                 </div>
+                <div>
+                    <button className="bg-skyblue btn-bg mv-20">Save</button>
+                </div>  
             </form>
         </div>
+        </>
     )
 }
 export default Transport;
