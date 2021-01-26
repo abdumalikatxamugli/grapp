@@ -5,7 +5,7 @@ import ClientTable from './ClientTable';
 const ClientList = (props) => {
   const [juridic, setJuridic]=useState(false);
   const [creating, setCreating]=useState(false);
-  console.log(juridic);
+  console.log(props);
   return (
   	
   	<div className="container-fluid">
@@ -31,7 +31,7 @@ const ClientList = (props) => {
   	
   	{
   		!creating&&
-  		<ClientTable juridic={juridic}/>
+  		<ClientTable changedAttribute={props.changedAttribute} changeHandler={props.changeHandler} juridic={juridic}/>
   	}
   	{
   		creating&&

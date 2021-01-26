@@ -7,20 +7,18 @@ const Transh = (props) => {
 
   const [transhes, setTranshes]=useState([{
         date:'2021-01-28',
-        amount:130000
+        amount:130000,
+        selected:false
   },
   {
-        date:'2021-02-28',
-        amount:130000
-  },
-  {
-        date:'2021-03-28',
-        amount:130000
-  }
-  ]);
+        date:'2021-01-28',
+        amount:130000,
+        selected:false
+  }]);
 
   const [interval, setInterval]=useState(30);
   const [count, setCount]=useState(transhes.length);
+  const [allSelected, setAllSelected]=useState(false);
 
   const reseparateCount=(e)=>{
     let newCount=e.target.value;
@@ -29,7 +27,8 @@ const Transh = (props) => {
     for(let i=0;i<newCount;i++){
         tempArray.push({
             date:addDates(initialDate, i*interval),
-            amount:totalAmount/newCount
+            amount:totalAmount/newCount,
+            selected:false
         });
     }
     setTranshes(tempArray);
@@ -40,7 +39,8 @@ const Transh = (props) => {
     for(let i=0;i<count;i++){
         tempArray.push({
             date:addDates(initialDate, i*newInterval),
-            amount:totalAmount/count
+            amount:totalAmount/count,
+            selected:false
         });
     }
     setTranshes(tempArray);
@@ -54,6 +54,28 @@ const Transh = (props) => {
     const newTranshState=[...transhes];
     newTranshState[index]['amount']=Number(value);
     setTranshes(newTranshState);
+  }
+  const resetSelected=(index)=>{
+    const newTranshState=[...transhes];
+    newTranshState[index]['selected']=!transhes[index]['selected'];
+    setAllSelected(false);
+    setTranshes(newTranshState);
+  }
+  const addTransh=()=>{
+    let tempTransh=[...transhes];
+    tempTransh.push({...tempTransh[tempTransh.length-1]}  );
+    setTranshes(tempTransh);
+  }
+  const checkAll=()=>{
+    let newTranshState=[...transhes];
+    setAllSelected(!allSelected);
+
+    setTranshes(
+      newTranshState.map((item)=>{
+        item['selected']=!allSelected;
+        return item;
+      })
+    )
   }
   return (
     <div className="transh">
@@ -91,7 +113,11 @@ const Transh = (props) => {
     		<thead>
     			<tr>
     				<td>
-    					<input type="checkbox"/>
+    					<input type="checkbox" 
+                     onChange={checkAll} 
+                     value={allSelected}
+                     checked={allSelected}
+              />
     				</td>
     				<td>
     					ДАТА
@@ -102,21 +128,26 @@ const Transh = (props) => {
     			</tr>
     		</thead>
     		<tbody>
-                {transhes.map((item, index)=>
+              {transhes.map((item, index)=>
         			<tr key={index}>
         				<td>
-        					<input type="checkbox"/>
+        					<input type="checkbox" 
+                         value={item.selected} 
+                         checked={item.selected}
+                         onChange={()=>resetSelected(index)}
+                  />
         				</td>
         				<td>
         					<input type="date" 
-                                value={item.date} 
-                                onChange={e=>resetDate(e.target.value,index)}/>
+                    value={item.date} 
+                    onChange={e=>resetDate(e.target.value,index)}
+                  />
         				</td>
         				<td>
         					<input type="number" 
-                                    value={item.amount}
-                                    onChange={e=>resetAmount(e.target.value,index)}
-                            />
+                    value={item.amount}
+                    onChange={e=>resetAmount(e.target.value,index)}
+                  />
         				</td>
         			</tr>
                 )}
@@ -136,7 +167,7 @@ const Transh = (props) => {
     		</tfoot>
     	</table>
     	<div className="h-right">
-    		<button>
+    		<button onClick={addTransh}>
     			Добавить
     		</button>
     	</div>

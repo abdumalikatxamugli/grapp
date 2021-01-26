@@ -97,14 +97,16 @@ const TransportList = (props) => {
 	    						<div className="col-md-12 attrs">
 	    							<div className="v-center">
 			    						Водители № доверенности, прав (категория):
-			    						<img src={addImage}  
+			    						<button onClick={()=>setVoditelModalShow(true)} className="bg-skyblue p-0">
+			    							<img src={addImage}  
 					    			   	  	   className="cursor-pointer" 
 					    			   	  	   alt="expand"
 					    			   	  	/>
+					    			   	</button>
 			    					</div>
 			    					<ul>
 			    						<li>
-			    							<button onClick={()=>setVoditelModalShow(true)}>
+			    							<button>
 			    								YANGI USER USER (AA123321, DOVERENNOST, B:C)
 			    							</button>
 			    						</li>

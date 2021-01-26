@@ -6,8 +6,12 @@ import getMaxDate from '../../helpers/getMaxDate';
 import getCurrentDate from '../../helpers/getCurrentDate';
 import countries from "../../constants/countries";
 import SimpleReactValidator from 'simple-react-validator';
+import {useDispatch} from 'react-redux';
+import {anketaCreate} from '../../redux/actions';
 const Anketa = () => {
-    const [clientModalState, setClientModalState] = useState(false);
+    const dispatch=useDispatch();
+    const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
+    const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
     const [anketaForm, setAnketaForm] = useState({
         INS_DATE: getCurrentDate(),
@@ -16,10 +20,11 @@ const Anketa = () => {
         INS_COUNTRY: 0,
         VAL_TYPE: "",
         ISTOCHNIK_O: "",
-        VAL_USLOVIYA: ""
+        VAL_USLOVIYA: "",
+        BENEFICIARY:"",
+        INSURER:""
     })
     const validator = new SimpleReactValidator()
-    useEffect(() => { console.log(validator)}, [])
     const anketaFormChanger = (e) => {
         setAnketaForm({
             ...anketaForm,
@@ -31,11 +36,26 @@ const Anketa = () => {
             setCountryModalState(!countryModalState)
         }
     },[anketaForm.INS_COUNTRY])
-    
+    useEffect(()=>{
+        if(anketaForm.BENEFICIARY){
+            setClientModalBeneficiaryState(!clientModalBeneficiaryState)
+        }
+    },[anketaForm.BENEFICIARY]) 
+    useEffect(()=>{
+        if(anketaForm.INSURER){
+            setClientModalInsurerState(!clientModalInsurerState)
+        }
+    },[anketaForm.INSURER])     
+    const save=()=>{
+        dispatch(anketaCreate({id:1}));
+    }    
     return (
         <>
-            <Modal show={clientModalState} setShow={setClientModalState}>
-                <ClientList />
+            <Modal show={clientModalBeneficiaryState} setShow={setClientModalBeneficiaryState}>
+                <ClientList changedAttribute="BENEFICIARY" changeHandler={anketaFormChanger}/>
+            </Modal>
+            <Modal show={clientModalInsurerState} setShow={setClientModalInsurerState}>
+                <ClientList changedAttribute="INSURER" changeHandler={anketaFormChanger} />
             </Modal>
             <Modal show={countryModalState} setShow={setCountryModalState}>
                 <Countries changedAttribute={"INS_COUNTRY"} changeHandler={anketaFormChanger} />
@@ -55,13 +75,13 @@ const Anketa = () => {
                         <span>Страхователь:</span>
                     </div>
                     <div className="input">
-                        <button onClick={() => setClientModalState(true)}>Выберите...</button>
+                        <button onClick={() => setClientModalBeneficiaryState(true)}>Выберите...</button>
                     </div>
                     <div className="label">
                         <span>Бенефициар:</span>
                     </div>
                     <div className="input">
-                        <button onClick={() => setClientModalState(true)}>Выберите...</button>
+                        <button onClick={() => setClientModalBeneficiaryState(true)}>Выберите...</button>
                     </div>
                     <div className="label">
                         <span>Валютные условия:</span>
@@ -127,4 +147,6 @@ const Anketa = () => {
         </>
     )
 }
+
+
 export default Anketa;
