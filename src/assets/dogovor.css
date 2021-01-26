@@ -1,6 +1,9 @@
 * {
     font-family: sans-serif;
 }
+* b{
+    font-size: 14px;
+}
 
 /* Stepwizard styles*/
 .form-main {

@@ -1,5 +1,6 @@
 import React from "react";
 const Polis = () => {
+    // const 
     return (
         <div className="polis-main">
             <div className="form-main">
