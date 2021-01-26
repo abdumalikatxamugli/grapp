@@ -321,6 +321,9 @@ const Transport = () => {
                         </table>
                     </UnvisibleFormElements>
                 </div>
+                <div>
+                    <button className="bg-skyblue btn-bg mv-20">Save</button>
+                </div>  
             </form>
         </div>
         </>

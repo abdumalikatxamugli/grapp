@@ -1,6 +1,41 @@
-import React from "react";
+import React,{useState} from "react";
 const Dogovor = () => {
-    
+    const [premiyas, setPremiyas]=useState([
+            {
+                name:"BENTLEY TURBO R(2020|204735)",
+                insuranceAmount:0,
+                premiyaPercent:0,
+                premiyaAmount:0,
+                franchise:false,
+                franchiseCond:false,
+                franchisePercent:0,
+                franchiseAmount:0
+            }
+        ]);
+    const changePremiya=(e,index, prop)=>{
+        console.log(prop);
+        let tempObj=[...premiyas];
+        let target=Number(e.target.value);
+        console.log(target);
+        switch(prop){
+            case 'insuranceAmount':
+                tempObj[index]['insuranceAmount']=target;
+                tempObj[index]['premiyaAmount']=tempObj[index]['premiyaPercent']*target/100;
+                tempObj[index]['franchiseAmount']=tempObj[index]['franchise']?
+                        tempObj[index]['franchisePercent']*target/100:0;
+                setPremiyas(tempObj)
+                break;
+            case 'premiyaPercent':
+                tempObj[index]['premiyaPercent']=target;
+                tempObj[index]['premiyaAmount']=tempObj[index]['insuranceAmount']*target/100;
+                setPremiyas(tempObj);
+                break;
+            case 'franchisePercent':
+                tempObj[index]['franchisePercent']=target;
+                tempObj[index]['franchiseAmount']=target*tempObj[index]['insuranceAmount'];
+                setPremiyas(tempObj);
+        }  
+    }
     return (
         <div className="contract-form">
             <div className="contract-top">
@@ -42,36 +77,53 @@ const Dogovor = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colSpan="9"><h5>BENTLEY TURBO R(2020|204735)</h5></td>
+                        {premiyas.map((item, index)=>
+                        <>
+                        <tr key={"name"+index}>
+                            <td colSpan="9"><h5>{item.name}</h5></td>
                         </tr>
-                        <tr>
+                        <tr key={"info"+index}>
                             <td>Страхование транспортных средств, выставляемых в залог</td>
                             <td>
-                                <input type="number" />
+                                <input type="number" 
+                                       value={item.insuranceAmount}
+                                       onChange={e=>changePremiya(e, index, 'insuranceAmount')}
+                                />
                             </td>
                             <td>
-                                <input type="number"/>
+                                <input type="number" 
+                                       value={item.premiyaPercent}
+                                       onChange={e=>changePremiya(e, index, 'premiyaPercent')}
+                                />
                             </td>
                             <td>
-                                <input type="number"/>
+                                <input type="number"  value={item.premiyaAmount} readOnly/>
                             </td>
                             <td>
                                 <input value="1" disabled/>
                             </td>
                             <td>
-                                <input type="checkbox" type="number" />
+                                <input  type="checkbox"
+                                        value={item.franchise}
+
+                                />
                             </td>
                             <td>
-                                <input type="checkbox" type="number"/>
+                                <input type="checkbox" 
+                                       value={item.franchiseCond}/>
                             </td>
                             <td>
-                                <input />
+                                <input type="number" 
+                                       value={item.franchisePercent}
+                                       onChange={e=>changePremiya(e, index, 'franchisePercent')}
+                                />
                             </td>
                             <td>
-                                <input  />
+                                <input   type="number" value={item.franchiseAmount} readOnly/>
                             </td>
                         </tr>
+                        </>
+                        )}
                         </tbody>
                     </table>
                 </div>

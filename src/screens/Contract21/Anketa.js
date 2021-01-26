@@ -1,11 +1,15 @@
 import React, {useState} from "react";
 import {ClientList, Modal,Countries, Period} from '../../components/';
 import CURRENCYCONDITIONS from '../../constants/currencyConditions';
+import CURRENCIES from '../../constants/currencies';
 import getMaxDate from '../../helpers/getMaxDate';
 
 const Anketa=()=>{
     const [clientModalState, setClientModalState]=useState(false);
     const [countryModalState, setCountryModalState]=useState(false);
+    const [currencyCond, setCurrencyCond]=useState(0);
+
+
     
     return(
         <>
@@ -41,7 +45,9 @@ const Anketa=()=>{
         				<span>Валютные условия:</span>
         			</div>
         			<div className="input">
-        				<select name="" id="">
+        				<select name="" id="" 
+                                value={currencyCond} 
+                                onChange={e=>setCurrencyCond(e.target.value)}>
                            {
                             CURRENCYCONDITIONS.map((item, index)=>{
                                 return(
@@ -53,6 +59,32 @@ const Anketa=()=>{
                            }
         				</select>
         			</div>
+                    {currencyCond!==0&&
+                        <>
+                        <div className="label">
+                            <span>Валюта:</span>
+                        </div>
+                        <div className="input">
+                            <select name="" id="">
+                                {
+                                CURRENCIES.map((item, index)=>{
+                                    return(
+                                        <option key={index} value={index} title={item}>
+                                              {item.slice(0,100)} ...
+                                        </option>
+                                        )
+                                    })
+                               }
+                            </select>
+                        </div>
+                         <div className="label">
+                            <span>Курс ЦБ:</span>
+                        </div>
+                        <div className="input">
+                           <input type="number"/>
+                        </div>
+                        </>
+                    }
         			<div className="label">
         				<span>Географическая зона:</span>
         			</div>

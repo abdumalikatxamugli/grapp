@@ -529,3 +529,11 @@ select{
 .mt-20{
     margin-top:20px;
 }
+.btn-bg{
+    font-size:16px;
+    padding:10px 13px;
+} 
+.mv-20{
+    margin-top:20px;
+    margin-bottom:20px;
+}
