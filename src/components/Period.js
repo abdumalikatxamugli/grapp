@@ -3,9 +3,9 @@ import getCurrentDate from '../helpers/getCurrentDate';
 
 
 const Period = (props) => {
-	const [datef,setDatef] = useState(getCurrentDate());
+	const [INS_DATEF,setDatef] = useState(getCurrentDate());
 	const [day,setDay] = useState(0);
-	const [datet,setDatet] = useState(getCurrentDate());
+	const [INS_DATET,setDatet] = useState(getCurrentDate());
 	
 	const addDays = (date, days)=>{
 	    var result = new Date(date);
@@ -13,8 +13,7 @@ const Period = (props) => {
 	    var dd = String(result.getDate()).padStart(2, '0');
 		var mm = String(result.getMonth() + 1).padStart(2, '0'); //January is 0!
 		var yyyy = result.getFullYear();
-
-		return  yyyy + '-' + mm + '-' + dd;
+		return yyyy + '-' + mm + '-' + dd
 	}
 	const subtractDays = (date, days)=>{
 	    var result = new Date(date);
@@ -26,17 +25,20 @@ const Period = (props) => {
 	}
 	const syncDays=(change, val)=>{
 		switch(change){
-			case 'datef':
+			case 'INS_DATEF':
 				setDatef(val);
-				setDatet(addDays(val,day))
+				setDatet(addDays(INS_DATET,day))
+				props.changeHandler({target: {name: "INS_DATEF", value: val}})
 				break;
-			case 'datet':
+			case 'INS_DATET':
 				setDatet(val);
-				setDatef(subtractDays(val,day))
+				setDatef(subtractDays(INS_DATEF,day))
+				props.changeHandler({target: {name: "INS_DATEF", value: subtractDays(val,day)}})
 				break;
 			case 'day':
 				setDay(val);
-				setDatet(addDays(datef,val))
+				props.changeHandler({target: {name: "INS_DATET", value: addDays(INS_DATEF,val)}})
+				setDatet(addDays(INS_DATEF,val))
 				break;
 			default: 
 				break;
@@ -48,9 +50,9 @@ const Period = (props) => {
 			<span>Период:</span>
 		</div>
 		<div className="input date">
-			<input type="date" value={datef} onChange={(e)=>syncDays('datef',e.target.value)}/>
+			<input type="date" value={INS_DATEF} onChange={(e)=>syncDays('INS_DATEF',e.target.value)}/>
 			<input type="number" value={day} onChange={(e)=>syncDays('day',e.target.value)}/>
-			<input type="date" value={datet} onChange={(e)=>syncDays('datet',e.target.value)}/>			
+			<input type="date" value={INS_DATET} onChange={(e)=>syncDays('INS_DATET',e.target.value)}/>			
 		</div>
 		<div className="label">
 			<span>Срок:</span>
