@@ -15,14 +15,13 @@ const Dogovor = () => {
     const changePremiya=(e,index, prop)=>{
         console.log(prop);
         let tempObj=[...premiyas];
-        let target=Number(e.target.value);
-        console.log(target);
+        let target=parseFloat(e.target.value);
+        
         switch(prop){
             case 'insuranceAmount':
                 tempObj[index]['insuranceAmount']=target;
                 tempObj[index]['premiyaAmount']=tempObj[index]['premiyaPercent']*target/100;
-                tempObj[index]['franchiseAmount']=tempObj[index]['franchise']?
-                        tempObj[index]['franchisePercent']*target/100:0;
+                tempObj[index]['franchiseAmount']=tempObj[index]['franchisePercent']*target/100;
                 setPremiyas(tempObj)
                 break;
             case 'premiyaPercent':
@@ -34,6 +33,9 @@ const Dogovor = () => {
                 tempObj[index]['franchisePercent']=target;
                 tempObj[index]['franchiseAmount']=target*tempObj[index]['insuranceAmount'];
                 setPremiyas(tempObj);
+                break;
+            default:
+                break;       
         }  
     }
     return (
@@ -85,19 +87,19 @@ const Dogovor = () => {
                         <tr key={"info"+index}>
                             <td>Страхование транспортных средств, выставляемых в залог</td>
                             <td>
-                                <input type="number" 
+                                <input type="text" 
                                        value={item.insuranceAmount}
                                        onChange={e=>changePremiya(e, index, 'insuranceAmount')}
                                 />
                             </td>
                             <td>
-                                <input type="number" 
+                                <input type="text" 
                                        value={item.premiyaPercent}
                                        onChange={e=>changePremiya(e, index, 'premiyaPercent')}
                                 />
                             </td>
                             <td>
-                                <input type="number"  value={item.premiyaAmount} readOnly/>
+                                <input type="text"  value={item.premiyaAmount} readOnly/>
                             </td>
                             <td>
                                 <input value="1" disabled/>
@@ -113,13 +115,13 @@ const Dogovor = () => {
                                        value={item.franchiseCond}/>
                             </td>
                             <td>
-                                <input type="number" 
+                                <input type="text" 
                                        value={item.franchisePercent}
                                        onChange={e=>changePremiya(e, index, 'franchisePercent')}
                                 />
                             </td>
                             <td>
-                                <input   type="number" value={item.franchiseAmount} readOnly/>
+                                <input   type="text" value={item.franchiseAmount} readOnly/>
                             </td>
                         </tr>
                         </>

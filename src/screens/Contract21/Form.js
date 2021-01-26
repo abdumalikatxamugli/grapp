@@ -9,12 +9,14 @@ import Polis from "./Polis";
 import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 
 const Form = () => {
-    const [active, setActive] = useState(1)
+    const [active, setActive] = useState(1);
+
+    // global context state
     return (
         <>
         <div className="topbar">
             <TopControls search={false}/>
-            <h1>21.Страхование транспортных средств, выставляемых в залог</h1>
+            <h1> 21. Страхование транспортных средств, выставляемых в залог</h1>
         </div>
         <div className="form-main">
             <div className="stepwizard">

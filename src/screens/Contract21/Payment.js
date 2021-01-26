@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Transh, PaymentForm} from '../../components/'
+import {Transh, PaymentForm} from '../../components/';
 
 const Payment = (props) => {
   const [transh, setTranshState]=useState(false);
@@ -12,13 +12,13 @@ const Payment = (props) => {
 	    	</div>
 	    	<div >
 	    		<div className="mb-10">
-		    		<input type="radio" onClick={()=>setTranshState(false)} id="once" name="oplata" checked={!transh?true:false}/>
+		    		<input type="radio" onClick={()=>setTranshState(false)} id="once" name="oplata" checked={!transh} onChange={()=>setTranshState(false)}/>
 		    		<label htmlFor="once">
 		    			Единовременная оплата
 		    		</label>
 	    		</div>
 	    		<div className="mb-10">
-		    		<input type="radio" onClick={()=>setTranshState(true)} id="transh" name="oplata" checked={transh?true:false}/>
+		    		<input type="radio" onClick={()=>setTranshState(true)} id="transh" name="oplata" checked={transh} onChange={()=>setTranshState(true)}/>
 		    		<label htmlFor="transh">
 		    			Оплата траншами
 		    		</label>

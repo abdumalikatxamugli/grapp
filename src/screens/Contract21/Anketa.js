@@ -3,14 +3,21 @@ import {ClientList, Modal,Countries, Period} from '../../components/';
 import CURRENCYCONDITIONS from '../../constants/currencyConditions';
 import CURRENCIES from '../../constants/currencies';
 import getMaxDate from '../../helpers/getMaxDate';
+import { connect } from 'react-redux'
+import {useDispatch} from 'react-redux';
+import {anketaCreate} from '../../redux/actions';
 
-const Anketa=()=>{
+const Anketa=(props)=>{
     const [clientModalState, setClientModalState]=useState(false);
     const [countryModalState, setCountryModalState]=useState(false);
     const [currencyCond, setCurrencyCond]=useState(0);
-
+    const dispatch=useDispatch();
+    
 
     
+    const save=()=>{
+        dispatch(anketaCreate({id:1}));
+    }    
     return(
         <>
             <Modal show={clientModalState} setShow={setClientModalState}>
@@ -100,9 +107,12 @@ const Anketa=()=>{
         				<input type="radio" id="budget" name="source"/>
         				<label htmlFor="budget">Бюджетные средства</label>	
         			</div>
-        		</div>
+                </div>
+                <button onClick={save}>Save</button>
         	</div>
         </>
     )
 }
+
+
 export default Anketa;
