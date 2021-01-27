@@ -5,7 +5,6 @@ import ClientTable from './ClientTable';
 const ClientList = (props) => {
   const [juridic, setJuridic]=useState(false);
   const [creating, setCreating]=useState(false);
-  console.log(props);
   return (
   	
   	<div className="container-fluid">

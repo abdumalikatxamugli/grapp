@@ -16,7 +16,7 @@ const Countries = (props) => {
       <input type="text" placeholder="search" onChange={e => filter(e)} />
       <ul>
         {result.map((country,idx) =>
-          idx!=0?<li onClick={()=>props.changeHandler({target:{name: props.changedAttribute, value: idx}})} key={idx}>{country}</li>:''
+          idx!==0?<li onClick={()=>props.changeHandler({target:{name: props.changedAttribute, value: idx}})} key={idx}>{country}</li>:''
         )}
       </ul>
     </div>

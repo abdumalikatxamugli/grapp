@@ -6,10 +6,10 @@ import getMaxDate from '../../helpers/getMaxDate';
 import getCurrentDate from '../../helpers/getCurrentDate';
 import countries from "../../constants/countries";
 import SimpleReactValidator from 'simple-react-validator';
-import {useDispatch} from 'react-redux';
-import {anketaCreate} from '../../redux/actions';
-const Anketa = () => {
-    const dispatch=useDispatch();
+import { useDispatch } from 'react-redux';
+import { anketaCreate } from '../../redux/actions';
+const Anketa = (props) => {
+    const dispatch = useDispatch();
     const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
@@ -21,38 +21,40 @@ const Anketa = () => {
         VAL_TYPE: "",
         ISTOCHNIK_O: "",
         VAL_USLOVIYA: "",
-        BENEFICIARY:"",
-        INSURER:""
+        BENEFICIARY: "",
+        INSURER: ""
     })
     const validator = new SimpleReactValidator()
     const anketaFormChanger = (e) => {
+        if ((e.target.name === "BENEFICIARY") && anketaForm["BENEFICIARY"] !== e.target.value) {
+            setClientModalBeneficiaryState(false)
+        }
+        if ((e.target.name === "INSURER") && anketaForm["INSURER"] !== e.target.value) {
+            setClientModalInsurerState(false)
+        }
         setAnketaForm({
             ...anketaForm,
             [e.target.name]: e.target.value
         })
     }
-    useEffect(()=>{
-        if(anketaForm.INS_COUNTRY){
+    useEffect(() => {
+        if (anketaForm.INS_COUNTRY) {
             setCountryModalState(!countryModalState)
         }
-    },[anketaForm.INS_COUNTRY])
-    useEffect(()=>{
-        if(anketaForm.BENEFICIARY){
-            setClientModalBeneficiaryState(!clientModalBeneficiaryState)
+    }, [anketaForm.INS_COUNTRY, setCountryModalState])
+    const save = () => {
+        dispatch(anketaCreate({ id: 1 }));
+    }
+    useEffect(() => {
+        console.log(validator.allValid())
+        if (validator.allValid()) {
+            props.givePermissionToStpep(2)
         }
-    },[anketaForm.BENEFICIARY]) 
-    useEffect(()=>{
-        if(anketaForm.INSURER){
-            setClientModalInsurerState(!clientModalInsurerState)
-        }
-    },[anketaForm.INSURER])     
-    const save=()=>{
-        dispatch(anketaCreate({id:1}));
-    }    
+    }, [anketaForm])
     return (
         <>
             <Modal show={clientModalBeneficiaryState} setShow={setClientModalBeneficiaryState}>
-                <ClientList changedAttribute="BENEFICIARY" changeHandler={anketaFormChanger}/>
+                <ClientList changedAttribute="BENEFICIARY" changeHandler={anketaFormChanger} />
             </Modal>
             <Modal show={clientModalInsurerState} setShow={setClientModalInsurerState}>
                 <ClientList changedAttribute="INSURER" changeHandler={anketaFormChanger} />
@@ -62,13 +64,13 @@ const Anketa = () => {
             </Modal>
             <div className="anketaCnt">
                 <div className="row">
-                    {JSON.stringify(anketaForm)} 
+                    {JSON.stringify(anketaForm)}
                     <div className="label">
                         <span>Дата заключения:</span>
                     </div>
                     <div className="input">
                         <input type="date" max={getMaxDate()} name="INS_DATE" onChange={anketaFormChanger} />
-                        {validator.message('INS_DATE', anketaForm.INS_DATE, 'required|alpha')}
+                        {validator.message('INS_DATE', anketaForm.INS_DATE, 'required')}
                     </div>
                     <Period changeHandler={anketaFormChanger} />
                     <div className="label">
@@ -81,7 +83,7 @@ const Anketa = () => {
                         <span>Бенефициар:</span>
                     </div>
                     <div className="input">
-                        <button onClick={() => setClientModalBeneficiaryState(true)}>Выберите...</button>
+                        <button onClick={() => setClientModalInsurerState(true)}>Выберите...</button>
                     </div>
                     <div className="label">
                         <span>Валютные условия:</span>
