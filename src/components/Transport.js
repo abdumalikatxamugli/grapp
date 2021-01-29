@@ -38,7 +38,7 @@ const Transport = () => {
                     </div>
                     <div className="input-group">
                         <div className="form-inline">
-                            <label className="required">Марка </label>
+                            <label className="required">Марка</label>
                             <select>
                                 <option value="0">Выберите</option>
                                 <option value="1">1</option>

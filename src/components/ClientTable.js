@@ -1,6 +1,14 @@
 import React from 'react';
 import leftArrow from '../assets/icons/arrow-left.svg';
+import { useDispatch } from 'react-redux';
+import { anketaCreate } from '../redux/actions';
+
 const ClientTable = (props) => {
+	const dispatch=useDispatch();
+	const selectClient=(name)=>{
+	  dispatch(anketaCreate({[props.field]:name}));
+    props.setShow(false);
+	}
 	return (
 		<>
 			{props.juridic &&
@@ -18,7 +26,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={() => props.changeHandler({ target: { name: props.changedAttribute, value: 1 } })}>
+								<button onClick={()=>selectClient('Ahost')}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>
@@ -44,7 +52,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={() => props.changeHandler({ target: { name: props.changedAttribute, value: 1 } })}>
+								<button onClick={()=>selectClient('Abdumalik')}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>

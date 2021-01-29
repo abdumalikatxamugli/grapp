@@ -11,6 +11,7 @@ import Modal from './Modal';
 import Countries from './Countries';
 import Period from './Period';
 import TransportList from './TransportList';
+import ClientTable from './ClientTable.js';
 
 export {
 			TopControls, 
@@ -25,5 +26,6 @@ export {
 			Countries,
 			Period,
 			ClientList,
-			TransportList
+			TransportList,
+			ClientTable
 	   }
