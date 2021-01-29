@@ -12,10 +12,10 @@ const Form = () => {
     const [active, setActive] = useState(1);
     const [navButtons, setNavButtons] = useState([
         { id: 1, label: 'Общие сведения', isAccessible: true },
-        { id: 2, label: 'Объект', isAccessible: false },
-        { id: 3, label: 'Договор страхования', isAccessible: false },
-        { id: 4, label: 'Оплата', isAccessible: false },
-        { id: 5, label: 'Полис', isAccessible: false }
+        { id: 2, label: 'Объект', isAccessible: true },
+        { id: 3, label: 'Договор страхования', isAccessible: true },
+        { id: 4, label: 'Оплата', isAccessible: true },
+        { id: 5, label: 'Полис', isAccessible: true }
     ])
     const makeAccessible = (index) => {
         const tomodified = [...navButtons]
