@@ -4,6 +4,8 @@ import {Sidemenu} from './components';
 import { Contract21 } from "./screens";
 import './assets/style.css';
 import './assets/dogovor.css';
+import { Provider } from 'react-redux'
+import store from './redux/store';
 
 
 function App() {
@@ -15,11 +17,11 @@ function App() {
   }
 
   return (
-	<>
+	  <Provider store={store}>
   		<Sidemenu setMenu={changeMenu}/>
       {menu===0&&<Main/>}
   		{menu===21&&<Contract21/>}
-    </>
+    </Provider>
  );
 }
 

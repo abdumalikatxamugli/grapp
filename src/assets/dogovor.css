@@ -1,6 +1,9 @@
 * {
     font-family: sans-serif;
 }
+* b{
+    font-size: 14px;
+}
 
 /* Stepwizard styles*/
 .form-main {
@@ -326,3 +329,55 @@
 .premiya-table input{
     width:125px;
 }
+.big-btn{
+    padding: 15px 10px;
+}
+
+/* Polis Form Styles */
+.polis-main{
+
+}
+.polis-main .polis-info{
+
+}
+.polis-main .polis-info label{
+    margin-right: 15px;
+}
+.polis-main .polis-info .col-6 label{
+    width: calc(50% - 7.5px);
+    display: inline-block;
+}
+.polis-main .polis-info .col-6 span{
+    width: calc(50% - 7.5px);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.polis-main table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+.polis-main table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #fff;
+    color: #000;
+}
+
+.polis-main table td,
+.polis-main table th {
+    border: 1px solid #fff;
+    padding: 8px;
+}
+
+.polis-main table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.polis-main table tr:hover {
+    background-color: #ddd;
+}
+/*** Polis Form Styles */

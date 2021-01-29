@@ -1,4 +1,5 @@
 import React from 'react';
+import PAYMENTTYPES from '../constants/paymentTypes';
 
 const PaymentForm = (props) => {
   return (
@@ -15,13 +16,14 @@ const PaymentForm = (props) => {
     		<div className="col-md-2 mb-10">
 	    		<div className="mb-10">Вид оплаты:</div>
 	    		<select>
-	    			<option value="">Счет агента</option>
+                {PAYMENTTYPES.map(item=>
+	    			<option key={item.id} value={item.id}>{item.name}</option>
+                )}
 	    		</select>	
     		</div>
-
-    		<div className="col-md-3 mb-10">
+            <div className="col-md-3 mb-10">
 	    		<div className="mb-10">№ плат.документа / Примечание:</div>
-	    		<input type="date"/>
+	    		<input/>
     		</div>
     		<div className="col-md-2 mb-10 v-bottom">
     			<button>Оплата</button>

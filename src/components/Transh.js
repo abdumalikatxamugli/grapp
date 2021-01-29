@@ -1,6 +1,82 @@
-import React from 'react';
+import React, {useState} from 'react';
+import addDates from '../helpers/addDates';
 
 const Transh = (props) => {
+  const totalAmount=150000;
+  const initialDate='2021-01-28';
+
+  const [transhes, setTranshes]=useState([{
+        date:'2021-01-28',
+        amount:130000,
+        selected:false
+  },
+  {
+        date:'2021-01-28',
+        amount:130000,
+        selected:false
+  }]);
+
+  const [interval, setInterval]=useState(30);
+  const [count, setCount]=useState(transhes.length);
+  const [allSelected, setAllSelected]=useState(false);
+
+  const reseparateCount=(e)=>{
+    let newCount=e.target.value;
+    setCount(newCount);
+    let tempArray=[];
+    for(let i=0;i<newCount;i++){
+        tempArray.push({
+            date:addDates(initialDate, i*interval),
+            amount:totalAmount/newCount,
+            selected:false
+        });
+    }
+    setTranshes(tempArray);
+  }
+  const reseparateInterval=(e)=>{
+    let newInterval=e.target.value;
+    let tempArray=[];
+    for(let i=0;i<count;i++){
+        tempArray.push({
+            date:addDates(initialDate, i*newInterval),
+            amount:totalAmount/count,
+            selected:false
+        });
+    }
+    setTranshes(tempArray);
+  }
+  const resetDate=(value, index)=>{
+    const newTranshState=[...transhes];
+    newTranshState[index]['date']=value;
+    setTranshes(newTranshState);
+  }
+  const resetAmount=(value, index)=>{
+    const newTranshState=[...transhes];
+    newTranshState[index]['amount']=Number(value);
+    setTranshes(newTranshState);
+  }
+  const resetSelected=(index)=>{
+    const newTranshState=[...transhes];
+    newTranshState[index]['selected']=!transhes[index]['selected'];
+    setAllSelected(false);
+    setTranshes(newTranshState);
+  }
+  const addTransh=()=>{
+    let tempTransh=[...transhes];
+    tempTransh.push({...tempTransh[tempTransh.length-1]}  );
+    setTranshes(tempTransh);
+  }
+  const checkAll=()=>{
+    let newTranshState=[...transhes];
+    setAllSelected(!allSelected);
+
+    setTranshes(
+      newTranshState.map((item)=>{
+        item['selected']=!allSelected;
+        return item;
+      })
+    )
+  }
   return (
     <div className="transh">
     	<div className="sparse">
@@ -19,21 +95,29 @@ const Transh = (props) => {
 	    		</div>
 	    	</div>
 	    	<span>Период оплат (в днях):</span>	
-	    	<input type="number"/>
+	    	<input type="number" 
+                   value={interval} 
+                   onChange={e=>setInterval(e.target.value)} 
+                   onKeyUp={reseparateInterval}
+            />
 	    	<span>Количество траншов:</span>	
-	    	<select name="" id="">
+	    	<select name="" id="" value={count} onChange={reseparateCount}>
 	    		<option value="2">2</option>
 	    		<option value="3">3</option>
 	    		<option value="4">4</option>
 	    		<option value="5">5</option>
 	    	</select>
-	    	<button>Распределить</button>
+	    	{/*<button>Распределить</button>*/}
     	</div>
     	<table className="transh-table" border="1">
     		<thead>
     			<tr>
     				<td>
-    					<input type="checkbox"/>
+    					<input type="checkbox" 
+                     onChange={checkAll} 
+                     value={allSelected}
+                     checked={allSelected}
+              />
     				</td>
     				<td>
     					ДАТА
@@ -44,17 +128,29 @@ const Transh = (props) => {
     			</tr>
     		</thead>
     		<tbody>
-    			<tr>
-    				<td>
-    					<input type="checkbox"/>
-    				</td>
-    				<td>
-    					<input type="date"/>
-    				</td>
-    				<td>
-    					<input type="number"/>
-    				</td>
-    			</tr>
+              {transhes.map((item, index)=>
+        			<tr key={index}>
+        				<td>
+        					<input type="checkbox" 
+                         value={item.selected} 
+                         checked={item.selected}
+                         onChange={()=>resetSelected(index)}
+                  />
+        				</td>
+        				<td>
+        					<input type="date" 
+                    value={item.date} 
+                    onChange={e=>resetDate(e.target.value,index)}
+                  />
+        				</td>
+        				<td>
+        					<input type="number" 
+                    value={item.amount}
+                    onChange={e=>resetAmount(e.target.value,index)}
+                  />
+        				</td>
+        			</tr>
+                )}
     		</tbody>
     		<tfoot>
     			<tr>
@@ -70,8 +166,8 @@ const Transh = (props) => {
     			</tr>
     		</tfoot>
     	</table>
-    	<div class="h-right">
-    		<button>
+    	<div className="h-right">
+    		<button onClick={addTransh}>
     			Добавить
     		</button>
     	</div>
