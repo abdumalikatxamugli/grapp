@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import SimpleReactValidator from "simple-react-validator";
+import { transportCreate } from "../redux/actions";
+import { contractAdd } from "../redux/actions/contract";
 import UnvisibleFormElements from "./UnvisibleFormElements";
-const Transport = () => {
+const Transport = (props) => {
+    const dispatch=useDispatch()
     const [transportForm, setTransportForm] = useState({
         "TB_ID": "",
         "TB_REGNUMBER": "",
@@ -10,6 +15,7 @@ const Transport = () => {
         "TB_DVIGATEL": "",
         "TB_MARKA": "",
         "TB_MODEL": "",
+        "TB_VMODEL": "",
         "TB_TYPE": "",
         "TB_MOSCH": "",
         "TB_STOIMOST": "",
@@ -72,9 +78,31 @@ const Transport = () => {
     const transportChanger = (e) => {
         setTransportForm({ ...transportForm, [e.target.name]: e.target.value })
     }
+    const validator = useRef(new SimpleReactValidator())
+    const [, forceUpdate] = useState();
+    const saveNew = (e) => {
+        e.preventDefault()
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Save to Database and to parent data
+        if (validator.current.allValid()) {
+            props.addTransport(transportForm)
+            dispatch(transportCreate(transportForm))
+            dispatch(contractAdd({
+                name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
+                insuranceAmount: 0,
+                premiyaPercent: 0,
+                premiyaAmount: 0,
+                franchise: false,
+                franchiseCond: false,
+                franchisePercent: 0,
+                franchiseAmount: 0
+            }))
+        } else {
+            validator.current.showMessages();
+            forceUpdate(1)
+        }
+    }
     return (
         <>
-
             <div className="transport-form hyper-form mt-20">
                 <form>
                     <div className="ml--10">
@@ -82,28 +110,34 @@ const Transport = () => {
                             <div className="form-inline">
                                 <label className="required">Владелец/Залогодатель/Лизингополучатель</label>
                                 <input type="text" name="TB_ID" onChange={transportChanger} />
+                                {validator.current.message('TB_ID', transportForm.TB_ID, 'required')}
                             </div>
                         </div>
                         <div className="input-group">
                             <div className="form-inline">
                                 <label className="required">Гос.номер</label>
                                 <input type="text" name="TB_REGNUMBER" onChange={transportChanger} />
+                                {validator.current.message('TB_REGNUMBER', transportForm.TB_REGNUMBER, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label className="required">Год выпуска</label>
                                 <input type="text" name="TB_YEAR" onChange={transportChanger} />
+                                {validator.current.message('TB_YEAR', transportForm.TB_YEAR, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>№ кузова</label>
                                 <input type="text" name="TB_KUZOV" onChange={transportChanger} />
+                                {validator.current.message('TB_KUZOV', transportForm.TB_KUZOV, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>Номер шасси</label>
                                 <input type="text" name="TB_SHASSI" onChange={transportChanger} />
+                                {validator.current.message('TB_SHASSI', transportForm.TB_SHASSI, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>№ двигателя</label>
                                 <input type="text" name="TB_DVIGATEL" onChange={transportChanger} />
+                                {validator.current.message('TB_DVIGATEL', transportForm.TB_DVIGATEL, 'required')}
                             </div>
                         </div>
                         <div className="input-group">
@@ -113,6 +147,7 @@ const Transport = () => {
                                     <option value="0">Выберите</option>
                                     <option value="1">1</option>
                                 </select>
+                                {validator.current.message('TB_MARKA', transportForm.TB_MARKA, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>Модель </label>
@@ -120,7 +155,9 @@ const Transport = () => {
                                     <option value="0">Выберите</option>
                                     <option value="1">1</option>
                                 </select>
-                                <input type="text" />
+                                <input type="text" name="TB_VMODEL" onChange={transportChanger} />
+                                {validator.current.message('TB_MODEL', transportForm.TB_MODEL, 'required')}
+                                {validator.current.message('TB_VMODEL', transportForm.TB_VMODEL, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label className="required">Вид транспорта</label>
@@ -128,35 +165,43 @@ const Transport = () => {
                                     <option value="0">Выберите</option>
                                     <option value="1">1</option>
                                 </select>
+                                {validator.current.message('TB_TYPE', transportForm.TB_TYPE, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>Объем </label>
                                 <input type="text" name="TB_MOSCH" onChange={transportChanger} /><span>см³</span>
+                                {validator.current.message('TB_MOSCH', transportForm.TB_MOSCH, 'required')}
                             </div>
                         </div>
                         <div className="input-group">
                             <div className="form-inline">
                                 <label>Стоимость ТС</label>
                                 <input type="text" name="TB_STOIMOST" onChange={transportChanger} /><span>сум</span>
+                                {validator.current.message('TB_STOIMOST', transportForm.TB_STOIMOST, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>Цвет кузова</label>
                                 <input type="text" name="TB_COLOR" onChange={transportChanger} />
+                                {validator.current.message('TB_COLOR', transportForm.TB_COLOR, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>№ тех. паспорта</label>
                                 <input type="text" name="TB_TEXPSERY" onChange={transportChanger} />
                                 <input type="text" name="TEXPNUMBER" onChange={transportChanger} />
+                                {validator.current.message('TB_TEXPSERY', transportForm.TB_TEXPSERY, 'required')}
+                                {validator.current.message('TEXPNUMBER', transportForm.TEXPNUMBER, 'required')}
                             </div>
                             <div className="form-inline">
                                 <label>Дата выдачи</label>
                                 <input type="date" name="TB_TEXPDATE" onChange={transportChanger} />
+                                {validator.current.message('TB_TEXPDATE', transportForm.TB_TEXPDATE, 'required')}
                             </div>
                         </div>
                         <div className="input-group">
                             <div className="form-block">
                                 <label>Примечание</label>
                                 <textarea name="TB_COMMENT" onChange={transportChanger}></textarea>
+                                {validator.current.message('TB_COMMENT', transportForm.TB_COMMENT, 'required')}
                             </div>
                         </div>
                     </div>
@@ -391,7 +436,7 @@ const Transport = () => {
                         </UnvisibleFormElements>
                     </div>
                     <div>
-                        <button className="bg-skyblue btn-bg mv-20">Save</button>
+                        <button className="bg-skyblue btn-bg mv-20" onClick={saveNew}>Save</button>
                     </div>
                 </form>
             </div>

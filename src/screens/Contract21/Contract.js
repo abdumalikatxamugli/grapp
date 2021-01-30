@@ -1,42 +1,58 @@
-import React,{useState} from "react";
-const Dogovor = () => {
-    const [premiyas, setPremiyas]=useState([
-            {
-                name:"BENTLEY TURBO R(2020|204735)",
-                insuranceAmount:0,
-                premiyaPercent:0,
-                premiyaAmount:0,
-                franchise:false,
-                franchiseCond:false,
-                franchisePercent:0,
-                franchiseAmount:0
-            }
-        ]);
-    const changePremiya=(e,index, prop)=>{
-        console.log(prop);
-        let tempObj=[...premiyas];
-        let target=parseFloat(e.target.value);
+import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { datediff } from "../../helpers/getDaysBetweenTwoDates";
+import { contractCreate } from "../../redux/actions";
+const Dogovor = forwardRef((props, ref) => {
+    const dispatch=useDispatch()
+    const globalContracts = useSelector(state => state.contractReducer);
+    const globalAnketa = useSelector(state => state.anketaReducer);
+    const [premiyas, setPremiyas] = useState([
+        {
+            name: "BENTLEY TURBO R(2020|204735)",
+            insuranceAmount: 0,
+            premiyaPercent: 0,
+            premiyaAmount: 0,
+            franchise: false,
+            franchiseCond: false,
+            franchisePercent: 0,
+            franchiseAmount: 0
+        }
+    ]);
+    useImperativeHandle(ref, () => ({
+        showValidationMessages() {
+        },
+        submitNew() {
         
-        switch(prop){
+        }
+    }));
+    useEffect(() => {
+        setPremiyas([...globalContracts])
+    }, [globalContracts])
+    const changePremiya = (e, index, prop) => {
+        console.log(prop);
+        let tempObj = [...premiyas];
+        let target = parseFloat(e.target.value);
+
+        switch (prop) {
             case 'insuranceAmount':
-                tempObj[index]['insuranceAmount']=target;
-                tempObj[index]['premiyaAmount']=tempObj[index]['premiyaPercent']*target/100;
-                tempObj[index]['franchiseAmount']=tempObj[index]['franchisePercent']*target/100;
+                tempObj[index]['insuranceAmount'] = target;
+                tempObj[index]['premiyaAmount'] = tempObj[index]['premiyaPercent'] * target / 100;
+                tempObj[index]['franchiseAmount'] = tempObj[index]['franchisePercent'] * target / 100;
                 setPremiyas(tempObj)
                 break;
             case 'premiyaPercent':
-                tempObj[index]['premiyaPercent']=target;
-                tempObj[index]['premiyaAmount']=tempObj[index]['insuranceAmount']*target/100;
+                tempObj[index]['premiyaPercent'] = target;
+                tempObj[index]['premiyaAmount'] = tempObj[index]['insuranceAmount'] * target / 100;
                 setPremiyas(tempObj);
                 break;
             case 'franchisePercent':
-                tempObj[index]['franchisePercent']=target;
-                tempObj[index]['franchiseAmount']=target*tempObj[index]['insuranceAmount'];
+                tempObj[index]['franchisePercent'] = target;
+                tempObj[index]['franchiseAmount'] = target * tempObj[index]['insuranceAmount'];
                 setPremiyas(tempObj);
                 break;
             default:
-                break;       
-        }  
+                break;
+        }
     }
     return (
         <div className="contract-form">
@@ -44,23 +60,23 @@ const Dogovor = () => {
                 <h4><b>Номер договора</b></h4>
                 <span>1021/2121</span>
                 <h4>Дата подписания</h4>
-                <span>10.12.2020г</span>
+                <span>{globalAnketa.INS_DATE ?? ''}</span>
                 <h4>Период страхования</h4>
                 <div className="sparse">
-                    <span>с</span> 
-                    <span> 10.12.2020</span>
+                    <span>с</span>
+                    <span> {globalAnketa.INS_DATEF ?? ''}</span>
                     <span>по</span>
-                    <span>09.12.2020г</span>
+                    <span>{globalAnketa.INS_DATET}г</span>
                 </div>
                 <h4>Срок действия:</h4>
-                <span>1095 </span>дня(ей)
+                <span>{globalAnketa.INS_DATEF ? datediff(globalAnketa.INS_DATEF, globalAnketa.INS_DATET) : ""} </span>дня(ей)
             </div>
             <div className="form-main">
                 <div className="form-header">
                     <h4>Страховые покрытия</h4>
                     <div className="sparse">
                         {/*<button>Отмена</button>*/}
-                        <button className="bg-skyblue">Сохранить</button>
+                        <button className="bg-skyblue" onClick={()=>dispatch(contractCreate([...premiyas]))}>Сохранить</button>
                     </div>
                 </div>
                 <div>
@@ -79,53 +95,53 @@ const Dogovor = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        {premiyas.map((item, index)=>
-                        <>
-                        <tr key={"name"+index}>
-                            <td colSpan="9"><h5>{item.name}</h5></td>
-                        </tr>
-                        <tr key={"info"+index}>
-                            <td>Страхование транспортных средств, выставляемых в залог</td>
-                            <td>
-                                <input type="text" 
-                                       value={item.insuranceAmount}
-                                       onChange={e=>changePremiya(e, index, 'insuranceAmount')}
-                                />
-                            </td>
-                            <td>
-                                <input type="text" 
-                                       value={item.premiyaPercent}
-                                       onChange={e=>changePremiya(e, index, 'premiyaPercent')}
-                                />
-                            </td>
-                            <td>
-                                <input type="text"  value={item.premiyaAmount} readOnly/>
-                            </td>
-                            <td>
-                                <input value="1" disabled/>
-                            </td>
-                            <td>
-                                <input  type="checkbox"
-                                        value={item.franchise}
+                            {premiyas.map((item, index) =>
+                                <Fragment key={`premiya${index}`}>
+                                    <tr key={"name" + index}>
+                                        <td colSpan="9"><h5>{item.name}</h5></td>
+                                    </tr>
+                                    <tr key={"info" + index}>
+                                        <td>Страхование транспортных средств, выставляемых в залог</td>
+                                        <td>
+                                            <input type="text"
+                                                value={item.insuranceAmount}
+                                                onChange={e => changePremiya(e, index, 'insuranceAmount')}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input type="text"
+                                                value={item.premiyaPercent}
+                                                onChange={e => changePremiya(e, index, 'premiyaPercent')}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input type="text" value={item.premiyaAmount} readOnly />
+                                        </td>
+                                        <td>
+                                            <input value="1" disabled />
+                                        </td>
+                                        <td>
+                                            <input type="checkbox"
+                                                value={item.franchise}
 
-                                />
-                            </td>
-                            <td>
-                                <input type="checkbox" 
-                                       value={item.franchiseCond}/>
-                            </td>
-                            <td>
-                                <input type="text" 
-                                       value={item.franchisePercent}
-                                       onChange={e=>changePremiya(e, index, 'franchisePercent')}
-                                />
-                            </td>
-                            <td>
-                                <input   type="text" value={item.franchiseAmount} readOnly/>
-                            </td>
-                        </tr>
-                        </>
-                        )}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input type="checkbox"
+                                                value={item.franchiseCond} />
+                                        </td>
+                                        <td>
+                                            <input type="text"
+                                                value={item.franchisePercent}
+                                                onChange={e => changePremiya(e, index, 'franchisePercent')}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input type="text" value={item.franchiseAmount} readOnly />
+                                        </td>
+                                    </tr>
+                                </Fragment>
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -135,5 +151,5 @@ const Dogovor = () => {
         </div>
 
     )
-}
+})
 export default Dogovor;
