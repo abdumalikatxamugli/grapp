@@ -15,12 +15,8 @@ const TransportTable = forwardRef((props, ref) => {
   }, [globalTransports])
   useImperativeHandle(ref, () => ({
     showValidationMessages() {
-      if (!validator.current.allValid()) {
-        validator.current.showMessages();
-        forceUpdate(1)
-      }
+      props.givePermissionToStpep(3)
     }
-
   }));
   const addTransport = (given) => {
     setCreateState(!createState)

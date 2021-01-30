@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { anketaCreate } from "../../redux/actions";
 import isEmpty from '../../helpers/objectHelpers';
 const Anketa = forwardRef((props, ref) => {
-    const dispatch = useDispatch()
     const globalAnketa = useSelector(state => state.anketaReducer);
+    const dispatch = useDispatch()
     const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
@@ -38,10 +38,10 @@ const Anketa = forwardRef((props, ref) => {
             if (!validator.current.allValid()) {
                 validator.current.showMessages();
                 forceUpdate(1)
-            } 
+            }
         },
-        submitNew(){
-            dispatch(anketaCreate(anketaForm))            
+        submitNew() {
+            dispatch(anketaCreate(anketaForm))
         }
     }));
     const anketaFormChanger = (e) => {
@@ -102,10 +102,10 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Дата заключения:</span>
                     </div>
                     <div className="input">
-                        <input type="date" max={getMaxDate()} name="INS_DATE" onChange={anketaFormChanger} />
+                        <input type="date" max={getMaxDate()} name="INS_DATE" value={anketaForm.INS_DATE} onChange={anketaFormChanger} />
                         {validator.current.message('INS_DATE', anketaForm.INS_DATE, 'required')}
                     </div>
-                    <Period changeHandler={anketaFormChanger} />
+                    <Period begin={anketaForm.INS_DATEF} end={anketaForm.INS_DATET} changeHandler={anketaFormChanger} />
                     <div className="label">
                         <span>Страхователь:</span>
                     </div>
@@ -128,7 +128,7 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Валютные условия:</span>
                     </div>
                     <div className="input">
-                        <select name="VAL_USLOVIYA" onChange={anketaFormChanger}>
+                        <select name="VAL_USLOVIYA" value={anketaForm.VAL_USLOVIYA} onChange={anketaFormChanger}>
                             <option value="">Выберите</option>
                             {
                                 CURRENCYCONDITIONS.map((item, index) => {
@@ -149,7 +149,7 @@ const Anketa = forwardRef((props, ref) => {
                             </div>
 
                             <div className="input">
-                                <select name="VAL_TYPE" onChange={anketaFormChanger}>
+                                <select name="VAL_TYPE" value={anketaForm.VAL_TYPE} onChange={anketaFormChanger}>
                                     <option value="">Выберите</option>
                                     {
                                         CURRENCIES.map((item, index) => {
@@ -167,7 +167,7 @@ const Anketa = forwardRef((props, ref) => {
                                 <span>Курс ЦБ:</span>
                             </div>
                             <div className="input">
-                                <input type="number" name="VAL_KURS" onChange={anketaFormChanger} />
+                                <input type="number" name="VAL_KURS" value={anketaForm.VAL_KURS} onChange={anketaFormChanger} />
                                 {validator.current.message('VAL_KURS', anketaForm.VAL_KURS, 'required')}
                             </div>
                         </>
@@ -183,9 +183,9 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Источник оплаты:</span>
                     </div>
                     <div className="input">
-                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="0" />
+                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="0" checked={anketaForm.ISTOCHNIK_O === '0' ? true : false} />
                         <label htmlFor="sobst">Собственные средства</label>
-                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="1" />
+                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="1" checked={anketaForm.ISTOCHNIK_O === '1' ? true : false} />
                         <label htmlFor="budget">Бюджетные средства</label>
                         {validator.current.message('ISTOCHNIK_O', anketaForm.ISTOCHNIK_O, 'required')}
                     </div>
