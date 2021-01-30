@@ -30,7 +30,7 @@ function Create(props) {
         TB_BASIS:'',
         TB_ISBANK:false
     });
-     const [fizObject, setFizObject]=useState({
+    const [fizObject, setFizObject]=useState({
         SYSTEM_ID:undefined,
         TB_PINFL:'',
         TB_PASPSERY:'',
