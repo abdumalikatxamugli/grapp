@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { TopControls } from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
@@ -9,13 +9,14 @@ import Polis from "./Polis";
 import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 
 const Form = () => {
+    const childRef = useRef();
     const [active, setActive] = useState(1);
     const [navButtons, setNavButtons] = useState([
         { id: 1, label: 'Общие сведения', isAccessible: true },
-        { id: 2, label: 'Объект', isAccessible: false },
-        { id: 3, label: 'Договор страхования', isAccessible: false },
-        { id: 4, label: 'Оплата', isAccessible: false },
-        { id: 5, label: 'Полис', isAccessible: false }
+        { id: 2, label: 'Объект', isAccessible: true },
+        { id: 3, label: 'Договор страхования', isAccessible: true },
+        { id: 4, label: 'Оплата', isAccessible: true },
+        { id: 5, label: 'Полис', isAccessible: true }
     ])
     const makeAccessible = (index) => {
         const tomodified = [...navButtons]
@@ -28,6 +29,10 @@ const Form = () => {
         const idx = navButtons.findIndex(item => item.id === id)
         if (navButtons[idx].isAccessible) {
             setActive(id)
+        } else {
+            if (childRef.current !== null) {
+                childRef.current.showValidationMessages()
+            }
         }
     }
     const activeChanger = (e, type) => {
@@ -37,7 +42,14 @@ const Form = () => {
         switch (type) {
             case 'increment':
                 if (navButtons[idx + 1].isAccessible) {
+                    if (childRef.current != null && childRef.current.submitNew !== undefined) {
+                        childRef.current.submitNew()
+                    }
                     setActive(activeId + 1)
+                } else {
+                    if (childRef.current != null && childRef.current.showValidationMessages !== undefined) {
+                        childRef.current.showValidationMessages()
+                    }
                 }
                 break;
             case 'decrement':
@@ -72,9 +84,9 @@ const Form = () => {
                         {active !== 1 && <button onClick={e => activeChanger(e, 'decrement')}>Отмена</button>}
                         {active !== 5 && <button onClick={e => activeChanger(e, 'increment')}>Далее</button>}
                     </div>
-                    {active === 1 && <Anketa givePermissionToStpep={makeAccessible} />}
-                    {active === 2 && <TransportTable />}
-                    {active === 3 && <Contract />}
+                    {active === 1 && <Anketa ref={active == 1 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
+                    {active === 2 && <TransportTable ref={active == 2 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
+                    {active === 3 && <Contract ref={active == 3 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
                     {active === 4 && <Payment />}
                     {active === 5 && <Polis />}
                 </div>
