@@ -12,6 +12,7 @@ import Countries from './Countries';
 import Period from './Period';
 import TransportList from './TransportList';
 import ClientTable from './ClientTable.js';
+import MyTable from './Table.js';
 
 export {
 			TopControls, 
@@ -27,5 +28,6 @@ export {
 			Period,
 			ClientList,
 			TransportList,
-			ClientTable
+			ClientTable,
+			MyTable
 	   }

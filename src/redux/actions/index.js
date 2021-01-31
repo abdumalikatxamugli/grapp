@@ -1,5 +1,5 @@
 import { anketaCreate } from './anketa';
 import { transportCreate } from './transport';
-import { contractCreate } from './contract';
-
-export { anketaCreate, transportCreate, contractCreate };
+import { contractCreate, contractAdd } from './contract';
+import { oplataAdd, oplataCreate } from './oplata';
+export { anketaCreate, transportCreate, contractCreate, contractAdd, oplataAdd, oplataCreate };

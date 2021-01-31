@@ -16,6 +16,7 @@ const Anketa = forwardRef((props, ref) => {
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
     const [anketaForm, setAnketaForm] = useState({
+        INS_NUM:'',
         INS_DATE: getCurrentDate(),
         INS_DATEF: getCurrentDate(),
         INS_DATET: getCurrentDate(),
@@ -188,6 +189,13 @@ const Anketa = forwardRef((props, ref) => {
                         <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="1" checked={anketaForm.ISTOCHNIK_O === '1' ? true : false} />
                         <label htmlFor="budget">Бюджетные средства</label>
                         {validator.current.message('ISTOCHNIK_O', anketaForm.ISTOCHNIK_O, 'required')}
+                    </div>
+                    <div className="label">
+                        <span>Рег.номер:</span>
+                    </div>
+                    <div className="input">
+                        <input type="text" name="INS_NUM" value={anketaForm.INS_NUM} onChange={anketaFormChanger} />
+                        {validator.current.message('INS_NUM', anketaForm.INS_NUM, 'required')}
                     </div>
                 </div>
             </div>
