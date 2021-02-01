@@ -9,7 +9,6 @@ import Polis from "./Polis";
 import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 
 const Form = () => {
-    const childRef = useRef();
     const [active, setActive] = useState(1);
     const [navButtons, setNavButtons] = useState([
         { id: 1, label: 'Общие сведения', isAccessible: true },
@@ -29,11 +28,7 @@ const Form = () => {
         const idx = navButtons.findIndex(item => item.id === id)
         if (navButtons[idx].isAccessible) {
             setActive(id)
-        } else {
-            if (childRef.current !== null) {
-                childRef.current.showValidationMessages()
-            }
-        }
+        } 
     }
     const activeChanger = (e, type) => {
         e.preventDefault()
@@ -42,15 +37,8 @@ const Form = () => {
         switch (type) {
             case 'increment':
                 if (navButtons[idx + 1].isAccessible) {
-                    if (childRef.current != null && childRef.current.submitNew !== undefined) {
-                        childRef.current.submitNew()
-                    }
                     setActive(activeId + 1)
-                } else {
-                    if (childRef.current != null && childRef.current.showValidationMessages !== undefined) {
-                        childRef.current.showValidationMessages()
-                    }
-                }
+                } 
                 break;
             case 'decrement':
                 if (navButtons[idx - 1].isAccessible) {
@@ -61,7 +49,7 @@ const Form = () => {
                 break;
         }
     }
-    // global context state
+    
     return (
         <>
             <div className="topbar">
@@ -84,9 +72,9 @@ const Form = () => {
                         {active !== 1 && <button onClick={e => activeChanger(e, 'decrement')}>Отмена</button>}
                         {active !== 5 && <button onClick={e => activeChanger(e, 'increment')}>Далее</button>}
                     </div>
-                    {active === 1 && <Anketa ref={active == 1 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
-                    {active === 2 && <TransportTable ref={active == 2 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
-                    {active === 3 && <Contract ref={active == 3 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
+                    {active === 1 && <Anketa  givePermissionToStpep={makeAccessible} />}
+                    {active === 2 && <TransportTable  givePermissionToStpep={makeAccessible} />}
+                    {active === 3 && <Contract  givePermissionToStpep={makeAccessible} />}
                     {active === 4 && <Payment />}
                     {active === 5 && <Polis />}
                 </div>

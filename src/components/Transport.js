@@ -83,7 +83,7 @@ const Transport = (props) => {
     const saveNew = (e) => {
         e.preventDefault()
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Save to Database and to parent data
-        if (validator.current.allValid()) {
+        // if (validator.current.allValid()) {
             props.addTransport(transportForm)
             dispatch(transportCreate(transportForm))
             dispatch(contractAdd({
@@ -96,10 +96,10 @@ const Transport = (props) => {
                 franchisePercent: 0,
                 franchiseAmount: 0
             }))
-        } else {
-            validator.current.showMessages();
-            forceUpdate(1)
-        }
+        // } else {
+        //     validator.current.showMessages();
+        //     forceUpdate(1)
+        // }
     }
     return (
         <>

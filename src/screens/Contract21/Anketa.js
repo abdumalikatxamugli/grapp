@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ClientList, ClientTable, Client, Modal, Countries, Period } from '../../components/';
 import CURRENCYCONDITIONS from '../../constants/currencyConditions';
 import CURRENCIES from '../../constants/currencies';
@@ -9,12 +9,14 @@ import SimpleReactValidator from 'simple-react-validator';
 import { useDispatch, useSelector } from 'react-redux';
 import { anketaCreate } from "../../redux/actions";
 import isEmpty from '../../helpers/objectHelpers';
-const Anketa = forwardRef((props, ref) => {
+const Anketa = (props, ref) => {
     const globalAnketa = useSelector(state => state.anketaReducer);
     const dispatch = useDispatch()
+
     const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
+    
     const [anketaForm, setAnketaForm] = useState({
         INS_NUM:'',
         INS_DATE: getCurrentDate(),
@@ -27,36 +29,16 @@ const Anketa = forwardRef((props, ref) => {
         BENEFICIARY: undefined,
         INSURER: undefined
     });
+
     useEffect(() => {
         setAnketaForm({ ...anketaForm, ...globalAnketa })
     }, [globalAnketa])
 
 
     const validator = useRef(new SimpleReactValidator())
-    const [, forceUpdate] = useState();
-    useImperativeHandle(ref, () => ({
-        showValidationMessages() {
-            if (!validator.current.allValid()) {
-                validator.current.showMessages();
-                forceUpdate(1)
-            }
-        },
-        submitNew() {
-            dispatch(anketaCreate(anketaForm))
-        }
-    }));
-    const anketaFormChanger = (e) => {
-        // if (e.target.name === "BENEFICIARY") {
-        //     setClientModalBeneficiaryState(false)
-        // }
-        // if (e.target.name === "INSURER") {
-        //     setClientModalInsurerState(false)
-        // }
-        setAnketaForm({
-            ...anketaForm,
-            [e.target.name]: e.target.value
-        });
-    }
+   
+  
+
     useEffect(() => {
         if (anketaForm.INS_COUNTRY) {
             setCountryModalState(false)
@@ -68,6 +50,16 @@ const Anketa = forwardRef((props, ref) => {
         }
     }, [anketaForm])
 
+    const changeAnketa = (e) => {
+        setAnketaForm({
+            ...anketaForm,
+            [e.target.name]: e.target.value
+        });
+    }
+    const save=()=>{
+         dispatch(anketaCreate(anketaForm));
+         alert("Anketa Saved");
+    }
     return (
         <>
             <Modal show={clientModalBeneficiaryState} setShow={setClientModalBeneficiaryState}>
@@ -95,7 +87,7 @@ const Anketa = forwardRef((props, ref) => {
                 </ClientList>
             </Modal>
             <Modal show={countryModalState} setShow={setCountryModalState}>
-                <Countries changedAttribute={"INS_COUNTRY"} changeHandler={anketaFormChanger} />
+                <Countries changedAttribute={"INS_COUNTRY"} changeHandler={changeAnketa} />
             </Modal>
             <div className="anketaCnt">
                 <div className="row">
@@ -103,10 +95,10 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Дата заключения:</span>
                     </div>
                     <div className="input">
-                        <input type="date" max={getMaxDate()} name="INS_DATE" value={anketaForm.INS_DATE} onChange={anketaFormChanger} />
+                        <input type="date" max={getMaxDate()} name="INS_DATE" value={anketaForm.INS_DATE} onChange={changeAnketa} />
                         {validator.current.message('INS_DATE', anketaForm.INS_DATE, 'required')}
                     </div>
-                    <Period begin={anketaForm.INS_DATEF} end={anketaForm.INS_DATET} changeHandler={anketaFormChanger} />
+                    <Period begin={anketaForm.INS_DATEF} end={anketaForm.INS_DATET} changeHandler={changeAnketa} />
                     <div className="label">
                         <span>Страхователь:</span>
                     </div>
@@ -129,7 +121,7 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Валютные условия:</span>
                     </div>
                     <div className="input">
-                        <select name="VAL_USLOVIYA" value={anketaForm.VAL_USLOVIYA} onChange={anketaFormChanger}>
+                        <select name="VAL_USLOVIYA" value={anketaForm.VAL_USLOVIYA} onChange={changeAnketa}>
                             <option value="">Выберите</option>
                             {
                                 CURRENCYCONDITIONS.map((item, index) => {
@@ -150,7 +142,7 @@ const Anketa = forwardRef((props, ref) => {
                             </div>
 
                             <div className="input">
-                                <select name="VAL_TYPE" value={anketaForm.VAL_TYPE} onChange={anketaFormChanger}>
+                                <select name="VAL_TYPE" value={anketaForm.VAL_TYPE} onChange={changeAnketa}>
                                     <option value="">Выберите</option>
                                     {
                                         CURRENCIES.map((item, index) => {
@@ -168,7 +160,7 @@ const Anketa = forwardRef((props, ref) => {
                                 <span>Курс ЦБ:</span>
                             </div>
                             <div className="input">
-                                <input type="number" name="VAL_KURS" value={anketaForm.VAL_KURS} onChange={anketaFormChanger} />
+                                <input type="number" name="VAL_KURS" value={anketaForm.VAL_KURS} onChange={changeAnketa} />
                                 {validator.current.message('VAL_KURS', anketaForm.VAL_KURS, 'required')}
                             </div>
                         </>
@@ -184,9 +176,9 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Источник оплаты:</span>
                     </div>
                     <div className="input">
-                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="0" checked={anketaForm.ISTOCHNIK_O === '0' ? true : false} />
+                        <input type="radio" name="ISTOCHNIK_O" onChange={changeAnketa} value="0" checked={anketaForm.ISTOCHNIK_O === '0' ? true : false} />
                         <label htmlFor="sobst">Собственные средства</label>
-                        <input type="radio" name="ISTOCHNIK_O" onChange={anketaFormChanger} value="1" checked={anketaForm.ISTOCHNIK_O === '1' ? true : false} />
+                        <input type="radio" name="ISTOCHNIK_O" onChange={changeAnketa} value="1" checked={anketaForm.ISTOCHNIK_O === '1' ? true : false} />
                         <label htmlFor="budget">Бюджетные средства</label>
                         {validator.current.message('ISTOCHNIK_O', anketaForm.ISTOCHNIK_O, 'required')}
                     </div>
@@ -194,14 +186,17 @@ const Anketa = forwardRef((props, ref) => {
                         <span>Рег.номер:</span>
                     </div>
                     <div className="input">
-                        <input type="text" name="INS_NUM" value={anketaForm.INS_NUM} onChange={anketaFormChanger} />
+                        <input type="text" name="INS_NUM" value={anketaForm.INS_NUM} onChange={changeAnketa} />
                         {validator.current.message('INS_NUM', anketaForm.INS_NUM, 'required')}
+                    </div>
+                    <div>
+                        <button onClick={save}>Save</button>
                     </div>
                 </div>
             </div>
         </>
     )
-})
+}
 
 
 export default Anketa;

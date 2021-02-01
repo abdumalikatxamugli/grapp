@@ -1,4 +1,4 @@
-import {OPLATA_ADD, OPLATA_CREATE} from '../constants';
+import {OPLATA_ADD, OPLATA_CREATE, OPLATA_DEL} from '../constants';
 const oplataCreate =(payload)=>{
 	return {
   		type: OPLATA_CREATE,
@@ -11,4 +11,10 @@ const oplataAdd =(payload)=>{
   		payload: payload
 	}
 }
-export {oplataAdd,oplataCreate}
+const deletePayment =(payload)=>{
+	return {
+  		type: OPLATA_DEL,
+  		payload: payload
+	}
+}
+export {oplataAdd,oplataCreate, deletePayment}
