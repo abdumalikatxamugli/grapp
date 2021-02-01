@@ -50,9 +50,9 @@ const Period = (props) => {
 			<span>Период:</span>
 		</div>
 		<div className="input date">
-			<input type="date" value={INS_DATEF} onChange={(e)=>syncDays('INS_DATEF',e.target.value)}/>
+			<input type="date" value={props.begin} onChange={(e)=>syncDays('INS_DATEF',e.target.value)}/>
 			<input type="number" value={day} onChange={(e)=>syncDays('day',e.target.value)}/>
-			<input type="date" value={INS_DATET} onChange={(e)=>syncDays('INS_DATET',e.target.value)}/>			
+			<input type="date" value={props.end} onChange={(e)=>syncDays('INS_DATET',e.target.value)}/>			
 		</div>
 		<div className="label">
 			<span>Срок:</span>

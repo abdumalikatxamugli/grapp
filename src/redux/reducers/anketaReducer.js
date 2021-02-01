@@ -4,7 +4,7 @@ const anketaReducer=(anketa=initialState, action)=>{
 	switch(action.type){
 		case ANKETA_CREATE:
 			return {
-				...action.payload	
+				...anketa, ...action.payload	
 			};
 			break;
 		default:

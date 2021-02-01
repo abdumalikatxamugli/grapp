@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
-import Client from './Client';
-import ClientTable from './ClientTable';
 
+/**
+	expects 2 children
+	1. ClientTable
+	2. CLient Create Form
+*/
 const ClientList = (props) => {
   const [juridic, setJuridic]=useState(false);
   const [creating, setCreating]=useState(false);
+
   return (
-  	
   	<div className="container-fluid">
 	  	<div className="row pb-10 pt-10 sticky border-bottom">
 	  		<div className="col-md-6 sparse">
@@ -30,11 +33,11 @@ const ClientList = (props) => {
   	
   	{
   		!creating&&
-  		<ClientTable changedAttribute={props.changedAttribute} changeHandler={props.changeHandler} juridic={juridic}/>
+  		React.cloneElement(props.children[0], { juridic: juridic})
   	}
   	{
   		creating&&
-  		<Client juridic={juridic}/>
+  		React.cloneElement(props.children[1], { juridic: juridic, initialObject:{}})
   	}
   	</div>
     

@@ -1,5 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
+import { MyTable } from '../../components/';
+import countries from "../../constants/countries";
+import currencies from "../../constants/currencies";
+import { summation } from "../../helpers/summation";
+
 const Polis = () => {
+    const globalOplata = useSelector(state => state.oplataReducer);
+    const globalAnketa = useSelector(state => state.anketaReducer);
+    const globalContracts = useSelector(state => state.contractReducer);
+    const globalPolis = useSelector(state => state.polisReducer);
+
     // const 
     return (
         <div className="polis-main">
@@ -44,43 +55,76 @@ const Polis = () => {
             <div className="row polis-info pt-3">
                 <div className="col-6">
                     <label>Страхователь:</label>
-                    <span>ХАМКОРБАНК АКЦ.ТИЖ.БАНК</span><br />
+                    <span>{globalAnketa.ISURER}</span><br />
                     <label>Географическая зона:</label>
-                    <span>РЕСПУБЛИКА УЗБЕКИСТАН</span><br />
+                    <span>{globalAnketa.INS_COUNTRY ? countries[globalAnketa.INS_COUNTRY] : "Не задано"}</span><br />
                     <label>Договор страхования:</label>
-                    <span>10/21/1000 от13.01.2021г.</span><br />
+                    <span>{globalAnketa.INS_NUM}</span><br />
                     <label>Общая страховая премия:</label>
-                    <span>14 400,01</span><br />
+                    <span>{summation([...globalContracts.map(item => item.premiyaAmount)])}</span><br />
                     <label>Валюта:</label>
-                    <span>Узбекский сум</span>
+                    <span>{globalAnketa.VAL_TYPE ? currencies[globalAnketa.VAL_TYPE] : ""}</span>
                 </div>
                 <div className="col-6">
-                    <div className="input-group">
+                    <div className="input-group" style={{ overflowY: 'auto' }}>
                         <div className="form-row">
                             <label><b>Объект страхования:</b></label>
                             <input />
                             {/* <span className="d-block">строка (строки) 1-1 с 1</span> */}
                         </div>
                         <label><b>Платеж(и):</b></label>
-                        <table>
-                            <tr>
-                                <th>Дата</th>
-                                <th>Сумма</th>
-                            </tr>
-                            <tr>
-                                <td>13.01.2021</td>
-                                <td>7 200,00</td>
-                            </tr>
-                            <tr>
-                                <td>13.01.2021</td>
-                                <td>7 200,00</td>
-                            </tr>
-                        </table>
+                        <MyTable columns={
+                            [
+                                {
+                                    title: 'Дата оплаты',
+                                    dataIndex: 'OPL_DATA',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Оплата',
+                                    dataIndex: 'OPL_SUMMA',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Тип оплаты',
+                                    dataIndex: 'OPL_TYPE',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Пользователь',
+                                    dataIndex: '',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Ком.%',
+                                    dataIndex: '',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Комиссия',
+                                    dataIndex: '',
+                                    filtered: false
+                                },
+                                {
+                                    title: 'Агент.согл.',
+                                    dataIndex: '',
+                                    filtered: false,
+                                },
+                                {
+                                    title: '',
+                                    dataIndex: '',
+                                    filtered: false,
+                                }
+
+                            ]
+                        }
+                            data={globalOplata}
+                        />
                     </div>
                 </div>
                 <div className="col-12">
                     <h4>Страховые покрытия:</h4>
-                    <table class="premiya-table">
+                    <table className="premiya-table">
                         <thead>
                             <tr>
                                 <th>Вид страхования</th>
@@ -90,61 +134,65 @@ const Polis = () => {
                                 <th>Франшиза сумма</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td colspan="6"><b>Полис: GSS9999995 Период: с 14.01.2021г. по 29.05.2021г. Дата выдачи: 13.01.2021</b></td>
-                        </tr>
-                        <tr>
-                            <td> Гаровга қўйиладиган транспорт воситаларини суғурта қилиш</td>
-                            <td>
-                               500 000 000,00
+                        {/*globalPolis*/ [{}].map((item, idx) => {
+                            return <Fragment key={`polis${idx}`}>
+                                <tr>
+                                    <td colSpan="6"><b>Полис: GSS9999995 Период: с {item.TB_DATE_BEGIN}г. по {item.TB_DATE_END}г. Дата выдачи: {item.TB_DATECONTROL}</b></td>
+                                </tr>
+                                <tr>
+                                    <td> Гаровга қўйиладиган транспорт воситаларини суғурта қилиш</td>
+                                    <td>
+                                        500 000 000,00
                             </td>
-                            <td>
-                                1
+                                    <td>
+                                        1
                             </td>
-                            <td>
-                                7 500 000,00
+                                    <td>
+                                        7 500 000,00
                             </td>
-                            <td>
-                                5 000 000,00
+                                    <td>
+                                        5 000 000,00
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Оплата сумма:
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Оплата сумма:
                             </td>
-                            <td>
-                               500 000 000,00
+                                    <td>
+                                        500 000 000,00
                             </td>
-                            <td>
-                                1
+                                    <td>
+                                        1
                             </td>
-                            <td>
-                                7 500 000,00
+                                    <td>
+                                        7 500 000,00
                             </td>
-                            <td>
-                                5 000 000,00
+                                    <td>
+                                        5 000 000,00
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Полис сумма:
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Полис сумма:
                             </td>
-                            <td>
-                               500 000 000,00
+                                    <td>
+                                        500 000 000,00
                             </td>
-                            <td>
-                                1
+                                    <td>
+                                        1
                             </td>
-                            <td>
-                                7 500 000,00
+                                    <td>
+                                        7 500 000,00
                             </td>
-                            <td>
-                                5 000 000,00
+                                    <td>
+                                        5 000 000,00
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="6"><b>Итого:</b></td>
-                        </tr>
+                                </tr>
+                                <tr>
+                                    <td colSpan="6"><b>Итого:</b></td>
+                                </tr>
+                            </Fragment>
+                        })}
                     </table>
                     {/* <table class="premiya-table mt-5">
                         <thead>
@@ -158,7 +206,7 @@ const Polis = () => {
                             </tr>
                         </thead>
                         <tr>
-                            <td colspan="6"><b>Полис: GSS9999995 Период: с 14.01.2021г. по 29.05.2021г. Дата выдачи: 13.01.2021</b></td>
+                            <td colSpan="6"><b>Полис: GSS9999995 Период: с 14.01.2021г. по 29.05.2021г. Дата выдачи: 13.01.2021</b></td>
                         </tr>
                         <tr>
                             <td>13.01.2021 (7 200,00)</td>
