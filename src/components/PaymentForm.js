@@ -34,6 +34,14 @@ const PaymentForm = (props) => {
 			forceUpdate([]);
 		}
 	}
+	useEffect(()=>{
+		if(PAYMENTTYPES.length>0){
+			setPaymentForm({
+				...paymentForm,
+				
+			})
+		}
+	},[])
 	return (
 		<form className="paymentForm" id="create-oplata-form">
 			<div className="row">

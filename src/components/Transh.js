@@ -5,19 +5,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import {summation} from '../helpers/summation';
 
 const Transh = (props) => {
+  const dispatch=useDispatch();
   const [totalAmount, setTotalAmount]=useState(0);
   const [initialDate, setInitialDate]=useState('');
   const [interval, setInterval]=useState(30);
   const [count, setCount]=useState(2);
   const [allSelected, setAllSelected]=useState(false);
   const [disabled, setDisabled]=useState(false);
-  const dispatch=useDispatch();
   const [transhes, setTranshes]=useState([]);
   const contract=useSelector(state => state.contractReducer);
   const anketa=useSelector(state => state.anketaReducer);
   const reduxTranshes=useSelector(state => state.transhReducer);
   const globalPayment=useSelector(state => state.oplataReducer);
-
+  console.log("update", reduxTranshes);
   useEffect(()=>{
     reset();    
   },[])
@@ -95,6 +95,11 @@ const Transh = (props) => {
     reset();
   }
   const save=()=>{
+    if(summation(transhes.map(item=>item.amount))!==summation(contract.map(item=>item.premiyaAmount))){
+      alert("Transh amount different than premiya");
+      return 0;
+    }
+
     dispatch(transhesUpdate(transhes));
   }
   const reset=()=>{
@@ -156,6 +161,7 @@ const Transh = (props) => {
                      onChange={checkAll} 
                      value={allSelected}
                      checked={allSelected}
+                     disabled={disabled}
               />
     				</td>
     				<td>
@@ -203,7 +209,7 @@ const Transh = (props) => {
     					
     				</td>
     				<td>
-    					{totalAmount}
+    					{totalAmount} / <small>{summation(transhes.map(item=>item.amount))}</small>
     				</td>
     			</tr>
     		</tfoot>
