@@ -1,27 +1,35 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import addDates from '../helpers/addDates';
+import {transhesUpdate} from '../redux/actions/transh';
+import {useDispatch, useSelector} from 'react-redux';
+import {summation} from '../helpers/summation';
 
 const Transh = (props) => {
-  const totalAmount=150000;
-  const initialDate='2021-01-28';
-
-  const [transhes, setTranshes]=useState([{
-        date:'2021-01-28',
-        amount:130000,
-        selected:false
-  },
-  {
-        date:'2021-01-28',
-        amount:130000,
-        selected:false
-  }]);
-
+  const dispatch=useDispatch();
+  const [totalAmount, setTotalAmount]=useState(0);
+  const [initialDate, setInitialDate]=useState('');
   const [interval, setInterval]=useState(30);
-  const [count, setCount]=useState(transhes.length);
+  const [count, setCount]=useState(2);
   const [allSelected, setAllSelected]=useState(false);
+  const [disabled, setDisabled]=useState(false);
+  const [transhes, setTranshes]=useState([]);
+  const contract=useSelector(state => state.contractReducer);
+  const anketa=useSelector(state => state.anketaReducer);
+  const reduxTranshes=useSelector(state => state.transhReducer);
+  const globalPayment=useSelector(state => state.oplataReducer);
 
-  const reseparateCount=(e)=>{
-    let newCount=e.target.value;
+  useEffect(()=>{
+    reset();    
+  },[])
+  useEffect(()=>{
+    if(globalPayment.length!==0){
+      setDisabled(true);
+    }else{
+      setDisabled(false);
+    }
+  },[globalPayment])
+  const reseparateCount=(value)=>{
+    let newCount=value;
     setCount(newCount);
     let tempArray=[];
     for(let i=0;i<newCount;i++){
@@ -33,8 +41,8 @@ const Transh = (props) => {
     }
     setTranshes(tempArray);
   }
-  const reseparateInterval=(e)=>{
-    let newInterval=e.target.value;
+  const reseparateInterval=(value)=>{
+    let newInterval=value;
     let tempArray=[];
     for(let i=0;i<count;i++){
         tempArray.push({
@@ -63,8 +71,9 @@ const Transh = (props) => {
   }
   const addTransh=()=>{
     let tempTransh=[...transhes];
-    tempTransh.push({...tempTransh[tempTransh.length-1]}  );
+    tempTransh.push({...tempTransh[tempTransh.length-1]});
     setTranshes(tempTransh);
+    reseparateCount(tempTransh.length);
   }
   const checkAll=()=>{
     let newTranshState=[...transhes];
@@ -77,19 +86,49 @@ const Transh = (props) => {
       })
     )
   }
+  const deleteTransh=()=>{
+    setTranshes(
+      [...transhes.filter(item=>!item.selected)]
+    )
+  }
+  const cancel=()=>{
+    reset();
+  }
+  const save=()=>{
+    dispatch(transhesUpdate(transhes));
+  }
+  const reset=()=>{
+    const summa=summation(contract.map((item)=>item.premiyaAmount));
+    setTotalAmount(summa);
+    setInitialDate(anketa.INS_DATE);
+    if(reduxTranshes&&reduxTranshes.length!=0){
+      setTranshes([...reduxTranshes]);
+    }else{
+      const tempArray=[];
+      for(let i=0;i<count;i++){
+          tempArray.push({
+              date:addDates(anketa.INS_DATE, i*interval),
+              amount:summa/count,
+              selected:false
+          });
+      }
+      setTranshes(tempArray);
+    }
+  }
+  console.log("update", reduxTranshes)
   return (
     <div className="transh">
     	<div className="sparse">
 	    	<div className="head">
 	    		<h4>Ожидаемые транши</h4>
 	    		<div className="sparse">
-	    			<button>
+	    			<button onClick={cancel}>
 	    				Отмена
 	    			</button>
-	    			<button>
+	    			<button onClick={deleteTransh}>
 	    				Удалить
 	    			</button>
-	    			<button>
+	    			<button onClick={save}>
 	    				Сохранить
 	    			</button>
 	    		</div>
@@ -98,10 +137,11 @@ const Transh = (props) => {
 	    	<input type="number" 
                    value={interval} 
                    onChange={e=>setInterval(e.target.value)} 
-                   onKeyUp={reseparateInterval}
+                   onKeyUp={e=>reseparateInterval(e.target.value)}
+                   disabled={disabled}
             />
 	    	<span>Количество траншов:</span>	
-	    	<select name="" id="" value={count} onChange={reseparateCount}>
+	    	<select disabled={disabled} value={count} onChange={e=>reseparateCount(e.target.value)}>
 	    		<option value="2">2</option>
 	    		<option value="3">3</option>
 	    		<option value="4">4</option>
@@ -135,18 +175,21 @@ const Transh = (props) => {
                          value={item.selected} 
                          checked={item.selected}
                          onChange={()=>resetSelected(index)}
+                         disabled={disabled}
                   />
         				</td>
         				<td>
         					<input type="date" 
                     value={item.date} 
                     onChange={e=>resetDate(e.target.value,index)}
+                    disabled={disabled}
                   />
         				</td>
         				<td>
         					<input type="number" 
                     value={item.amount}
                     onChange={e=>resetAmount(e.target.value,index)}
+                    disabled={disabled}
                   />
         				</td>
         			</tr>
@@ -161,15 +204,17 @@ const Transh = (props) => {
     					
     				</td>
     				<td>
-    					123 321.09
+    					{totalAmount}
     				</td>
     			</tr>
     		</tfoot>
     	</table>
     	<div className="h-right">
+        {!disabled&&
     		<button onClick={addTransh}>
     			Добавить
     		</button>
+        }
     	</div>
     </div>
   )

@@ -1,34 +1,57 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Transh, PaymentForm, MyTable } from '../../components/';
 import currencyConditions from '../../constants/currencyConditions';
 import currencies from '../../constants/currencies';
 import { summation } from "../../helpers/summation";
+import {transhesUpdate} from '../../redux/actions/transh';
+
 const Payment = (props) => {
 	const globalContracts = useSelector(state => state.contractReducer);
 	const globalAnketa = useSelector(state => state.anketaReducer);
 	const globalOplata = useSelector(state => state.oplataReducer);
+	const globalTransh = useSelector(state => state.transhReducer);
+	const dispatch=useDispatch();
 
 	const [transh, setTranshState] = useState(false);
+	const controlTransh=(val)=>{
+		setTranshState(val);
+		if(!val){
+			dispatch(transhesUpdate([]));
+		}
+	}
+	useEffect(()=>{
+		if(globalTransh.length!==0){
+			setTranshState(true);
+		}
+	},[])
 	return (
 		<>
 			<div className="row">
 				<div className="col-md-6">
 					<div className="mb-10">
 						Условие оплаты:
-	    	</div>
+	    		</div>
 					<div >
 						<div className="mb-10">
-							<input type="radio" onClick={() => setTranshState(false)} id="once" name="oplata" checked={!transh} onChange={() => setTranshState(false)} />
+							<input type="radio" 
+									onClick={() => controlTransh(false)} 
+									id="once" name="oplata" checked={!transh} 
+									disabled={globalOplata.length!==0}
+							/>
 							<label htmlFor="once">
 								Единовременная оплата
-		    		</label>
+		    				</label>
 						</div>
 						<div className="mb-10">
-							<input type="radio" onClick={() => setTranshState(true)} id="transh" name="oplata" checked={transh} onChange={() => setTranshState(true)} />
+							<input type="radio" 
+								onClick={() => controlTransh(true)} 
+								id="transh" name="oplata" checked={transh} 
+								disabled={globalOplata.length!==0}
+							/>
 							<label htmlFor="transh">
 								Оплата траншами
-		    		</label>
+		    				</label>
 						</div>
 					</div>
 				</div>
@@ -43,12 +66,12 @@ const Payment = (props) => {
 						Учет: {currencyConditions[globalAnketa.VAL_USLOVIYA]}
 					</div>
 					<div className="mb-10">
-						Оплата:	{globalAnketa.VAL_TYPE?currencies[globalAnketa.VAL_TYPE]:""}
+						Оплата:	{globalAnketa.VAL_TYPE??""}
 					</div>
 				</div>
 			</div>
 			{
-				transh && <Transh />
+				transh && <Transh/>
 			}
 			<div>
 				<h4 className="mb-4">Оплата</h4>
@@ -88,13 +111,7 @@ const Payment = (props) => {
 							title: 'Агент.согл.',
 							dataIndex: '',
 							filtered: false,
-						},
-						{
-							title: '',
-							dataIndex: '',
-							filtered: false,
 						}
-						
 					]
 				} 
 				data={globalOplata}
