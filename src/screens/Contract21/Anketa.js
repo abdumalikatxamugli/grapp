@@ -10,10 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { anketaCreate } from "../../redux/actions";
 import isEmpty from '../../helpers/objectHelpers';
 const { ipcRenderer } = window.require('electron');
-
 const Anketa = (props, ref) => {
-    const globalAnketa = useSelector(state => state.anketaReducer);
     const dispatch = useDispatch()
+    const globalAnketa = useSelector(state => state.anketaReducer);
 
     const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
@@ -66,29 +65,35 @@ const Anketa = (props, ref) => {
     const save = () => {
         ipcRenderer.send("anketa_create", anketaForm)
     }
+    const setB=(name)=>{
+        dispatch(anketaCreate({BENEFICIARY:name}));
+    }
+    const setI=(name)=>{
+        dispatch(anketaCreate({INSURER:name}));
+    }
     return (
         <>
             <Modal show={clientModalBeneficiaryState} setShow={setClientModalBeneficiaryState}>
                 <ClientList changedAttribute="BENEFICIARY">
                     <ClientTable
-                        field='BENEFICIARY'
                         setShow={setClientModalBeneficiaryState}
+                        action={setB}
                     />
                     <Client
-                        field='BENEFICIARY'
                         setShow={setClientModalBeneficiaryState}
+                        action={setB}
                     />
                 </ClientList>
             </Modal>
             <Modal show={clientModalInsurerState} setShow={setClientModalInsurerState}>
                 <ClientList changedAttribute="INSURER">
                     <ClientTable
-                        field='INSURER'
                         setShow={setClientModalInsurerState}
+                        action={setI}
                     />
                     <Client
-                        field='INSURER'
                         setShow={setClientModalInsurerState}
+                        action={setI}
                     />
                 </ClientList>
             </Modal>

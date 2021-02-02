@@ -8,12 +8,10 @@ const anketa_controller = () => {
     const create = async (arg, win) => {
         try {
             const anketa= await Anketa.create(arg);
-            console.log('fc success')
             win.webContents.send('anketa_saved',client);
         }
         catch (e) {
-            // console.log(e)
-            win.webContents.send('error_occured',e);
+            win.webContents.send('error_occured',e.errors);
         }
     }
     const list = async (event, win) => {

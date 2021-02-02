@@ -19,8 +19,8 @@ const Form = () => {
         { id: 5, label: 'Полис', isAccessible: true }
     ])
     useEffect(()=>{
-        ipcRenderer.on("error_occured",function(came){
-            alert(JSON.stringify(came))
+        ipcRenderer.on("error_occured",function(came,error){
+            alert(JSON.stringify(error))
         })
     },[])
     const makeAccessible = (index) => {

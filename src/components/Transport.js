@@ -4,86 +4,26 @@ import SimpleReactValidator from "simple-react-validator";
 import { transportCreate } from "../redux/actions";
 import { contractAdd } from "../redux/actions/contract";
 import UnvisibleFormElements from "./UnvisibleFormElements";
+import {Modal,ClientTable, Client, ClientList} from './index';
+
 const Transport = (props) => {
     const dispatch=useDispatch()
-    const [transportForm, setTransportForm] = useState({
-        "TB_ID": "",
-        "TB_REGNUMBER": "",
-        "TB_YEAR": "",
-        "TB_KUZOV": "",
-        "TB_SHASSI": "",
-        "TB_DVIGATEL": "",
-        "TB_MARKA": "",
-        "TB_MODEL": "",
-        "TB_VMODEL": "",
-        "TB_TYPE": "",
-        "TB_MOSCH": "",
-        "TB_STOIMOST": "",
-        "TB_COLOR": "",
-        "TB_TEXPSERY": "",
-        "TB_TEXPDATE": "",
-        "TB_COMMENT": "",
-        "TB_DEFEKT": "",
-        "TB_DEFEKT_OPIS1": "",
-        "TB_DEFEKT_OPIS2": "",
-        "TB_DEFEKT_OPIS3": "",
-        "TB_DEFEKT_OPIS4": "",
-        "TB_DEFEKT_OPIS5": "",
-        "TB_DEFEKT_OPIS6": "",
-        "TB_DOP_KOL": "",
-        "TB_SUMM_DOP_OBOR": "",
-        "TB_SUMM_ARENDA": "",
-        "TB_SIGNAL": "",
-        "TB_DOP1_SPEC": "",
-        "TB_DOP1_KOL": "",
-        "TB_DOP1_SUM": "",
-        "TB_DOP2_SPEC": "",
-        "TB_DOP2_KOL": "",
-        "TB_DOP2_SUM": "",
-        "TB_DOP3_SPEC": "",
-        "TB_DOP3_KOL": "",
-        "TB_DOP3_SUM": "",
-        "TB_DOP4_SPEC": "",
-        "TB_DOP4_KOL": "",
-        "TB_DOP4_SUM": "",
-        "TB_DOP5_SPEC": "",
-        "TB_DOP5_KOL": "",
-        "TB_DOP5_SUM": "",
-        "TB_DOP6_SPEC": "",
-        "TB_DOP6_KOL": "",
-        "TB_DOP6_SUM": "",
-        "TB_DOP7_SPEC": "",
-        "TB_DOP7_KOL": "",
-        "TB_DOP7_SUM": "",
-        "TB_DOP8_SPEC": "",
-        "TB_DOP8_KOL": "",
-        "TB_DOP8_SUM": "",
-        "TB_DOP9_SPEC": "",
-        "TB_DOP9_KOL": "",
-        "TB_DOP9_SUM": "",
-        "TB_DOP10_SPEC": "",
-        "TB_DOP10_KOL": "",
-        "TB_DOP10_SUM": "",
-        "TB_LASTINSURER": "",
-        "TB_UB_GOD1": "",
-        "TB_UB_SUM1": "",
-        "TB_UB_PRICHINA1": "",
-        "TB_UB_GOD2": "",
-        "TB_UB_SUM2": "",
-        "TB_UB_PRICHINA2": "",
-        "TB_UB_GOD3": "",
-        "TB_UB_SUM3": "",
-        "TB_UB_PRICHINA3": ""
-    })
+
+    const [zagoladatelShowState, setZagoladatelShowState] =useState(false)
+    const [transportForm, setTransportForm] = useState({});
+    
     const transportChanger = (e) => {
         setTransportForm({ ...transportForm, [e.target.name]: e.target.value })
     }
     const validator = useRef(new SimpleReactValidator())
     const [, forceUpdate] = useState();
+    const setZ=(name)=>{
+        setTransportForm({...transportForm, ZALOGADATEL:name});
+    }
     const saveNew = (e) => {
         e.preventDefault()
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Save to Database and to parent data
-        // if (validator.current.allValid()) {
+        if (validator.current.allValid()) {
             props.addTransport(transportForm)
             dispatch(transportCreate(transportForm))
             dispatch(contractAdd({
@@ -96,20 +36,34 @@ const Transport = (props) => {
                 franchisePercent: 0,
                 franchiseAmount: 0
             }))
-        // } else {
-        //     validator.current.showMessages();
-        //     forceUpdate(1)
-        // }
+        } else {
+            validator.current.showMessages();
+            forceUpdate(1)
+        }
     }
     return (
         <>
             <div className="transport-form hyper-form mt-20">
+                <Modal show={zagoladatelShowState} setShow={setZagoladatelShowState}>
+                    <ClientList changedAttribute="ZALOGADATEL">
+                        <ClientTable
+                            action={setZ}
+                            setShow={setZagoladatelShowState}
+                        />
+                        <Client
+                            action={setZ}
+                            setShow={setZagoladatelShowState}
+                        />
+                    </ClientList>
+                </Modal>
                 <form>
                     <div className="ml--10">
                         <div className="input-group">
                             <div className="form-inline">
                                 <label className="required">Владелец/Залогодатель/Лизингополучатель</label>
-                                <input type="text" name="TB_ID" onChange={transportChanger} />
+                                <button type="button" onClick={e=>setZagoladatelShowState(true)}>
+                                   {transportForm.ZALOGADATEL??'Залогодатель'}
+                                </button>
                                 {validator.current.message('TB_ID', transportForm.TB_ID, 'required')}
                             </div>
                         </div>
