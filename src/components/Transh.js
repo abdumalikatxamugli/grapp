@@ -17,7 +17,7 @@ const Transh = (props) => {
   const anketa=useSelector(state => state.anketaReducer);
   const reduxTranshes=useSelector(state => state.transhReducer);
   const globalPayment=useSelector(state => state.oplataReducer);
-
+  console.log("update", reduxTranshes);
   useEffect(()=>{
     reset();    
   },[])
@@ -95,6 +95,11 @@ const Transh = (props) => {
     reset();
   }
   const save=()=>{
+    if(summation(transhes.map(item=>item.amount))!==summation(contract.map(item=>item.premiyaAmount))){
+      alert("Transh amount different than premiya");
+      return 0;
+    }
+
     dispatch(transhesUpdate(transhes));
   }
   const reset=()=>{
@@ -157,6 +162,7 @@ const Transh = (props) => {
                      onChange={checkAll} 
                      value={allSelected}
                      checked={allSelected}
+                     disabled={disabled}
               />
     				</td>
     				<td>
@@ -204,7 +210,7 @@ const Transh = (props) => {
     					
     				</td>
     				<td>
-    					{totalAmount}
+    					{totalAmount} / <small>{summation(transhes.map(item=>item.amount))}</small>
     				</td>
     			</tr>
     		</tfoot>

@@ -63,10 +63,10 @@ const Payment = (props) => {
 						Премия:	{summation([...globalContracts.map(item => item.premiyaAmount)])}
 					</div>
 					<div className="mb-10">
-						Учет: {currencyConditions[globalAnketa.VAL_USLOVIYA]}
+						Учет: {currencies[globalAnketa.VAL_TYPE]??""}
 					</div>
 					<div className="mb-10">
-						Оплата:	{globalAnketa.VAL_TYPE??""}
+						Оплата:	{currencies[globalAnketa.VAL_TYPE]??""}
 					</div>
 				</div>
 			</div>
