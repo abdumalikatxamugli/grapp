@@ -6,9 +6,14 @@ import { anketaCreate } from '../redux/actions';
 const ClientTable = (props) => {
 	const dispatch=useDispatch();
 	const selectClient=(name)=>{
-	  dispatch(anketaCreate({[props.field]:name}));
-    props.setShow(false);
+		if(props.juridic){
+	        props.action(name);
+	    }else{
+	        props.action(name);
+	    }
+	 	props.setShow(false);
 	}
+
 	return (
 		<>
 			{props.juridic &&

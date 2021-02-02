@@ -1,6 +1,6 @@
 import React, { useState,useEffect }  from "react";
 import { useDispatch } from 'react-redux';
-import { anketaCreate } from '../redux/actions';
+
 /*
 **props:
 *juridic:Boolean
@@ -13,7 +13,7 @@ import { anketaCreate } from '../redux/actions';
 */
 function Create(props) {
     const dispatch=useDispatch();
-    
+
     const [jurObject, setJurObject]=useState({
         SYSTEM_ID:undefined,
         TB_ORGINN:'',
@@ -110,9 +110,9 @@ function Create(props) {
 
         // write name to redux store
         if(props.juridic){
-            dispatch(anketaCreate({[props.field]:jurObject.TB_ORGNAME}));
+            props.action(jurObject.TB_ORGNAME);
         }else{
-             dispatch(anketaCreate({[props.field]:fizObject.TB_NAME}));
+            props.action(fizObject.TB_NAME);
         }
         props.setShow(false);
     }
