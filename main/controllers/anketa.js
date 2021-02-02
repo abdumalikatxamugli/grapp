@@ -15,7 +15,6 @@ const anketa_controller = () => {
             // console.log(e)
             win.webContents.send('error_occured',e);
         }
-
     }
     const list = async (event, win) => {
         const anketas= await Anketa.findAll({
