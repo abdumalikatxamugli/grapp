@@ -65,11 +65,11 @@ const Anketa = (props, ref) => {
     const save = () => {
         ipcRenderer.send("anketa_create", anketaForm)
     }
-    const setB=(name)=>{
-        dispatch(anketaCreate({BENEFICIARY:name}));
+    const setB=(name,id)=>{
+        dispatch(anketaCreate({BENEFICIARY:name, BENEFICIARY_ID:id}));
     }
-    const setI=(name)=>{
-        dispatch(anketaCreate({INSURER:name}));
+    const setI=(name,id)=>{
+        dispatch(anketaCreate({INSURER:name,INSURER_ID:id}));
     }
     return (
         <>
