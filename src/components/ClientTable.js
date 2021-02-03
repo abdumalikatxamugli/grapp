@@ -1,10 +1,10 @@
 import React from 'react';
 import leftArrow from '../assets/icons/arrow-left.svg';
-import { useDispatch } from 'react-redux';
-import { anketaCreate } from '../redux/actions';
+
+
 
 const ClientTable = (props) => {
-	const dispatch=useDispatch();
+	
 	const selectClient=(name, id)=>{
 		if(props.juridic){
 	        props.action(name, id);

@@ -1,7 +1,8 @@
 const {app, BrowserWindow, ipcMain,Notification } = require('electron');
 const { anketa_create } = require('./controllers/anketa');
+const { client } = require('./controllers/client');
 
-var internet=false;
+
 
 var mainWindow;
 async function createWindow() {
@@ -35,6 +36,7 @@ app.on('activate', () => {
 })
 
 //listener abdumalik
+ipcMain.on('save-client',client.create);
 
 
 // Shoh functions
@@ -42,29 +44,4 @@ ipcMain.on('anketa_create', (event, came) => {
   anketa_create(came, mainWindow)
 });
 
-// check internet
-
 // setInterval(check_internet, 3000);
-
-// function check_internet(){
-//   dns.resolve('www.google.com', function(err) {
-//     if (err) {
-//      if(internet){
-//       const notification = {
-//          title: 'GROSS: Интернет отключен',
-//       }
-//       new Notification(notification).show();
-//       internet=false;
-//     }
-//   } else {
-//     if(!internet){
-//       const notification = {
-//         title: 'GROSS: Интернет',
-//         body: 'У вас есть интернет, я начинаю синхронизацию'
-//       }
-//       new Notification(notification).show()
-//       internet=true;
-//     }
-//   }
-// });
-// }

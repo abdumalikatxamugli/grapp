@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Transh, PaymentForm, MyTable } from '../../components/';
-import currencyConditions from '../../constants/currencyConditions';
 import currencies from '../../constants/currencies';
 import { summation } from "../../helpers/summation";
 import {transhesUpdate} from '../../redux/actions/transh';
@@ -116,7 +115,7 @@ const Payment = (props) => {
 				} 
 				data={globalOplata}
 				/>
-				{globalOplata.length==0 && <div>Оплата не произведена</div>}
+				{globalOplata.length===0 && <div>Оплата не произведена</div>}
 				<div className="mt-4">Остаток:	<b>{summation([...globalContracts.map(item => item.premiyaAmount)])}</b></div>
 			</div>
 			<PaymentForm />

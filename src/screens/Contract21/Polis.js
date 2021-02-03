@@ -9,7 +9,6 @@ const Polis = () => {
     const globalOplata = useSelector(state => state.oplataReducer);
     const globalAnketa = useSelector(state => state.anketaReducer);
     const globalContracts = useSelector(state => state.contractReducer);
-    const globalPolis = useSelector(state => state.polisReducer);
     const globalTransports = useSelector(state => state.transportReducer);
     const globalTransh = useSelector(state => state.transhReducer);
     const [givingMethod, setGivingMethod] = useState(1)
@@ -31,7 +30,7 @@ const Polis = () => {
                 <h4>Параметры</h4>
                 <div className="input-group sparse">
                     <b>Выдача полиса:</b>
-                    <input type="radio" disabled checked={globalTransports.length == 1} />
+                    <input type="radio" disabled checked={globalTransports.length === 1} />
                     <label>один ко всем объектам</label>
                     <input type="radio" disabled checked={globalTransports.length > 1} />
                     <label>каждому по одному</label>
@@ -46,7 +45,7 @@ const Polis = () => {
                         <option>Выберите</option>
                     </select>
                     &nbsp;
-                    {givingMethod == 2 && <Fragment>
+                    {givingMethod === 2 && <Fragment>
                         <label>Платежи</label>
                         <select>
                             <option value="">Выберите</option>
