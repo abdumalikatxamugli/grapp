@@ -1,0 +1,30 @@
+const { ipcMain } = require('electron')
+const window = require('electron').BrowserWindow;
+const Anketa = require('../models/anketa.js');
+
+
+const anketa_controller = () => {
+
+    const create = async (arg, win) => {
+        try {
+            const anketa= await Anketa.create(arg);
+            win.webContents.send('anketa_saved',client);
+        }
+        catch (e) {
+            win.webContents.send('error_occured',e.errors);
+        }
+    }
+    const list = async (event, win) => {
+        const anketas= await Anketa.findAll({
+            limit: 2,
+            offset: 1
+        });
+        win.webContents.send('anketa_list_resp',anketas);
+    }
+    return {
+        anketa_create: create,
+        anketa_list: list
+    }
+
+}
+module.exports = anketa_controller();

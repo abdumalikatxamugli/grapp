@@ -1,4 +1,5 @@
 const {app, BrowserWindow, ipcMain,Notification } = require('electron');
+const { anketa_create } = require('./controllers/anketa');
 
 var internet=false;
 
@@ -37,7 +38,9 @@ app.on('activate', () => {
 
 
 // Shoh functions
-
+ipcMain.on('anketa_create', (event, came) => {
+  anketa_create(came, mainWindow)
+});
 
 // check internet
 

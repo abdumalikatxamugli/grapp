@@ -120,6 +120,7 @@ const Transh = (props) => {
       setTranshes(tempArray);
     }
   }
+  console.log("update", reduxTranshes)
   return (
     <div className="transh">
     	<div className="sparse">

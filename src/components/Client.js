@@ -107,12 +107,12 @@ function Create(props) {
         }else{
             // update the database instance
         }
-
+ 
         // write name to redux store
         if(props.juridic){
-            props.action(jurObject.TB_ORGNAME);
+            props.action(commonObject, jurObject);
         }else{
-            props.action(fizObject.TB_NAME);
+            props.action(commonObject, fizObject);
         }
         props.setShow(false);
     }

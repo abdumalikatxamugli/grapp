@@ -9,7 +9,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import { useDispatch, useSelector } from 'react-redux';
 import { anketaCreate } from "../../redux/actions";
 import isEmpty from '../../helpers/objectHelpers';
-
+const { ipcRenderer } = window.require('electron');
 const Anketa = (props, ref) => {
     const dispatch = useDispatch()
     const globalAnketa = useSelector(state => state.anketaReducer);
@@ -17,9 +17,9 @@ const Anketa = (props, ref) => {
     const [clientModalBeneficiaryState, setClientModalBeneficiaryState] = useState(false);
     const [clientModalInsurerState, setClientModalInsurerState] = useState(false);
     const [countryModalState, setCountryModalState] = useState(false);
-    
+
     const [anketaForm, setAnketaForm] = useState({
-        INS_NUM:'',
+        INS_NUM: '',
         INS_DATE: getCurrentDate(),
         INS_DATEF: getCurrentDate(),
         INS_DATET: getCurrentDate(),
@@ -27,6 +27,7 @@ const Anketa = (props, ref) => {
         VAL_TYPE: '',
         ISTOCHNIK_O: '',
         VAL_USLOVIYA: '',
+        OLD_DOGNUM: '',
         BENEFICIARY: undefined,
         INSURER: undefined
     });
@@ -37,8 +38,12 @@ const Anketa = (props, ref) => {
 
 
     const validator = useRef(new SimpleReactValidator())
-   
-  
+
+    useEffect(() => {
+        ipcRenderer.on("anketa_saved", function () {
+            dispatch(anketaCreate(anketaForm))
+        })
+    }, [])
 
     useEffect(() => {
         if (anketaForm.INS_COUNTRY) {
@@ -57,15 +62,14 @@ const Anketa = (props, ref) => {
             [e.target.name]: e.target.value
         });
     }
-    const save=()=>{
-         dispatch(anketaCreate(anketaForm));
-         alert("Anketa Saved");
+    const save = () => {
+        ipcRenderer.send("anketa_create", anketaForm)
     }
-    const setB=(name)=>{
-        dispatch(anketaCreate({BENEFICIARY:name}));
+    const setB=(name,id)=>{
+        dispatch(anketaCreate({BENEFICIARY:name, BENEFICIARY_ID:id}));
     }
-    const setI=(name)=>{
-        dispatch(anketaCreate({INSURER:name}));
+    const setI=(name,id)=>{
+        dispatch(anketaCreate({INSURER:name,INSURER_ID:id}));
     }
     return (
         <>
@@ -195,6 +199,13 @@ const Anketa = (props, ref) => {
                     <div className="input">
                         <input type="text" name="INS_NUM" value={anketaForm.INS_NUM} onChange={changeAnketa} />
                         {validator.current.message('INS_NUM', anketaForm.INS_NUM, 'required')}
+                    </div>
+                    <div className="label">
+                        <span>Старый номер договора:</span>
+                    </div>
+                    <div className="input">
+                        <input type="text" name="OLD_DOGNUM" value={anketaForm.OLD_DOGNUM} onChange={changeAnketa} />
+                        {validator.current.message('OLD_DOGNUM', anketaForm.OLD_DOGNUM, 'required')}
                     </div>
                     <div>
                         <button onClick={save}>Save</button>

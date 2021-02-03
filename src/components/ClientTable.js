@@ -5,11 +5,11 @@ import { anketaCreate } from '../redux/actions';
 
 const ClientTable = (props) => {
 	const dispatch=useDispatch();
-	const selectClient=(name)=>{
+	const selectClient=(name, id)=>{
 		if(props.juridic){
-	        props.action(name);
+	        props.action(name, id);
 	    }else{
-	        props.action(name);
+	        props.action(name, id);
 	    }
 	 	props.setShow(false);
 	}
@@ -31,7 +31,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={()=>selectClient('Ahost')}>
+								<button onClick={()=>selectClient('Ahost', 1)}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>
@@ -57,7 +57,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={()=>selectClient('Abdumalik')}>
+								<button onClick={()=>selectClient('Abdumalik',1)}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>
