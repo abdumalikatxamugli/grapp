@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect} from 'react';
+import React, { useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import SimpleReactValidator from 'simple-react-validator';
 import PAYMENTTYPES from '../constants/paymentTypes';
@@ -34,14 +34,6 @@ const PaymentForm = (props) => {
 			forceUpdate([]);
 		}
 	}
-	useEffect(()=>{
-		if(PAYMENTTYPES.length>0){
-			setPaymentForm({
-				...paymentForm,
-				
-			})
-		}
-	},[])
 	return (
 		<form className="paymentForm" id="create-oplata-form">
 			<div className="row">

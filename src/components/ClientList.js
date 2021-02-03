@@ -37,7 +37,7 @@ const ClientList = (props) => {
   	}
   	{
   		creating&&
-  		React.cloneElement(props.children[1], { juridic: juridic, initialObject:{}})
+  		React.cloneElement(props.children[1], { juridic: juridic})
   	}
   	</div>
     

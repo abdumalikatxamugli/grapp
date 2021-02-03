@@ -4,17 +4,14 @@ const oplataReducer = (oplata = initialState, action) => {
 	switch (action.type) {
 		case OPLATA_CREATE:
 			return action.payload
-			break;
 		case OPLATA_ADD:
 			return [
 				...oplata, action.payload
 			];
-			break;
 		case OPLATA_DEL:
 			return [
-				...oplata.filter((item, index)=>index!=action.payload)
+				...oplata.filter((item, index)=>index!==action.payload)
 			];
-			break;
 		default:
 			return oplata
 	}

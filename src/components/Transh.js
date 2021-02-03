@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useCallback} from 'react';
 import addDates from '../helpers/addDates';
 import {transhesUpdate} from '../redux/actions/transh';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,10 +17,9 @@ const Transh = (props) => {
   const anketa=useSelector(state => state.anketaReducer);
   const reduxTranshes=useSelector(state => state.transhReducer);
   const globalPayment=useSelector(state => state.oplataReducer);
-  console.log("update", reduxTranshes);
-  useEffect(()=>{
-    reset();    
-  },[])
+  
+ 
+  
   useEffect(()=>{
     if(globalPayment.length!==0){
       setDisabled(true);
@@ -102,11 +101,12 @@ const Transh = (props) => {
 
     dispatch(transhesUpdate(transhes));
   }
-  const reset=()=>{
+
+  const reset=useCallback(()=>{
     const summa=summation(contract.map((item)=>item.premiyaAmount));
     setTotalAmount(summa);
     setInitialDate(anketa.INS_DATE);
-    if(reduxTranshes&&reduxTranshes.length!=0){
+    if(reduxTranshes&&reduxTranshes.length!==0){
       setTranshes([...reduxTranshes]);
     }else{
       const tempArray=[];
@@ -119,7 +119,10 @@ const Transh = (props) => {
       }
       setTranshes(tempArray);
     }
-  }
+  },[contract,anketa.INS_DATE, count, interval, reduxTranshes])
+  useEffect(()=>{
+    reset();    
+  },[reset])
   console.log("update", reduxTranshes)
   return (
     <div className="transh">

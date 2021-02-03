@@ -6,7 +6,6 @@ const transportReducer = (transport = initialState, action) => {
             return [
                 ...transport, action.payload
             ];
-            break;
         default:
             return transport
     }

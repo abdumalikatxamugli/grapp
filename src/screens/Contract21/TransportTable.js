@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import SimpleReactValidator from 'simple-react-validator';
+
 
 import { Transport, TransportList } from '../../components';
 

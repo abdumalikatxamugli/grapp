@@ -26,16 +26,16 @@ const Transport = (props) => {
         if (validator.current.allValid()) {
             props.addTransport(transportForm)
             dispatch(transportCreate(transportForm))
-            dispatch(contractAdd({
-                name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
-                insuranceAmount: 0,
-                premiyaPercent: 0,
-                premiyaAmount: 0,
-                franchise: false,
-                franchiseCond: false,
-                franchisePercent: 0,
-                franchiseAmount: 0
-            }))
+            // dispatch(contractAdd({
+            //     name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
+            //     insuranceAmount: 0,
+            //     premiyaPercent: 0,
+            //     premiyaAmount: 0,
+            //     franchise: false,
+            //     franchiseCond: false,
+            //     franchisePercent: 0,
+            //     franchiseAmount: 0
+            // }))
         } else {
             validator.current.showMessages();
             forceUpdate(1)

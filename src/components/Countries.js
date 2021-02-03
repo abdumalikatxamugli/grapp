@@ -4,19 +4,19 @@ const Countries = (props) => {
   const [result, setResult] = useState(COUNTRIES);
   const filter = (e) => {
     setResult(COUNTRIES.filter(item => item.includes(e.target.value)));
-    props.changeHandler({
-      target: {
-        value: e.target.value,
-        name: props.changedAttribute
-      }
-    })
+  }
+  const selectCountry=(country)=>{
+    props.action(country);
+    props.setShow(false);
   }
   return (
     <div className="counties-component">
       <input type="text" placeholder="search" onChange={e => filter(e)} />
       <ul>
         {result.map((country,idx) =>
-          idx!==0?<li onClick={()=>props.changeHandler({target:{name: props.changedAttribute, value: idx}})} key={idx}>{country}</li>:''
+          <li onClick={()=>selectCountry(country)} key={idx}>
+            {country}
+          </li>
         )}
       </ul>
     </div>
