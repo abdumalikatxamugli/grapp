@@ -5,7 +5,7 @@ const { ipcRenderer } = window.require("electron");
 const Client=(props)=>{
     useEffect(()=>{
       ipcRenderer.on('client-saved', save2)
-      
+      console.log("as");
       if(!props.initialObject){
         return;
       }
@@ -40,6 +40,7 @@ const Client=(props)=>{
           d:{...props.juridic?jurObject:fizObject},
           type:props.juridic?1:0
         });
+
     }
     const save2=(event, args)=>{
         if(props.juridic)
@@ -47,6 +48,7 @@ const Client=(props)=>{
         else
             props.action(args.name, args.id);
 
+        ipcRenderer.removeListener('client-saved', save2);
         props.setShow(false);
     }
     return (

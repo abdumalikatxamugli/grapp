@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
 })
 
 
-const ClientCommon = sequelize.define('Client', {
+const ClientCommon = sequelize.define('ClientCommon', {
     SYSTEM_TYPE:{
         //yur=1 fiz=0 
         type: DataTypes.BOOLEAN

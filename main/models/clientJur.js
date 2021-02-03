@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
 })
 
 
-const ClientJur = sequelize.define('Client', {
+const ClientJur = sequelize.define('ClientJur', {
     TB_ORGINN:{
         type:DataTypes.STRING
     },

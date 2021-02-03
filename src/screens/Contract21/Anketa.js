@@ -16,7 +16,6 @@ import getCurrentDate from '../../helpers/getCurrentDate';
 
 const { ipcRenderer } = window.require('electron');
 const Anketa = (props, ref) => {
-   
     const dispatch = useDispatch()
     const globalAnketa = useSelector(state => state.anketaReducer);
 
@@ -80,6 +79,7 @@ const Anketa = (props, ref) => {
                     <Client
                         setShow={setClientModalBeneficiaryState}
                         action={setB}
+                        name={"b"}
                     />
                 </ClientList>
             </Modal>
@@ -92,6 +92,7 @@ const Anketa = (props, ref) => {
                     <Client
                         setShow={setClientModalInsurerState}
                         action={setI}
+                        name={'i'}
                     />
                 </ClientList>
             </Modal>
