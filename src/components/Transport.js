@@ -18,7 +18,7 @@ const Transport = (props) => {
     const validator = useRef(new SimpleReactValidator())
     const [, forceUpdate] = useState();
     const setZ=(id,name)=>{
-        setTransportForm({...transportForm, ZALOGADATEL:name, ZALOGADATEL_ID: id});
+        setTransportForm({...transportForm, ZALOGADATEL:name, ZALOGADATEL_ID: 1});
     }
     const saveNew = (e) => {
         e.preventDefault()
