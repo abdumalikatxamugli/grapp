@@ -1,9 +1,9 @@
-import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { datediff } from "../../helpers/getDaysBetweenTwoDates";
 import { contractCreate } from "../../redux/actions";
 const { ipcRenderer } = window.require('electron');
-const Dogovor = (props, ref) => {
+const Dogovor = (props) => {
     const dispatch = useDispatch()
     const globalContracts = useSelector(state => state.contractReducer);
     const globalAnketa = useSelector(state => state.anketaReducer);
@@ -64,16 +64,16 @@ const Dogovor = (props, ref) => {
                 <h4><b>Номер договора</b></h4>
                 <span>1021/2121</span>
                 <h4>Дата подписания</h4>
-                <span>{globalAnketa.INS_DATE ?? ''}</span>
+                {/* <span>{globalAnketa.INS_DATE ?? ''}</span> */}
                 <h4>Период страхования</h4>
                 <div className="sparse">
                     <span>с</span>
-                    <span> {globalAnketa.INS_DATEF ?? ''}</span>
+                    {/* <span> {new Date(globalAnketa.INS_DATEF).toString() ?? ''}</span> */}
                     <span>по</span>
-                    <span>{globalAnketa.INS_DATET}г</span>
+                    {/* <span>{new Date(globalAnketa.INS_DATET).toString()?? ''}г</span> */}
                 </div>
                 <h4>Срок действия:</h4>
-                <span>{globalAnketa.INS_DATEF ? datediff(globalAnketa.INS_DATEF, globalAnketa.INS_DATET) : ""} </span>дня(ей)
+                {/* <span>{globalAnketa.INS_DATEF ? datediff(globalAnketa.INS_DATEF, globalAnketa.INS_DATET) : ""} </span>дня(ей) */}
             </div>
             <div className="form-main">
                 <div className="form-header">

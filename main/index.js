@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-const { app, BrowserWindow, ipcMain, Notification } = require('electron');
-const { anketa_create } = require('./controllers/anketa');
-=======
 const {app, BrowserWindow, ipcMain,Notification } = require('electron');
 const { anketa } = require('./controllers/anketa');
->>>>>>> 2bb37daa8ddde55b3de877e86eabf5430edc8730
 const { client } = require('./controllers/client');
 const { contract } = require('./controllers/contract');
+const {transch} = require('./controllers/transch');
 const { transport } = require('./controllers/transport');
 const { voditel } = require('./controllers/voditel');
 
@@ -47,16 +43,10 @@ ipcMain.on('save-client', client.create);
 
 
 // Shoh functions
-<<<<<<< HEAD
-ipcMain.on('anketa_create', (event, came) => {
-  anketa_create(came, mainWindow)
-});
+ipcMain.on('anketa_save', anketa.create);
 ipcMain.on('transport-create', transport.create);
 ipcMain.on('transport-delete', transport.delete);
 ipcMain.on('voditel-create', voditel.create);
 ipcMain.on('contract-create', contract.create);
-=======
-ipcMain.on('anketa_save', anketa.create)
-
->>>>>>> 2bb37daa8ddde55b3de877e86eabf5430edc8730
+ipcMain.on('transch-create', transch.create);
 // setInterval(check_internet, 3000);

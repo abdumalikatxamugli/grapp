@@ -56,6 +56,7 @@ const Anketa = (props, ref) => {
         ipcRenderer.send("anketa_save", anketaForm)
     }
     const save2 = (event, args) => {
+        console.log(args)
         dispatch(anketaCreate(args))
     }
 

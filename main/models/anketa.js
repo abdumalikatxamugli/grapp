@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const Transch = require('./transch');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -52,7 +53,11 @@ const Anketa = sequelize.define('Anketa', {
 
 // Contract.belongsTo(Beneficiar);
 // Beneficiar.hasMany(Contract);
-
+Anketa.hasMany(Transch, {
+    as: 'transch',
+    foreignKey: 'ANKETA_ID'
+})
+Transch.belongsTo(Anketa)
 Anketa.sync({ force: true } );
 
 
