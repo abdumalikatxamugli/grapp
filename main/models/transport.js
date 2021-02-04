@@ -11,115 +11,115 @@ const sequelize = new Sequelize({
 const Transport = sequelize.define('Transport', {
     TB_ID: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     TB_REGNUMBER: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_YEAR: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     TB_KUZOV: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_SHASSI: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_DVIGATEL: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_MARKA: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_MODEL: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_VMODEL: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_TYPE: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_MOSCH: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: true
     },
     TB_STOIMOST: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_STOIMOST: {
         type: DataTypes.DECIMAL(15, 2),
-        allowNull: false
+        allowNull: true
     },
     TB_COLOR: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_TEXPSERY: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_TEXPNUMBER: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     TB_TEXPDATE: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     TB_COMMENT: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS1: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS2: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS3: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS4: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS5: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DEFEKT_OPIS6: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_DOP_KOL: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_SUMM_DOP_OBOR: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_SUMM_ARENDA: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     TB_SIGNAL: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
 
     TB_DOP1_SPEC: {
@@ -254,7 +254,14 @@ const Transport = sequelize.define('Transport', {
 
 });
 
-// Transport.belongsTo(Anketa, { foreignKey: 'CONTRACT_ID' });
+Transport.hasOne(Contract);
+Contract.belongsTo(Transport, {
+    as: "transport",
+    foreignKey: {
+        name: 'TRANSPORT_ID'
+    }
+});
+
 Transport.sync({ force: true });
 
 

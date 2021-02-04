@@ -13,9 +13,8 @@ const TransportTable = (props, ref) => {
     setTransports([...globalTransports])
   }, [globalTransports])
   
-  const addTransport = (given) => {
+  const addTransport = () => {
     setCreateState(!createState)
-    setTransports([...transports])
   }
   
   const [createState, setCreateState] = useState(false);

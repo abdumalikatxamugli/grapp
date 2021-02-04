@@ -18,9 +18,9 @@ const Form = () => {
     const [navButtons, setNavButtons] = useState([
         {  label: 'Общие сведения', isAccessible: true },
         {  label: 'Объект', isAccessible: true },
-        {  label: 'Договор страхования', isAccessible: false },
-        {  label: 'Оплата', isAccessible: false },
-        {  label: 'Полис', isAccessible: false }
+        {  label: 'Договор страхования', isAccessible: true },
+        {  label: 'Оплата', isAccessible: true },
+        {  label: 'Полис', isAccessible: true }
     ]);
    
     const permit = (id) => {

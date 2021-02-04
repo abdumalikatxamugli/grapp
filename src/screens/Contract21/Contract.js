@@ -2,8 +2,9 @@ import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useState }
 import { useDispatch, useSelector } from "react-redux";
 import { datediff } from "../../helpers/getDaysBetweenTwoDates";
 import { contractCreate } from "../../redux/actions";
-const Dogovor = forwardRef((props, ref) => {
-    const dispatch=useDispatch()
+const { ipcRenderer } = window.require('electron');
+const Dogovor = (props, ref) => {
+    const dispatch = useDispatch()
     const globalContracts = useSelector(state => state.contractReducer);
     const globalAnketa = useSelector(state => state.anketaReducer);
     const [premiyas, setPremiyas] = useState([
@@ -18,16 +19,19 @@ const Dogovor = forwardRef((props, ref) => {
             franchiseAmount: 0
         }
     ]);
-    useImperativeHandle(ref, () => ({
-        showValidationMessages() {
-        },
-        submitNew() {
-        
-        }
-    }));
     useEffect(() => {
         setPremiyas([...globalContracts])
     }, [globalContracts])
+    useEffect(() => {
+        ipcRenderer.on("contract-saved", save2)
+    }, [])
+    const save = () => {
+        ipcRenderer.send("contract-create", premiyas)
+    }
+    const save2 = (event, data) => {
+        dispatch(contractCreate([...data]))
+        ipcRenderer.removeListener('contract-saved', save2);
+    }
     const changePremiya = (e, index, prop) => {
         console.log(prop);
         let tempObj = [...premiyas];
@@ -76,7 +80,7 @@ const Dogovor = forwardRef((props, ref) => {
                     <h4>Страховые покрытия</h4>
                     <div className="sparse">
                         {/*<button>Отмена</button>*/}
-                        <button className="bg-skyblue" onClick={()=>dispatch(contractCreate([...premiyas]))}>Сохранить</button>
+                        <button className="bg-skyblue" onClick={save}>Сохранить</button>
                     </div>
                 </div>
                 <div>
@@ -151,5 +155,5 @@ const Dogovor = forwardRef((props, ref) => {
         </div>
 
     )
-})
+}
 export default Dogovor;

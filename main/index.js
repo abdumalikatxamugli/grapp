@@ -1,7 +1,9 @@
-const {app, BrowserWindow, ipcMain,Notification } = require('electron');
+const { app, BrowserWindow, ipcMain, Notification } = require('electron');
 const { anketa_create } = require('./controllers/anketa');
 const { client } = require('./controllers/client');
-
+const { contract } = require('./controllers/contract');
+const { transport } = require('./controllers/transport');
+const { voditel } = require('./controllers/voditel');
 
 
 var mainWindow;
@@ -18,7 +20,7 @@ async function createWindow() {
 
   win.loadURL("http://localhost:3000");
 
-  mainWindow=win;
+  mainWindow = win;
 }
 
 app.whenReady().then(createWindow)
@@ -36,12 +38,15 @@ app.on('activate', () => {
 })
 
 //listener abdumalik
-ipcMain.on('save-client',client.create);
+ipcMain.on('save-client', client.create);
 
 
 // Shoh functions
 ipcMain.on('anketa_create', (event, came) => {
   anketa_create(came, mainWindow)
 });
-
+ipcMain.on('transport-create', transport.create);
+ipcMain.on('transport-delete', transport.delete);
+ipcMain.on('voditel-create', voditel.create);
+ipcMain.on('contract-create', contract.create);
 // setInterval(check_internet, 3000);

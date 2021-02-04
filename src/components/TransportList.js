@@ -1,19 +1,41 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import addImage from '../assets/icons/add.svg';
 import editImg from '../assets/icons/edit.svg';
-import Voditel from './Voditel';
+import VoditelCreate from './VoditelCreate';
+import VoditelTable from './VoditelTable';
+import VoditelList from './VoditelList';
 import Modal from './Modal';
+import { useDispatch } from 'react-redux';
+import { transportRemove } from '../redux/actions/transport';
+const { ipcRenderer } = window.require("electron");
 
 const TransportList = (props) => {
-	const [voditelModalShow, setVoditelModalShow] = useState(false);
+	const dispatch = useDispatch()
+	const [voditelModalShow, setVoditelModalShow] = useState({
+		status: false,
+		index: 0
+	});
+	useEffect(() => {
+		ipcRenderer.on('transport-deleted', remove2)
+	}, [])
+	const remove = (id) => {
+		ipcRenderer.send('transport-delete', id)
+	}
+	const remove2 = (event, deleted_id) => {
+		dispatch(transportRemove(deleted_id))
+		ipcRenderer.removeListener('transport-deleted', remove2)
+	}
 	const drop = (ev) => {
 		ev.currentTarget.parentNode.parentNode.classList.toggle("open");
 	}
 	if (props.data.length) {
 		return (
 			<>
-				<Modal show={voditelModalShow} setShow={setVoditelModalShow}>
-					<Voditel />
+				<Modal show={voditelModalShow.status} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })}>
+					<VoditelList changedAttribute="VODITEL">
+						<VoditelTable transportIndex={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
+						<VoditelCreate transportIndex={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
+					</VoditelList>
 				</Modal>
 				<table className="transportTable bordered-table" border="1">
 					<thead >
@@ -29,6 +51,9 @@ const TransportList = (props) => {
 						  </th>
 							<th>
 								Год выпуска
+						  </th>
+							<th>
+								Действия
 						  </th>
 						</tr>
 					</thead>
@@ -52,6 +77,11 @@ const TransportList = (props) => {
 										</td>
 										<td>
 											{item.TB_YEAR}
+										</td>
+										<td>
+											<button onClick={() => remove(item.id)}>
+												Удалить
+											</button>
 										</td>
 									</tr>
 									<tr>
@@ -102,7 +132,7 @@ const TransportList = (props) => {
 													<div className="col-md-12 attrs">
 														<div className="v-center">
 															Водители № доверенности, прав (категория):
-											  <button onClick={() => setVoditelModalShow(true)} className="bg-skyblue p-0">
+											  <button onClick={() => setVoditelModalShow({ ...voditelModalShow, status: true, index: idx })} className="bg-skyblue p-0">
 																<img src={addImage}
 																	className="cursor-pointer"
 																	alt="expand"
@@ -111,9 +141,9 @@ const TransportList = (props) => {
 														</div>
 														<ul>
 															<li>
-																<button>
-																	YANGI USER USER (AA123321, DOVERENNOST, B:C)
-												  </button>
+																{item.voditels.map((item, indx) => (<button key={`t${idx}${indx}`}>
+																	{item.TB_NAME}
+																</button>))}
 															</li>
 														</ul>
 													</div>
