@@ -6,11 +6,11 @@ import { summation } from "../../helpers/summation";
 import { transhesUpdate } from '../../redux/actions/transh';
 
 const Payment = (props) => {
+	const dispatch = useDispatch();
 	const globalContracts = useSelector(state => state.contractReducer);
 	const globalAnketa = useSelector(state => state.anketaReducer);
 	const globalOplata = useSelector(state => state.oplataReducer);
 	const globalTransh = useSelector(state => state.transhReducer);
-	const dispatch = useDispatch();
 
 	const [transh, setTranshState] = useState(false);
 	const controlTransh = (val) => {
