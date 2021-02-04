@@ -4,6 +4,11 @@ import leftArrow from '../assets/icons/arrow-left.svg';
 
 
 const ClientTable = (props) => {
+
+	// useEffect(()=>{
+	// 	ipcRenderer.send('get-clients');
+	// },[])
+	// ipcRenderer.on('client-saved', list);
 	
 	const selectClient=(name, id)=>{
 		if(props.juridic){

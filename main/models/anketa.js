@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Beneficiar = require('./Beneficiar.js');
+
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.sqlite3',
@@ -10,15 +10,15 @@ const sequelize = new Sequelize({
 const Anketa = sequelize.define('Anketa', {
     INS_NUM: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     INS_DATE: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     INS_DATEF: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     INS_DAY: {
         type: DataTypes.DATE,
@@ -26,34 +26,34 @@ const Anketa = sequelize.define('Anketa', {
     },
     INS_DATET: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: true
     },
     BENEFICIARY_ID: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     INSURANT_ID: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     INS_COUNTRY:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     VAL_USLOVIYA:{
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     OLD_DOGNUM: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
 });
 
 // Contract.belongsTo(Beneficiar);
 // Beneficiar.hasMany(Contract);
 
-Anketa.sync();
+Anketa.sync({ force: true } );
 
 
 module.exports = Anketa;
