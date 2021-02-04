@@ -5,6 +5,7 @@ const ClientFiz=require('../models/clientFiz');
 const client=()=>{
 	const create=async(event, {c, d, type})=>{
 		const common=await ClientCommon.create({...c, SYSTEM_TYPE:type});
+		d={...d, commonID:common.id};
 		const detail=type?await ClientJur.create(d):await ClientFiz.create(d);
 	
 		event.reply('client-saved', {

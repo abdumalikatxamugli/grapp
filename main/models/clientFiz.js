@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const ClientCommon = require('./clientCommon');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -58,8 +59,12 @@ const ClientFiz = sequelize.define('ClientFiz', {
     },
     TB_CERT_END:{
         type: DataTypes.DATEONLY
+    },
+    commonID:{
+        type: DataTypes.INTEGER  
     }
 })
+    
 
 ClientFiz.sync({ force: true });
 

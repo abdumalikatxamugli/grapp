@@ -5,7 +5,6 @@ const { ipcRenderer } = window.require("electron");
 const Client=(props)=>{
     useEffect(()=>{
       ipcRenderer.on('client-saved', save2)
-      console.log("as");
       if(!props.initialObject){
         return;
       }

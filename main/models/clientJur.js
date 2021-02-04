@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const ClientCommon = require('./clientCommon');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -46,8 +47,13 @@ const ClientJur = sequelize.define('ClientJur', {
     },
     TB_ISBANK:{
         type:DataTypes.BOOLEAN
+    },
+    commonID:{
+        type: DataTypes.INTEGER  
     }
 })
+
+
 
 ClientJur.sync({ force: true });
 

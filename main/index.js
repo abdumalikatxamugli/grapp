@@ -1,5 +1,5 @@
 const {app, BrowserWindow, ipcMain,Notification } = require('electron');
-const { anketa_create } = require('./controllers/anketa');
+const { anketa } = require('./controllers/anketa');
 const { client } = require('./controllers/client');
 
 
@@ -40,8 +40,6 @@ ipcMain.on('save-client',client.create);
 
 
 // Shoh functions
-ipcMain.on('anketa_create', (event, came) => {
-  anketa_create(came, mainWindow)
-});
+ipcMain.on('anketa_save', anketa.create)
 
 // setInterval(check_internet, 3000);

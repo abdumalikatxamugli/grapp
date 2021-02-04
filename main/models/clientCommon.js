@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
+const ClientFiz = require('./clientFiz');
+const ClientJur = require('./clientJur');
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.sqlite3',
@@ -52,6 +53,12 @@ const ClientCommon = sequelize.define('ClientCommon', {
         type: DataTypes.STRING
     }
 })
+
+ClientCommon.hasOne(ClientJur);
+ClientFiz.belongsTo(ClientCommon, {foreignKey: 'commonID'});
+
+ClientCommon.hasOne(ClientFiz, );
+ClientJur.belongsTo(ClientCommon, {foreignKey: 'commonID'});
 
 ClientCommon.sync({ force: true });
 

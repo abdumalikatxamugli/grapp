@@ -5,13 +5,15 @@ const Anketa = require('../models/anketa.js');
 
 const anketa_controller = () => {
 
-    const create = async (arg, win) => {
+    const create = async (event, args) => {
         try {
-            const anketa= await Anketa.create(arg);
-            win.webContents.send('anketa_saved',client);
+            const anketa= args.id?await Anketa.upsert(args, {returning:true})
+                    :await Anketa.create(args)
+            event.reply('anketa_saved', args.id?anketa[0].dataValues:anketa.dataValues);
         }
         catch (e) {
-            win.webContents.send('error_occured',e.errors);
+            console.log(e)
+            event.reply('error_occured',e.errors);
         }
     }
     const list = async (event, win) => {
@@ -22,8 +24,10 @@ const anketa_controller = () => {
         win.webContents.send('anketa_list_resp',anketas);
     }
     return {
-        anketa_create: create,
-        anketa_list: list
+        anketa:{
+            create: create,
+            list: list
+        }
     }
 
 }

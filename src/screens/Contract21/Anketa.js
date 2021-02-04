@@ -30,9 +30,7 @@ const Anketa = (props, ref) => {
     });
 
     useEffect(() => {
-        ipcRenderer.on("anketa_saved", function () {
-            dispatch(anketaCreate(anketaForm))
-        })
+        ipcRenderer.on("anketa_saved",save2);
     }, ["init"])
 
     useEffect(() => {
@@ -55,7 +53,10 @@ const Anketa = (props, ref) => {
     }
 
     const save = () => {
-        ipcRenderer.send("anketa_create", anketaForm)
+        ipcRenderer.send("anketa_save", anketaForm)
+    }
+    const save2 = (event, args) => {
+        dispatch(anketaCreate(args))
     }
 
     const setB=(name,id)=>{
