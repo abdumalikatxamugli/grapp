@@ -1,80 +1,48 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Beneficiar=require('./Beneficiar.js');
 const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
+  dialect: 'sqlite',
+  storage: './database.sqlite3',
+  logging: false
 })
 
 
 const Contract = sequelize.define('Contract', {
- 
-  INS_DATE: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  INS_DATEF: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  INS_DAY: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  INS_DATET: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  OWNERID:{
+  TRANSPORT_ID: {
     type: DataTypes.INTEGER,
     allowNull: true
   },
-  BENEFID:{
-    type: DataTypes.INTEGER,
+  insuranceAmount: {
+    type: DataTypes.DECIMAL(15, 2),
     allowNull: true
   },
-  INSURANT_ID:{
-    type: DataTypes.INTEGER,
+  premiyaPercent: {
+    type: DataTypes.DECIMAL(15, 2),
     allowNull: true
   },
-  // VAL_USLOVIYA:{
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false
-  // },
-  // VAL_USLOVIYA:{
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false
-  // },
-  // VAL_LBL:{
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false
-  // },
-  // VAL_KURS:{
-  //   type: DataTypes.DECIMAL(10,2),
-  //   allowNull: false
-  // },
-  INS_COUNTRY:{
-    type: DataTypes.DECIMAL(10,2),
-    allowNull: false
+  premiyaAmount: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
   },
-  ISTOCHNIK_O:{
-    type: DataTypes.STRING,
-    allowNull: false
+  franchise: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
   },
-  INS_DOGNUM:{
-    type: DataTypes.INTEGER,
-    allowNull: false
+  franchiseCond: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
   },
-  OLD_DOGNUM:{
-    type: DataTypes.STRING,
-    allowNull: false
-  }
+  franchisePercent: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
+  },
+  franchiseAmount: {
+    type: DataTypes.DECIMAL(15, 2),
+    allowNull: true
+  },
 });
 
-Contract.belongsTo(Beneficiar);
-Beneficiar.hasMany(Contract);
-
-Contract.sync();
+Contract.sync({ force: true });
 
 
-module.exports=Contract;
+
+module.exports = Contract;

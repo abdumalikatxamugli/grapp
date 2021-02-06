@@ -4,7 +4,7 @@ import Sidemenu from './Sidemenu';
 import Transport from './Transport';
 import Client from './Client';
 import ClientList from './ClientList';
-import Voditel from './Voditel';
+import VoditelList from './VoditelList';
 import Transh from './Transh';
 import PaymentForm from './PaymentForm';
 import Modal from './Modal';
@@ -20,7 +20,6 @@ export {
 			Sidemenu,
 			Transport,
 			Client,
-			Voditel,
 			Transh,
 			PaymentForm,
 			Modal,
@@ -29,5 +28,6 @@ export {
 			ClientList,
 			TransportList,
 			ClientTable,
-			MyTable
+			MyTable,
+			VoditelList
 	   }

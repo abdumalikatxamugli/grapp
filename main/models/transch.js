@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Contract = require('./contract');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -9,22 +8,21 @@ const sequelize = new Sequelize({
 
 
 const Transch = sequelize.define('Transch', {
-    user_id: {
+    ANKETA_ID: {
         type: DataTypes.INTEGER,
-        allowNull: false
-      },
-    SUMMA: {
-        type: DataTypes.DECIMAL(15, 2),
-        allowNull: false
+        allowNull: true
     },
-    DATE: {
-        type: DataTypes.date,
-        allowNull: false
+    amount: {
+        type: DataTypes.DECIMAL(15, 2),
+        allowNull: true
+    },
+    date: {
+        type: DataTypes.DECIMAL(15, 2),
+        allowNull: true
     }
 });
 
-Transch.belongsTo(Contract, {foreignKey: 'CONTRACT_ID'});
-Transch.sync({force: true});
+Transch.sync({ force: true });
 
 
 module.exports = Transch;

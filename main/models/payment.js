@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Contract = require('./contract');
+const Anketa = require('./anketa');
+
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -9,25 +10,28 @@ const sequelize = new Sequelize({
 
 
 const Payment = sequelize.define('Payment', {
-    SUMMA: {
-        type: DataTypes.DECIMAL(15, 2),
-        allowNull: false
+    ANKETA_ID: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
-    DATE: {
-        type: DataTypes.date,
-        allowNull: false
+    OPL_DATA: {
+        type: DataTypes.DATE,
+        allowNull: true
     },
-    TYPE: {
-        type: DataTypes.SMALLINT,
-        allowNull: false
+    OPL_SUMMA: {
+        type: DataTypes.DECIMAL(15,2),
+        allowNull: true
     },
-    PAYDOC: {
+    OPL_TYPE: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    DOC_NUM: {
         type: DataTypes.STRING,
         allowNull: true
     }
 });
 
-Payment.belongsTo(Contract, {foreignKey: 'CONTRACT_ID'});
 Payment.sync({force: true});
 
 

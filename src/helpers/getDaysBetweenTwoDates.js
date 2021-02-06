@@ -4,9 +4,11 @@ function parseDate(str) {
 }
 
 export function datediff(first, second) {
-    const fir=parseDate(first)
-    const sec=parseDate(second)
-    // Take the difference between the dates and divide by milliseconds per day.
-    // Round to nearest whole number to deal with DST.
-    return Math.round((sec-fir)/(1000*60*60*24));
+    console.log(first, second)
+    return ""
+    // const fir=parseDate(first)
+    // const sec=parseDate(second)
+    // // Take the difference between the dates and divide by milliseconds per day.
+    // // Round to nearest whole number to deal with DST.
+    // return Math.round((sec-fir)/(1000*60*60*24));
 }

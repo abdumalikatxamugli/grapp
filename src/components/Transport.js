@@ -1,45 +1,51 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import { transportCreate } from "../redux/actions";
 import { contractAdd } from "../redux/actions/contract";
 import UnvisibleFormElements from "./UnvisibleFormElements";
-import {Modal,ClientTable, Client, ClientList} from './index';
+import { Modal, ClientTable, Client, ClientList } from './index';
+const { ipcRenderer } = window.require('electron');
 
 const Transport = (props) => {
-    const dispatch=useDispatch()
-
-    const [zagoladatelShowState, setZagoladatelShowState] =useState(false)
+    const dispatch = useDispatch()
+    const [zagoladatelShowState, setZagoladatelShowState] = useState(false)
     const [transportForm, setTransportForm] = useState({});
-    
+    const validator = useRef(new SimpleReactValidator())
+    const [, forceUpdate] = useState();
+    useEffect(() => {
+        ipcRenderer.on("transport-saved", save2)
+    }, [])
     const transportChanger = (e) => {
         setTransportForm({ ...transportForm, [e.target.name]: e.target.value })
     }
-    const validator = useRef(new SimpleReactValidator())
-    const [, forceUpdate] = useState();
-    const setZ=(id,name)=>{
-        setTransportForm({...transportForm, ZALOGADATEL:name, ZALOGADATEL_ID: id});
+    const setZ = (name, id) => {
+        setTransportForm({ ...transportForm, ZALOGADATEL: name, TB_ID: id });
     }
-    const saveNew = (e) => {
+    const save = (e) => {
         e.preventDefault()
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Save to Database and to parent data
-        if (validator.current.allValid()) {
-            props.addTransport(transportForm)
-            dispatch(transportCreate(transportForm))
-            dispatch(contractAdd({
-                name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
-                insuranceAmount: 0,
-                premiyaPercent: 0,
-                premiyaAmount: 0,
-                franchise: false,
-                franchiseCond: false,
-                franchisePercent: 0,
-                franchiseAmount: 0
-            }))
-        } else {
-            validator.current.showMessages();
-            forceUpdate(1)
-        }
+        // if (validator.current.allValid()) {
+        ipcRenderer.send("transport-create", transportForm)
+        // } else {
+        // validator.current.showMessages();
+        // forceUpdate(1)
+        // }
+    }
+    const save2 = (event, came) => {
+        props.addTransport()
+        dispatch(transportCreate({...came, voditels:[]}))
+        dispatch(contractAdd({
+            name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
+            insuranceAmount: 0,
+            premiyaPercent: 0,
+            premiyaAmount: 0,
+            franchise: false,
+            franchiseCond: false,
+            franchisePercent: 0,
+            franchiseAmount: 0,
+            transport_id: came.id
+        }))
+        ipcRenderer.removeListener('transport-saved', save2);
     }
     return (
         <>
@@ -61,8 +67,8 @@ const Transport = (props) => {
                         <div className="input-group">
                             <div className="form-inline">
                                 <label className="required">Владелец/Залогодатель/Лизингополучатель</label>
-                                <button type="button" onClick={e=>setZagoladatelShowState(true)}>
-                                   {transportForm.ZALOGADATEL??'Залогодатель'}
+                                <button type="button" onClick={e => setZagoladatelShowState(true)}>
+                                    {transportForm.ZALOGADATEL ?? 'Залогодатель'}
                                 </button>
                                 {validator.current.message('TB_ID', transportForm.TB_ID, 'required')}
                             </div>
@@ -390,7 +396,7 @@ const Transport = (props) => {
                         </UnvisibleFormElements>
                     </div>
                     <div>
-                        <button className="bg-skyblue btn-bg mv-20" onClick={saveNew}>Save</button>
+                        <button className="bg-skyblue btn-bg mv-20" onClick={save}>Save</button>
                     </div>
                 </form>
             </div>

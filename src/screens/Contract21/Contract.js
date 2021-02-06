@@ -1,9 +1,10 @@
-import React, { forwardRef, Fragment, useEffect, useImperativeHandle, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { datediff } from "../../helpers/getDaysBetweenTwoDates";
 import { contractCreate } from "../../redux/actions";
-const Dogovor = forwardRef((props, ref) => {
-    const dispatch=useDispatch()
+const { ipcRenderer } = window.require('electron');
+const Dogovor = (props) => {
+    const dispatch = useDispatch()
     const globalContracts = useSelector(state => state.contractReducer);
     const globalAnketa = useSelector(state => state.anketaReducer);
     const [premiyas, setPremiyas] = useState([
@@ -18,16 +19,19 @@ const Dogovor = forwardRef((props, ref) => {
             franchiseAmount: 0
         }
     ]);
-    useImperativeHandle(ref, () => ({
-        showValidationMessages() {
-        },
-        submitNew() {
-        
-        }
-    }));
     useEffect(() => {
         setPremiyas([...globalContracts])
     }, [globalContracts])
+    useEffect(() => {
+        ipcRenderer.on("contract-saved", save2)
+    }, [])
+    const save = () => {
+        ipcRenderer.send("contract-create", premiyas)
+    }
+    const save2 = (event, data) => {
+        dispatch(contractCreate([...data]))
+        ipcRenderer.removeListener('contract-saved', save2);
+    }
     const changePremiya = (e, index, prop) => {
         console.log(prop);
         let tempObj = [...premiyas];
@@ -60,23 +64,23 @@ const Dogovor = forwardRef((props, ref) => {
                 <h4><b>Номер договора</b></h4>
                 <span>1021/2121</span>
                 <h4>Дата подписания</h4>
-                <span>{globalAnketa.INS_DATE ?? ''}</span>
+                {/* <span>{globalAnketa.INS_DATE ?? ''}</span> */}
                 <h4>Период страхования</h4>
                 <div className="sparse">
                     <span>с</span>
-                    <span> {globalAnketa.INS_DATEF ?? ''}</span>
+                    {/* <span> {new Date(globalAnketa.INS_DATEF).toString() ?? ''}</span> */}
                     <span>по</span>
-                    <span>{globalAnketa.INS_DATET}г</span>
+                    {/* <span>{new Date(globalAnketa.INS_DATET).toString()?? ''}г</span> */}
                 </div>
                 <h4>Срок действия:</h4>
-                <span>{globalAnketa.INS_DATEF ? datediff(globalAnketa.INS_DATEF, globalAnketa.INS_DATET) : ""} </span>дня(ей)
+                {/* <span>{globalAnketa.INS_DATEF ? datediff(globalAnketa.INS_DATEF, globalAnketa.INS_DATET) : ""} </span>дня(ей) */}
             </div>
             <div className="form-main">
                 <div className="form-header">
                     <h4>Страховые покрытия</h4>
                     <div className="sparse">
                         {/*<button>Отмена</button>*/}
-                        <button className="bg-skyblue" onClick={()=>dispatch(contractCreate([...premiyas]))}>Сохранить</button>
+                        <button className="bg-skyblue" onClick={save}>Сохранить</button>
                     </div>
                 </div>
                 <div>
@@ -151,5 +155,5 @@ const Dogovor = forwardRef((props, ref) => {
         </div>
 
     )
-})
+}
 export default Dogovor;
