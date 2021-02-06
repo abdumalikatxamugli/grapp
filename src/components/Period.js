@@ -33,11 +33,11 @@ const Period = (props) => {
 			case 'INS_DATET':
 				setDatet(val);
 				setDatef(subtractDays(INS_DATEF,day))
-				props.changeHandler({target: {name: "INS_DATEF", value: subtractDays(val,day)}})
+				props.changeHandler({target: {name: "INS_DATET", value: subtractDays(val,day)}})
 				break;
 			case 'day':
 				setDay(val);
-				props.changeHandler({target: {name: "INS_DATET", value: addDays(INS_DATEF,val)}})
+				props.changeHandler({target: {name: "INS_DAY", value: addDays(INS_DATEF,val)}})
 				setDatet(addDays(INS_DATEF,val))
 				break;
 			default: 

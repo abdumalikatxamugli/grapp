@@ -1,124 +1,57 @@
 import React, { useState,useEffect }  from "react";
-import { useDispatch } from 'react-redux';
-import { anketaCreate } from '../redux/actions';
-/*
-**props:
-*juridic:Boolean
-*initialObject:object{
-    common:,
-    fiz:,
-    yur:,
-}
-*field: beneficiar|insurant|zalogadatel
-*/
-function Create(props) {
-    const dispatch=useDispatch();
-    
-    const [jurObject, setJurObject]=useState({
-        SYSTEM_ID:undefined,
-        TB_ORGINN:'',
-        TB_ORGNAME:'',
-        TB_KOD_OKONX:'',
-        TB_KOD_OKED:'',
-        TB_ORGMFO:'',
-        TB_ORGBANK:'',
-        TB_ORGSCHET:'',
-        TB_KOD_OKPO:'',
-        TB_KOD_SOATO:'',
-        TB_DIREKTOR:'',
-        TB_BUHGALTER:'',
-        TB_BASIS:'',
-        TB_ISBANK:false
-    });
-    const [fizObject, setFizObject]=useState({
-        SYSTEM_ID:undefined,
-        TB_PINFL:'',
-        TB_PASPSERY:'',
-        TB_PASPNUMBER:'',
-        TB_NAME:'',
-        TB_SURNAME:'',
-        TB_PATRONYM:'',
-        TB_DATEBIRTH:'',
-        TB_PASPVIDAN:'',
-        TB_PASPDATE:'',
-        TB_SEX:'',
-        TB_PRAVA_SERY:'',
-        TB_PRAVA_NUMBER:'',
-        TB_PRAVA_DATE:'',
-        TB_CHP:'',
-        TB_CERTIFICATE:'',
-        TB_CERT_BEGIN:'',
-        TB_CERT_END:''
-    });
-    const [commonObject, setCommonObject]=useState({
-        SYSTEM_ID:undefined,
-        TB_REZIDENT:false,
-        TB_COUNTRY:'',
-        TB_OBLAST:'',
-        TB_RAYON:'',
-        TB_ULICA:'',
-        TB_DOM:'',
-        TB_KV:'',
-        TB_EMAIL:'',
-        TB_SITE:'',
-        TB_POCHTA:'',
-        TB_PHONE1:'',
-        TB_PHONE2:'',
-        TB_FAX:''
-    });
-    const init=()=>{
-        if(Object.keys(props.initialObject).length===0){
-            return;
-        }
-        const tempJuridic={...props.initialObject.yur};
-        const tempFizObject={...props.initialObject.fiz};
-        const tempCommonObject={...props.initialObject.common};
-        setJurObject(tempJuridic);
-        setFizObject(tempFizObject);
-        setCommonObject(tempCommonObject);
-    }
-    useEffect(init, [props.initialObject]);
-    const setProp=(type, prop, value)=>{
+const { ipcRenderer } = window.require("electron");
 
-        var temp;
+
+const Client=(props)=>{
+    useEffect(()=>{
+      ipcRenderer.on('client-saved', save2)
+      if(!props.initialObject){
+        return;
+      }
+      setJurObject({...props.initialObject.yur});
+      setFizObject({...props.initialObject.fiz});
+      setCommonObject({...props.initialObject.common});
+
+    }, ["init"]);
+    
+    const [jurObject, setJurObject]=useState({});
+    const [fizObject, setFizObject]=useState({});
+    const [commonObject, setCommonObject]=useState({});
+    const setProp=(type, prop, value)=>{
         switch(type){
             case 'fiz':
-                temp={...fizObject};
-                temp[prop]=value;
-                setFizObject(temp);
+                setFizObject({...fizObject, [prop]:value});
                 break;
             case 'yur':
-                temp={...jurObject};
-                temp[prop]=value;
-                setJurObject(temp);
+                setJurObject({...jurObject, [prop]:value});
                 break;
             case 'common':
-                temp={...commonObject};
-                temp[prop]=value;
-                setCommonObject(temp);
+                setCommonObject({...commonObject, [prop]:value});
                 break;
             default:
                 break;
         }
     }
     const save=()=>{
-        if(commonObject.SYSTEM_ID===undefined){
-            // save to database create new instance
-        }else{
-            // update the database instance
-        }
+        ipcRenderer.send('save-client',{
+          c:{...commonObject},
+          d:{...props.juridic?jurObject:fizObject},
+          type:props.juridic?1:0
+        });
 
-        // write name to redux store
-        if(props.juridic){
-            dispatch(anketaCreate({[props.field]:jurObject.TB_ORGNAME}));
-        }else{
-             dispatch(anketaCreate({[props.field]:fizObject.TB_NAME}));
-        }
+    }
+    const save2=(event, args)=>{
+        if(props.juridic)
+            props.action(args.name, args.id);
+        else
+            props.action(args.name, args.id);
+
+        ipcRenderer.removeListener('client-saved', save2);
         props.setShow(false);
     }
     return (
         <div className="client-form hyper-form">
-            <form method="post" action="#" className="mt-5">
+            <form className="mt-5">
                 <div className="input-group">
                     <label >Резидент</label>
                     <div className="form-check">
@@ -543,4 +476,4 @@ function Create(props) {
         </div>
     );
 }
-export default Create;
+export default Client;

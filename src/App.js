@@ -15,7 +15,7 @@ function App() {
   	document.getElementsByTagName("body")[0].classList.add('closed-sidemenu');
   	setMenu(idx);
   }
-
+  
   return (
 	  <Provider store={store}>
   		<Sidemenu setMenu={changeMenu}/>

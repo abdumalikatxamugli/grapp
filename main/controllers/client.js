@@ -1,0 +1,22 @@
+const ClientCommon=require('../models/clientCommon');
+const ClientJur=require('../models/clientJur');
+const ClientFiz=require('../models/clientFiz');
+
+const client=()=>{
+	const create=async(event, {c, d, type})=>{
+		const common=await ClientCommon.create({...c, SYSTEM_TYPE:type});
+		d={...d, commonID:common.id};
+		const detail=type?await ClientJur.create(d):await ClientFiz.create(d);
+	
+		event.reply('client-saved', {
+			name:type?detail.TB_ORGNAME:detail.TB_NAME+" "+detail.TB_SURNAME,
+			id:common.id
+		});
+	}
+	return {
+		client:{
+			create:create
+		}
+	}
+}
+module.exports=client();

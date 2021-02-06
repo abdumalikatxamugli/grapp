@@ -1,27 +1,23 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import SimpleReactValidator from 'simple-react-validator';
+
 
 import { Transport, TransportList } from '../../components';
 
 
-const TransportTable = forwardRef((props, ref) => {
+const TransportTable = (props, ref) => {
   const globalTransports = useSelector(state => state.transportReducer);
   const [transports, setTransports] = useState([])
-  const validator = useRef(new SimpleReactValidator())
-  const [, forceUpdate] = useState();
+  
   useEffect(() => {
     setTransports([...globalTransports])
   }, [globalTransports])
-  useImperativeHandle(ref, () => ({
-    showValidationMessages() {
-      props.givePermissionToStpep(3)
-    }
-  }));
+  
   const addTransport = (given) => {
     setCreateState(!createState)
     setTransports([...transports])
   }
+  
   const [createState, setCreateState] = useState(false);
   return (
     <div>
@@ -40,6 +36,6 @@ const TransportTable = forwardRef((props, ref) => {
 
     </div>
   )
-})
+}
 
 export default TransportTable;

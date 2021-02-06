@@ -6,7 +6,6 @@ const anketaReducer=(anketa=initialState, action)=>{
 			return {
 				...anketa, ...action.payload	
 			};
-			break;
 		default:
 			return anketa
 	}

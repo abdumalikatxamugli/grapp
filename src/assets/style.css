@@ -311,6 +311,7 @@ select{
 .bordered-table{
     width:100%;
     border-collapse: collapse;
+    
 }
 .bordered-table th{
     font-size:15px;

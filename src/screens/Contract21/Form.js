@@ -1,67 +1,40 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TopControls } from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
 import Payment from "./Payment";
 import TransportTable from "./TransportTable";
-// import Transport from "../../components/Transport";
 import Polis from "./Polis";
 import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
+const { ipcRenderer } = window.require('electron');
 
 const Form = () => {
-    const childRef = useRef();
-    const [active, setActive] = useState(1);
+    useEffect(()=>{
+        ipcRenderer.on("error_occured",function(came,error){
+            alert(JSON.stringify(error))
+        })
+    },[])
+    const [active, setActive] = useState(0);
     const [navButtons, setNavButtons] = useState([
-        { id: 1, label: 'Общие сведения', isAccessible: true },
-        { id: 2, label: 'Объект', isAccessible: true },
-        { id: 3, label: 'Договор страхования', isAccessible: true },
-        { id: 4, label: 'Оплата', isAccessible: true },
-        { id: 5, label: 'Полис', isAccessible: true }
-    ])
-    const makeAccessible = (index) => {
-        const tomodified = [...navButtons]
-        const idx = tomodified.findIndex(item => item.id === index)
-        tomodified[idx] = { ...tomodified[idx], isAccessible: true }
-        setNavButtons([...tomodified])
+        {  label: 'Общие сведения', isAccessible: true },
+        {  label: 'Объект', isAccessible: true },
+        {  label: 'Договор страхования', isAccessible: false },
+        {  label: 'Оплата', isAccessible: false },
+        {  label: 'Полис', isAccessible: false }
+    ]);
+   
+    const permit = (id) => {
+        const modified = [...navButtons]
+        modified[id].isAccessible =  true ;
+        setNavButtons([...modified])
     }
-    const makeActive = (e, id) => {
-        e.preventDefault()
-        const idx = navButtons.findIndex(item => item.id === id)
-        if (navButtons[idx].isAccessible) {
+    const activate = (id) => {
+        if (navButtons[id].isAccessible) {
             setActive(id)
-        } else {
-            if (childRef.current !== null) {
-                childRef.current.showValidationMessages()
-            }
-        }
+        } 
     }
-    const activeChanger = (e, type) => {
-        e.preventDefault()
-        const activeId = parseInt(active)
-        const idx = navButtons.findIndex(item => item.id === activeId)
-        switch (type) {
-            case 'increment':
-                if (navButtons[idx + 1].isAccessible) {
-                    if (childRef.current != null && childRef.current.submitNew !== undefined) {
-                        childRef.current.submitNew()
-                    }
-                    setActive(activeId + 1)
-                } else {
-                    if (childRef.current != null && childRef.current.showValidationMessages !== undefined) {
-                        childRef.current.showValidationMessages()
-                    }
-                }
-                break;
-            case 'decrement':
-                if (navButtons[idx - 1].isAccessible) {
-                    setActive(activeId - 1)
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    // global context state
+    
+
     return (
         <>
             <div className="topbar">
@@ -72,8 +45,8 @@ const Form = () => {
                 <div className="stepwizard">
                     <ul className="stepwizard-navigators">
                         {navButtons.map((item, idx) => (
-                            <li className={active === item.id ? 'active' : ''} onClick={(e) => makeActive(e, item.id)} key={idx}>
-                                <span>{item.id}</span>
+                            <li className={active === idx ? 'active' : ''} onClick={() => activate(idx)} key={idx}>
+                                <span>{idx+1}</span>
                                 <strong>
                                     {item.label}
                                 </strong>
@@ -81,14 +54,14 @@ const Form = () => {
                         ))}
                     </ul>
                     <div className="d-flex justify-content-around mt-5 mb-5">
-                        {active !== 1 && <button onClick={e => activeChanger(e, 'decrement')}>Отмена</button>}
-                        {active !== 5 && <button onClick={e => activeChanger(e, 'increment')}>Далее</button>}
+                        {active !== 0 && <button onClick={() => activate(active-1 )}>Назад</button>}
+                        {active !== 1 && <button onClick={() => activate(active+1)}>Далее</button>}
                     </div>
-                    {active === 1 && <Anketa ref={active == 1 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
-                    {active === 2 && <TransportTable ref={active == 2 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
-                    {active === 3 && <Contract ref={active == 3 ? childRef : {}} givePermissionToStpep={makeAccessible} />}
-                    {active === 4 && <Payment />}
-                    {active === 5 && <Polis />}
+                    {active === 0 && <Anketa  permit={permit} />}
+                    {active === 1 && <TransportTable  permit={permit} />}
+                    {active === 2 && <Contract  permit={permit} />}
+                    {active === 3 && <Payment  permit={permit} />}
+                    {active === 4 && <Polis />}
                 </div>
 
             </div>

@@ -1,14 +1,24 @@
 import React from 'react';
 import leftArrow from '../assets/icons/arrow-left.svg';
-import { useDispatch } from 'react-redux';
-import { anketaCreate } from '../redux/actions';
+
+
 
 const ClientTable = (props) => {
-	const dispatch=useDispatch();
-	const selectClient=(name)=>{
-	  dispatch(anketaCreate({[props.field]:name}));
-    props.setShow(false);
+
+	// useEffect(()=>{
+	// 	ipcRenderer.send('get-clients');
+	// },[])
+	// ipcRenderer.on('client-saved', list);
+	
+	const selectClient=(name, id)=>{
+		if(props.juridic){
+	        props.action(name, id);
+	    }else{
+	        props.action(name, id);
+	    }
+	 	props.setShow(false);
 	}
+
 	return (
 		<>
 			{props.juridic &&
@@ -26,7 +36,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={()=>selectClient('Ahost')}>
+								<button onClick={()=>selectClient('Ahost', 1)}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>
@@ -52,7 +62,7 @@ const ClientTable = (props) => {
 					<tbody>
 						<tr>
 							<td width="5%">
-								<button onClick={()=>selectClient('Abdumalik')}>
+								<button onClick={()=>selectClient('Abdumalik',1)}>
 									<img src={leftArrow} alt="leftArrow" />
 								</button>
 							</td>
