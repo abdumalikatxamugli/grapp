@@ -17,7 +17,6 @@ const Client=(props)=>{
     const [jurObject, setJurObject]=useState({});
     const [fizObject, setFizObject]=useState({});
     const [commonObject, setCommonObject]=useState({});
-    
     const setProp=(type, prop, value)=>{
         switch(type){
             case 'fiz':
