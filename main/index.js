@@ -41,6 +41,9 @@ app.on('activate', () => {
 
 //listener abdumalik
 ipcMain.on('save-client', client.create);
+ipcMain.on('get-clients', client.list);
+ipcMain.on('remove-client', client.remove);
+ipcMain.on('insert-client-from-archive', client.insertFromArchive);
 
 
 // Shoh functions

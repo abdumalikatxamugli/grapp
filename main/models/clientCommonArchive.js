@@ -1,13 +1,13 @@
 'use strict';
 
 const {DataTypes } = require('sequelize');
-const ClientFiz = require('./clientFiz');
-const ClientJur = require('./clientJur');
+const ClientFizArchive = require('./clientFizArchive');
+const ClientJurArchive = require('./clientJurArchive');
 const sequelize=require('./dbconnection');
 
 
 
-const ClientCommon = sequelize.define('ClientCommon', {
+const ClientCommonArchive = sequelize.define('ClientCommonArchive', {
     SYSTEM_TYPE:{
         //yur=1 fiz=0 
         type: DataTypes.BOOLEAN
@@ -53,14 +53,11 @@ const ClientCommon = sequelize.define('ClientCommon', {
     }
 })
 
-ClientCommon.hasOne(ClientJur,{
-    onDelete:'CASCADE'
-});
 
-ClientCommon.hasOne(ClientFiz,{
-    onDelete:'CASCADE',
-    hooks:true
-});
 
-ClientCommon.sync({force:true});
-module.exports = ClientCommon;
+ClientCommonArchive.hasOne(ClientJurArchive);
+
+ClientCommonArchive.hasOne(ClientFizArchive);
+
+ClientCommonArchive.sync({force:true});
+module.exports = ClientCommonArchive;

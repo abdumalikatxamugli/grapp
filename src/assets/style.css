@@ -544,3 +544,7 @@ select{
 .p-0{
     padding:0;
 }
+.remove{
+    background-color: crimson;
+    color:white;
+}
