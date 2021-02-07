@@ -56,15 +56,22 @@ const Anketa = (props, ref) => {
         ipcRenderer.send("anketa_save", anketaForm)
     }
     const save2 = (event, args) => {
-        console.log(args)
         dispatch(anketaCreate(args))
     }
 
     const setB=(name,id)=>{
+        if(id===anketaForm.INSURANT_ID){
+            alert("BENEFICIAR can not be same as INSURANT");
+            return;
+        }
         dispatch(anketaCreate({BENEFICIARY:name, BENEFICIARY_ID:id}));
     }
     const setI=(name,id)=>{
-         dispatch(anketaCreate({INSURER:name,INSURER_ID:id}));
+         if(id===anketaForm.BENEFICIARY_ID){
+            alert("INSURANT can not be same as BENEFICIAR");
+            return;
+         }
+         dispatch(anketaCreate({INSURANT:name,INSURANT_ID:id}));
     }
     const setC=(name)=>{
         dispatch(anketaCreate({INS_COUNTRY:name}));
@@ -86,7 +93,7 @@ const Anketa = (props, ref) => {
                 </ClientList>
             </Modal>
             <Modal show={clientModalInsurerState} setShow={setClientModalInsurerState}>
-                <ClientList changedAttribute="INSURER">
+                <ClientList changedAttribute="INSURANT">
                     <ClientTable
                         setShow={setClientModalInsurerState}
                         action={setI}
@@ -126,9 +133,9 @@ const Anketa = (props, ref) => {
                     </div>
                     <div className="input">
                         <button onClick={() => setClientModalInsurerState(true)}>
-                            {anketaForm.INSURER ?? 'Выберите...'}
+                            {anketaForm.INSURANT ?? 'Выберите...'}
                         </button>
-                        {validator.current.message('INSURER', anketaForm.INSURER, 'required')}
+                        {validator.current.message('INSURANT', anketaForm.INSURANT, 'required')}
                     </div>
                     <div className="label">
                         <span>Бенефициар:</span>

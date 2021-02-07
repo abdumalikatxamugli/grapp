@@ -15,19 +15,19 @@ const Anketa = sequelize.define('Anketa', {
         allowNull: true
     },
     INS_DATE: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     INS_DATEF: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     INS_DAY: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     INS_DATET: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     BENEFICIARY_ID: {
@@ -46,6 +46,15 @@ const Anketa = sequelize.define('Anketa', {
       type: DataTypes.INTEGER,
       allowNull: true
     },
+    VAL_TYPE:{
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    VAL_KURS:{
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: true
+    },
+    
     OLD_DOGNUM: {
         type: DataTypes.STRING,
         allowNull: true
