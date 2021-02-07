@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { anketaCreate } from "../../redux/actions";
 import SimpleReactValidator from 'simple-react-validator';
@@ -31,6 +31,11 @@ const Anketa = (props, ref) => {
 
     useEffect(() => {
         ipcRenderer.on("anketa_saved",save2);
+        ipcRenderer.on("remove-client",remove2);
+        return ()=>{
+             ipcRenderer.removeListener("anketa_saved",save2);
+            ipcRenderer.removeListener("remove-client",remove2);
+        }
     }, ["init"])
 
     useEffect(() => {
@@ -76,7 +81,19 @@ const Anketa = (props, ref) => {
     const setC=(name)=>{
         dispatch(anketaCreate({INS_COUNTRY:name}));
     }
+    const remove=(id, role)=>{
+        ipcRenderer.send('remove-client',id, role)
+    }
 
+    const remove2=(event, id, role)=>{
+        if(role==='BENEFICIARY'){
+            dispatch(anketaCreate({BENEFICIARY:null, BENEFICIARY_ID:null}));
+        }
+        if(role==='INSURANT'){
+            dispatch(anketaCreate({INSURANT:null, INSURANT_ID:null}));
+        }
+    };
+    
     return (
         <>
             <Modal show={clientModalBeneficiaryState} setShow={setClientModalBeneficiaryState}>
@@ -88,7 +105,6 @@ const Anketa = (props, ref) => {
                     <Client
                         setShow={setClientModalBeneficiaryState}
                         action={setB}
-                        name={"b"}
                     />
                 </ClientList>
             </Modal>
@@ -101,7 +117,6 @@ const Anketa = (props, ref) => {
                     <Client
                         setShow={setClientModalInsurerState}
                         action={setI}
-                        name={'i'}
                     />
                 </ClientList>
             </Modal>
@@ -135,6 +150,15 @@ const Anketa = (props, ref) => {
                         <button onClick={() => setClientModalInsurerState(true)}>
                             {anketaForm.INSURANT ?? 'Выберите...'}
                         </button>
+                        {
+                            anketaForm.INSURANT&&
+                            <button
+                                className="remove"
+                                onClick={()=>remove(anketaForm.INSURANT_ID, "INSURANT")}
+                            >
+                                remove
+                            </button>
+                        }
                         {validator.current.message('INSURANT', anketaForm.INSURANT, 'required')}
                     </div>
                     <div className="label">
@@ -144,6 +168,15 @@ const Anketa = (props, ref) => {
                         <button onClick={() => setClientModalBeneficiaryState(true)}>
                             {anketaForm.BENEFICIARY ?? 'Выберите...'}
                         </button>
+                        {
+                            anketaForm.BENEFICIARY&&
+                            <button 
+                                className="remove"
+                                onClick={()=>remove(anketaForm.BENEFICIARY_ID, 'BENEFICIARY')}
+                            >
+                                remove
+                            </button>
+                        }
                         {validator.current.message('BENEFICIARY', anketaForm.BENEFICIARY, 'required')}
                     </div>
                     <div className="label">

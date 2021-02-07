@@ -1,11 +1,11 @@
 const { DataTypes } = require('sequelize');
-const ClientCommon = require('./clientCommon');
+const ClientCommonArchive = require('./clientCommonArchive');
 
 const sequelize=require('./dbconnection');
 
 
 
-const ClientJur = sequelize.define('ClientJur', {
+const ClientJurArchive = sequelize.define('ClientJurArchive', {
     TB_ORGINN:{
         type:DataTypes.STRING
     },
@@ -45,16 +45,18 @@ const ClientJur = sequelize.define('ClientJur', {
     TB_ISBANK:{
         type:DataTypes.BOOLEAN
     },
-    ClientCommonID:{
+    ClientCommonArchiveId:{
         type: DataTypes.INTEGER  
     }
 })
 
 
-ClientJur.associate=(models)=>{
-    ClientJur.belongsTo(models.ClientCommon);
+ClientJurArchive.associate=(models)=>{
+    ClientJurArchive.belongsTo(models.ClientCommonArchive);
 };
 
-ClientJur.sync({force:true});
 
-module.exports = ClientJur;
+ClientJurArchive.sync({force:true});
+
+
+module.exports = ClientJurArchive;

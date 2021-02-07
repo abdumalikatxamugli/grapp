@@ -1,11 +1,11 @@
 'use strict';
 
 const { DataTypes } = require('sequelize');
-const ClientCommon = require('./clientCommon');
+const ClientCommonArchive = require('./clientCommonArchive');
 const sequelize=require('./dbconnection');
 
 
-const ClientFiz = sequelize.define('ClientFiz', {
+const ClientFizArchive = sequelize.define('ClientFizArchive', {
     TB_PINFL:{
         type: DataTypes.STRING
     },
@@ -57,16 +57,17 @@ const ClientFiz = sequelize.define('ClientFiz', {
     TB_CERT_END:{
         type: DataTypes.DATEONLY
     },
-    ClientCommonID:{
+    ClientCommonArchiveId:{
         type: DataTypes.INTEGER
     }
 });
 
 
 
-ClientFiz.associate=(models)=>{
-    ClientFiz.belongsTo(models.ClientCommon);
+ClientFizArchive.associate=(models)=>{
+    ClientFizArchive.belongsTo(models.ClientCommonArchive);
 };
 
-ClientFiz.sync({force:true});
-module.exports = ClientFiz;
+
+ClientFizArchive.sync({force:true});
+module.exports = ClientFizArchive;

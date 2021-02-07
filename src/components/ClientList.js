@@ -8,6 +8,12 @@ import React, {useState} from 'react';
 const ClientList = (props) => {
   const [juridic, setJuridic]=useState(false);
   const [creating, setCreating]=useState(false);
+  const [initialObject, setInitialObj]=useState({});
+
+  const edit=(item)=>{
+  	setCreating(true);
+  	setInitialObj(item)
+  }
 
   return (
   	<div className="container-fluid">
@@ -33,11 +39,11 @@ const ClientList = (props) => {
   	
   	{
   		!creating&&
-  		React.cloneElement(props.children[0], { juridic: juridic})
+  		React.cloneElement(props.children[0], { juridic: juridic, edit:edit})
   	}
   	{
   		creating&&
-  		React.cloneElement(props.children[1], { juridic: juridic})
+  		React.cloneElement(props.children[1], { juridic: juridic, initialObject:initialObject})
   	}
   	</div>
     

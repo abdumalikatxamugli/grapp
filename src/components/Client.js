@@ -8,10 +8,15 @@ const Client=(props)=>{
       if(!props.initialObject){
         return;
       }
-      setJurObject({...props.initialObject.yur});
+      setJurObject({...props.initialObject.jur});
       setFizObject({...props.initialObject.fiz});
-      setCommonObject({...props.initialObject.common});
+      delete props.initialObject.fiz;
+      delete props.initialObject.jur;
+      setCommonObject({...props.initialObject});
 
+      return ()=>{
+        ipcRenderer.removeListener('client-saved', save2);
+      }
     }, ["init"]);
     
     const [jurObject, setJurObject]=useState({});
@@ -46,7 +51,6 @@ const Client=(props)=>{
         else
             props.action(args.name, args.id);
 
-        ipcRenderer.removeListener('client-saved', save2);
         props.setShow(false);
     }
     return (
