@@ -33,7 +33,7 @@ const Anketa = (props, ref) => {
         ipcRenderer.on("anketa_saved",save2);
         ipcRenderer.on("remove-client",remove2);
         return ()=>{
-             ipcRenderer.removeListener("anketa_saved",save2);
+            ipcRenderer.removeListener("anketa_saved",save2);
             ipcRenderer.removeListener("remove-client",remove2);
         }
     }, ["init"])
@@ -64,19 +64,19 @@ const Anketa = (props, ref) => {
         dispatch(anketaCreate(args))
     }
 
-    const setB=(name,id)=>{
+    const setB=(name,id, archive_id)=>{
         if(id===anketaForm.INSURANT_ID){
             alert("BENEFICIAR can not be same as INSURANT");
             return;
         }
-        dispatch(anketaCreate({BENEFICIARY:name, BENEFICIARY_ID:id}));
+        dispatch(anketaCreate({BENEFICIARY:name, BENEFICIARY_ID:id, BENEFICIARY_ARCHIVE: archive_id}));
     }
-    const setI=(name,id)=>{
+    const setI=(name,id, archive_id)=>{
          if(id===anketaForm.BENEFICIARY_ID){
             alert("INSURANT can not be same as BENEFICIAR");
             return;
          }
-         dispatch(anketaCreate({INSURANT:name,INSURANT_ID:id}));
+         dispatch(anketaCreate({INSURANT:name,INSURANT_ID:id, INSURANT_ARCHIVE:archive_id}));
     }
     const setC=(name)=>{
         dispatch(anketaCreate({INS_COUNTRY:name}));
@@ -101,6 +101,7 @@ const Anketa = (props, ref) => {
                     <ClientTable
                         setShow={setClientModalBeneficiaryState}
                         action={setB}
+                        restricted={anketaForm.INSURANT_ARCHIVE??null}
                     />
                     <Client
                         setShow={setClientModalBeneficiaryState}
@@ -113,6 +114,7 @@ const Anketa = (props, ref) => {
                     <ClientTable
                         setShow={setClientModalInsurerState}
                         action={setI}
+                        restricted={anketaForm.BENEFICIARY_ARCHIVE??null}
                     />
                     <Client
                         setShow={setClientModalInsurerState}
@@ -147,7 +149,7 @@ const Anketa = (props, ref) => {
                         <span>Страхователь:</span>
                     </div>
                     <div className="input">
-                        <button onClick={() => setClientModalInsurerState(true)}>
+                        <button onClick={() => anketaForm.INSURANT ?? setClientModalInsurerState(true)}>
                             {anketaForm.INSURANT ?? 'Выберите...'}
                         </button>
                         {
@@ -165,7 +167,7 @@ const Anketa = (props, ref) => {
                         <span>Бенефициар:</span>
                     </div>
                     <div className="input">
-                        <button onClick={() => setClientModalBeneficiaryState(true)}>
+                        <button onClick={() => anketaForm.BENEFICIARY??setClientModalBeneficiaryState(true)}>
                             {anketaForm.BENEFICIARY ?? 'Выберите...'}
                         </button>
                         {

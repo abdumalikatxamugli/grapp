@@ -50,6 +50,9 @@ const ClientCommon = sequelize.define('ClientCommon', {
     },
     TB_FAX:{
         type: DataTypes.STRING
+    },
+    ARCHIVE_ID:{
+        type: DataTypes.INTEGER
     }
 })
 
