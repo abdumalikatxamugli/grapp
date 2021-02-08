@@ -44,7 +44,8 @@ ipcMain.on('save-client', client.create);
 ipcMain.on('get-clients', client.list);
 ipcMain.on('remove-client', client.remove);
 ipcMain.on('insert-client-from-archive', client.insertFromArchive);
-
+ipcMain.on('get-contracts', contract.get);
+ipcMain.on('get-transports', transport.get);
 
 // Shoh functions
 ipcMain.on('anketa_save', anketa.create);

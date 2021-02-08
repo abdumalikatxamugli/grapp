@@ -7,33 +7,32 @@ const Dogovor = (props) => {
     const dispatch = useDispatch()
     const globalContracts = useSelector(state => state.contractReducer);
     const globalAnketa = useSelector(state => state.anketaReducer);
-    const [premiyas, setPremiyas] = useState([
-        {
-            name: "BENTLEY TURBO R(2020|204735)",
-            insuranceAmount: 0,
-            premiyaPercent: 0,
-            premiyaAmount: 0,
-            franchise: false,
-            franchiseCond: false,
-            franchisePercent: 0,
-            franchiseAmount: 0
-        }
-    ]);
+    const [premiyas, setPremiyas] = useState([]);
     useEffect(() => {
         setPremiyas([...globalContracts])
     }, [globalContracts])
+    
     useEffect(() => {
-        ipcRenderer.on("contract-saved", save2)
-    }, [])
+        ipcRenderer.on("contract-saved", save2);
+        ipcRenderer.send("get-contracts");
+        ipcRenderer.on("get-contracts", get);
+        return ()=>{
+            ipcRenderer.removeListener("get-contracts", get);
+            ipcRenderer.removeListener('contract-saved', save2);
+        }
+    }, []);
+
     const save = () => {
         ipcRenderer.send("contract-create", premiyas)
     }
+
     const save2 = (event, data) => {
         dispatch(contractCreate([...data]))
         ipcRenderer.removeListener('contract-saved', save2);
     }
+
     const changePremiya = (e, index, prop) => {
-        console.log(prop);
+        
         let tempObj = [...premiyas];
         let target = parseFloat(e.target.value);
 
@@ -57,6 +56,10 @@ const Dogovor = (props) => {
             default:
                 break;
         }
+    }
+    const get=(event, payload)=>{
+        const contracts=payload.map(item=>item.dataValues);
+        setPremiyas(contracts);
     }
     return (
         <div className="contract-form">

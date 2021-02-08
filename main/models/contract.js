@@ -1,47 +1,37 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite3',
-  logging: false
-})
+const { DataTypes } = require('sequelize');
+const sequelize=require('./dbconnection');
 
 
 const Contract = sequelize.define('Contract', {
-  TRANSPORT_ID: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
   insuranceAmount: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: 0    
   },
   premiyaPercent: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: 0      
   },
   premiyaAmount: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: 0      
   },
   franchise: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: false      
   },
   franchiseCond: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: false      
   },
   franchisePercent: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
+    defaultValue: 0     
   },
   franchiseAmount: {
     type: DataTypes.DECIMAL(15, 2),
-    allowNull: true
-  },
+    defaultValue: 0     
+  }
 });
-
-Contract.sync({ force: true });
 
 
 

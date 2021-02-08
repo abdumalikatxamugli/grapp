@@ -1,13 +1,14 @@
 const { Op } = require("sequelize");
-const ClientCommonArchive=require('../models/clientCommonArchive');
-const ClientJurArchive=require('../models/clientJurArchive');
-const ClientFizArchive=require('../models/clientFizArchive');
-const ClientCommon=require('../models/clientCommon');
-const ClientJur=require('../models/clientJur');
-const ClientFiz=require('../models/clientFiz');
-
+const {ClientCommonArchive,
+	   ClientJurArchive,
+  	   ClientFizArchive,
+       ClientCommon,
+ 	   ClientJur,
+       ClientFiz,
+} = require('../models')
 const {myupsert} = require('../helpers');
-const sequelize=require('../models/dbconnection'); 
+
+
 const client=()=>{
 	const create=async(event, {c, d, type})=>{
 		
@@ -36,7 +37,6 @@ const client=()=>{
 		});
 	}
 	const list=async (event, restricted)=>{
-		console.log(restricted)
 		const clients=await ClientCommonArchive.findAll(
 			{
 				where:{
@@ -68,6 +68,7 @@ const client=()=>{
 
 	const remove=async (event, id, role)=>{
 		const common=await ClientCommon.findByPk(id);	
+		console.log(common);
 		await common.destroy();
 		event.reply('remove-client', id, role);
 	}

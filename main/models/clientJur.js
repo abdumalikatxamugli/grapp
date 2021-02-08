@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const ClientCommon = require('./clientCommon');
 
 const sequelize=require('./dbconnection');
 
@@ -44,17 +43,11 @@ const ClientJur = sequelize.define('ClientJur', {
     },
     TB_ISBANK:{
         type:DataTypes.BOOLEAN
-    },
-    ClientCommonID:{
-        type: DataTypes.INTEGER  
     }
 })
 
 
-ClientJur.associate=(models)=>{
-    ClientJur.belongsTo(models.ClientCommon);
-};
 
-ClientJur.sync({force:true});
+
 
 module.exports = ClientJur;

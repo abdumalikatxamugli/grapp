@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron')
 const window = require('electron').BrowserWindow;
-const Anketa = require('../models/anketa.js');
+const {Anketa} = require('../models');
 
 const anketa_controller = () => {
 

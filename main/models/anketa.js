@@ -1,13 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const Payment = require('./payment');
-const Transch = require('./transch');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
-
+const { DataTypes } = require('sequelize');
+const sequelize=require('./dbconnection');
 
 const Anketa = sequelize.define('Anketa', {
     INS_NUM: {
@@ -23,7 +15,7 @@ const Anketa = sequelize.define('Anketa', {
         allowNull: true
     },
     INS_DAY: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.INTEGER,
         allowNull: true
     },
     INS_DATET: {
@@ -60,19 +52,5 @@ const Anketa = sequelize.define('Anketa', {
         allowNull: true
     }
 });
-
-// Contract.belongsTo(Beneficiar);
-// Beneficiar.hasMany(Contract);
-Anketa.hasMany(Transch, {
-    as: 'transch',
-    foreignKey: 'ANKETA_ID'
-})
-Anketa.hasMany(Payment, {
-    as: 'payment',
-    foreignKey: 'ANKETA_ID'
-})
-Transch.belongsTo(Anketa)
-Anketa.sync({ force: true } );
-
 
 module.exports = Anketa;

@@ -1,10 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
+const sequelize=require('./dbconnection');
 
 
 const Voditel = sequelize.define('Voditel', {
@@ -81,9 +77,6 @@ const Voditel = sequelize.define('Voditel', {
         allowNull: true
     }
 });
-
-// Transport.belongsTo(Anketa, { foreignKey: 'CONTRACT_ID' });
-Voditel.sync({ force: true });
 
 
 module.exports = Voditel;

@@ -1,8 +1,6 @@
 'use strict';
 
 const {DataTypes } = require('sequelize');
-const ClientFiz = require('./clientFiz');
-const ClientJur = require('./clientJur');
 const sequelize=require('./dbconnection');
 
 
@@ -56,14 +54,8 @@ const ClientCommon = sequelize.define('ClientCommon', {
     }
 })
 
-ClientCommon.hasOne(ClientJur,{
-    onDelete:'CASCADE'
-});
 
-ClientCommon.hasOne(ClientFiz,{
-    onDelete:'CASCADE',
-    hooks:true
-});
 
-ClientCommon.sync({force:true});
+
+
 module.exports = ClientCommon;

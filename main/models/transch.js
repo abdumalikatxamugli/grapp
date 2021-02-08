@@ -1,11 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
-
+const { DataTypes } = require('sequelize');
+const sequelize=require('./dbconnection');
 
 const Transch = sequelize.define('Transch', {
     ANKETA_ID: {
@@ -22,7 +16,6 @@ const Transch = sequelize.define('Transch', {
     }
 });
 
-Transch.sync({ force: true });
 
 
 module.exports = Transch;

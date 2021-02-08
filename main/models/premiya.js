@@ -1,11 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Transport=require("./transport.js");
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
 
+const sequelize=require('./dbconnection');
 
 const Premiya = sequelize.define('Premiya', {
     STRAXOVAYA_SUMMA:{
@@ -22,8 +17,7 @@ const Premiya = sequelize.define('Premiya', {
     }
 });
 
-Premiya.belongsTo(Transport, {foreignKey: 'OBJECT_ID'});
-Premiya.sync({force: true});
+
 
 
 module.exports = Premiya;
