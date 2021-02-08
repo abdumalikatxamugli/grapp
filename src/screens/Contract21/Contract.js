@@ -149,9 +149,7 @@ const Dogovor = (props) => {
                         </tbody>
                     </table>
                 </div>
-
             </div>
-
         </div>
 
     )
