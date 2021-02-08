@@ -20,7 +20,7 @@ async function createWindow() {
   win.maximize();
   // win.removeMenu()
 
-  win.loadURL("http://localhost:3000");
+  win.loadURL("http://localhost:3001");
 
   mainWindow = win;
 }
