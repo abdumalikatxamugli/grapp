@@ -6,7 +6,7 @@ const Period = (props) => {
 	const [INS_DATEF, setDatef] = useState(getCurrentDate());
 	const [day, setDay] = useState(0);
 	const [INS_DATET, setDatet] = useState(getCurrentDate());
-
+	console.log(INS_DATET);
 	const addDays = (date, days) => {
 		var result = new Date(date);
 		result.setDate(result.getDate() + parseInt(days));
@@ -28,17 +28,17 @@ const Period = (props) => {
 			case 'INS_DATEF':
 				setDatef(val);
 				setDatet(addDays(INS_DATET, day))
-				props.changeHandler({ target: { name: "INS_DATEF", value: val } })
+				props.changeHandler({ target: { name: "INS_DATET", value: val } })
 				break;
 			case 'INS_DATET':
 				setDatet(val);
-
 				setDatef(subtractDays(INS_DATEF,day))
-				props.changeHandler({target: {name: "INS_DATET", value: subtractDays(val,day)}})
+				props.changeHandler({target: {name: "INS_DATEF", value: subtractDays(val,day)}})
 				break;
 			case 'day':
 				setDay(val);
-				props.changeHandler({target: {name: "INS_DAY", value: addDays(INS_DATEF,val)}})
+				props.changeHandler({target: {name: "INS_DATET", value: addDays(INS_DATEF,val)}})
+				props.changeHandler({target: {name: "INS_DAY", value: val}})
 				setDatet(addDays(INS_DATEF,val))
 				break;
 			default:

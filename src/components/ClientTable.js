@@ -9,7 +9,7 @@ const { ipcRenderer } = window.require("electron");
 const ClientTable = (props) => {
 
 	useEffect(()=>{
-		ipcRenderer.send('get-clients');
+		ipcRenderer.send('get-clients', props.restricted);
 		ipcRenderer.on('get-clients', list);
 		ipcRenderer.on('insert-client-from-archive', selectClient);
 		return ()=>{
@@ -26,13 +26,9 @@ const ClientTable = (props) => {
 	const saveSelected=(id)=>{
 		ipcRenderer.send('insert-client-from-archive', id);
 	}
-	const selectClient=(event, name, id)=>{
-		if(props.juridic){
-	        props.action(name, id);
-	    }else{
-	        props.action(name, id);
-	    }
-	 	props.setShow(false);
+	const selectClient=(event, name, id, archive_id)=>{
+	  props.action(name, id,archive_id);
+	  props.setShow(false);
 	}
 
 	return (

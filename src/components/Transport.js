@@ -8,24 +8,32 @@ import { Modal, ClientTable, Client, ClientList } from './index';
 const { ipcRenderer } = window.require('electron');
 
 const Transport = (props) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
     const [zagoladatelShowState, setZagoladatelShowState] = useState(false)
     const [transportForm, setTransportForm] = useState({});
     const validator = useRef(new SimpleReactValidator())
     const [, forceUpdate] = useState();
     useEffect(() => {
-        ipcRenderer.on("transport-saved", save2)
+        ipcRenderer.on("transport-saved", save2);
+        ipcRenderer.on("remove-client",remove2);
+        return ()=>{
+            ipcRenderer.removeListener('transport-saved', save2);
+            ipcRenderer.removeListener("remove-client",remove2);
+        }
     }, [])
+
     const transportChanger = (e) => {
         setTransportForm({ ...transportForm, [e.target.name]: e.target.value })
     }
     const setZ = (name, id) => {
-        setTransportForm({ ...transportForm, ZALOGADATEL: name, TB_ID: id });
+        setTransportForm({ ...transportForm, ZALOGADATEL: name,  ZALOGADATEL_ID: id });
+        props.setBlock(true);
     }
     const save = (e) => {
         e.preventDefault()
         // if (validator.current.allValid()) {
-        ipcRenderer.send("transport-create", transportForm)
+        ipcRenderer.send("transport-create", {...transportForm, ANKETA_ID:props.anketa_id})
         // } else {
         // validator.current.showMessages();
         // forceUpdate(1)
@@ -34,19 +42,17 @@ const Transport = (props) => {
     const save2 = (event, came) => {
         props.addTransport()
         dispatch(transportCreate({...came, voditels:[]}))
-        dispatch(contractAdd({
-            name: `${transportForm.TB_MARKA} ${transportForm.TB_MODEL}`,
-            insuranceAmount: 0,
-            premiyaPercent: 0,
-            premiyaAmount: 0,
-            franchise: false,
-            franchiseCond: false,
-            franchisePercent: 0,
-            franchiseAmount: 0,
-            transport_id: came.id
-        }))
-        ipcRenderer.removeListener('transport-saved', save2);
+     
     }
+    const remove=(id, role)=>{
+        ipcRenderer.send('remove-client',id, role);
+        props.setBlock(false);
+    }
+    const remove2=(event, id, role)=>{
+        if(role==='ZALOGADATEL'){
+            setTransportForm({ZALOGADATEL:null, ZALOGADATEL_ID:null});
+        }
+    };
     return (
         <>
             <div className="transport-form hyper-form mt-20">
@@ -55,6 +61,7 @@ const Transport = (props) => {
                         <ClientTable
                             action={setZ}
                             setShow={setZagoladatelShowState}
+                            restricted={null}
                         />
                         <Client
                             action={setZ}
@@ -67,10 +74,20 @@ const Transport = (props) => {
                         <div className="input-group">
                             <div className="form-inline">
                                 <label className="required">Владелец/Залогодатель/Лизингополучатель</label>
-                                <button type="button" onClick={e => setZagoladatelShowState(true)}>
+                                <button type="button" onClick={e => transportForm.ZALOGADATEL??setZagoladatelShowState(true)}>
                                     {transportForm.ZALOGADATEL ?? 'Залогодатель'}
                                 </button>
-                                {validator.current.message('TB_ID', transportForm.TB_ID, 'required')}
+                                {
+                                    transportForm.ZALOGADATEL&&
+                                    <button
+                                        type="button"
+                                        className="remove"
+                                        onClick={()=>remove(transportForm.ZALOGADATEL_ID, "ZALOGADATEL")}
+                                    >
+                                        remove
+                                    </button>
+                                }
+                                {validator.current.message('ZALOGADATEL_ID', transportForm.ZALOGADATEL_ID, 'required')}
                             </div>
                         </div>
                         <div className="input-group">

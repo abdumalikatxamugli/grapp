@@ -47,9 +47,9 @@ const Client=(props)=>{
     }
     const save2=(event, args)=>{
         if(props.juridic)
-            props.action(args.name, args.id);
+            props.action(args.name, args.id, args.archive_id);
         else
-            props.action(args.name, args.id);
+            props.action(args.name, args.id, args.archive_id);
 
         props.setShow(false);
     }

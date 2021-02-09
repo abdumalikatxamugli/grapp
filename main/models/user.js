@@ -1,11 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
-
+const sequelize=require('./dbconnection');
 
 const User = sequelize.define('User', {
   SYSTEM_ID: {

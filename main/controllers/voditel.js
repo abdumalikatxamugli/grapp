@@ -1,4 +1,5 @@
-const Voditel = require('../models/voditel');
+const {Voditel} = require('../models');
+
 const voditel = () => {
     const create = async (event,  data) => {
         const voditel = await Voditel.create({ ...data });

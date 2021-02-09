@@ -16,8 +16,16 @@ const TransportList = (props) => {
 		index: 0
 	});
 	useEffect(() => {
-		ipcRenderer.on('transport-deleted', remove2)
-	}, [])
+		ipcRenderer.on('transport-deleted', remove2);
+		ipcRenderer.send("get-transports",props.anketa_id);
+	    ipcRenderer.on("get-transports", list);
+	    return ()=>{
+	      ipcRenderer.removeListener('get-transports', list);
+	    } 
+	}, []);
+	const list=(event, payload)=>{
+	  console.log(payload);
+	}
 	const remove = (id) => {
 		ipcRenderer.send('transport-delete', id)
 	}

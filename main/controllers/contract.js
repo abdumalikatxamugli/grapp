@@ -1,5 +1,5 @@
-const Contract = require('../models/contract');
-const Transport = require('../models/transport');
+const {Contract, Transport} = require('../models');
+
 const contract = () => {
     const create = async (event, data) => {
         try {
@@ -36,9 +36,14 @@ const contract = () => {
         }
 
     }
+    const get=async (event)=>{
+        const contracts=await Contract.findAll();
+        event.reply('get-contracts', contracts);
+    }
     return {
         contract: {
-            create: create
+            create: create,
+            get:get
         }
     }
 }

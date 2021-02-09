@@ -1,6 +1,5 @@
-const Payment = require('../models/payment');
-const Anketa = require('../models/anketa');
-const Transch = require('../models/transch');
+const {Payment, Anketa, Transch} = require('../models');
+
 const payment = () => {
     const create = async (event, { id, data }) => {
         try {

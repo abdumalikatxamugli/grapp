@@ -1,8 +1,6 @@
 'use strict';
 
 const {DataTypes } = require('sequelize');
-const ClientFizArchive = require('./clientFizArchive');
-const ClientJurArchive = require('./clientJurArchive');
 const sequelize=require('./dbconnection');
 
 
@@ -55,9 +53,5 @@ const ClientCommonArchive = sequelize.define('ClientCommonArchive', {
 
 
 
-ClientCommonArchive.hasOne(ClientJurArchive);
 
-ClientCommonArchive.hasOne(ClientFizArchive);
-
-ClientCommonArchive.sync({force:true});
 module.exports = ClientCommonArchive;

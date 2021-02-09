@@ -1,7 +1,6 @@
 'use strict';
 
 const { DataTypes } = require('sequelize');
-const ClientCommon = require('./clientCommon');
 const sequelize=require('./dbconnection');
 
 
@@ -56,17 +55,9 @@ const ClientFiz = sequelize.define('ClientFiz', {
     },
     TB_CERT_END:{
         type: DataTypes.DATEONLY
-    },
-    ClientCommonID:{
-        type: DataTypes.INTEGER
     }
 });
 
 
 
-ClientFiz.associate=(models)=>{
-    ClientFiz.belongsTo(models.ClientCommon);
-};
-
-ClientFiz.sync({force:true});
 module.exports = ClientFiz;

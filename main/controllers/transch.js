@@ -1,5 +1,5 @@
-const Anketa = require('../models/anketa');
-const Transch = require('../models/transch');
+const {Anketa,Transch} = require('../models');
+
 const transch = () => {
     const create = async (event, { id, data }) => {
         try {

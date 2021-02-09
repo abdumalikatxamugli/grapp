@@ -1,13 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Anketa = require('./anketa');
-
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite3',
-    logging: false
-})
-
+const sequelize=require('./dbconnection');
 
 const Payment = sequelize.define('Payment', {
     ANKETA_ID: {
@@ -32,7 +24,6 @@ const Payment = sequelize.define('Payment', {
     }
 });
 
-Payment.sync({force: true});
 
 
 module.exports = Payment;

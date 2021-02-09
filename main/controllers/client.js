@@ -1,20 +1,23 @@
-const ClientCommonArchive=require('../models/clientCommonArchive');
-const ClientJurArchive=require('../models/clientJurArchive');
-const ClientFizArchive=require('../models/clientFizArchive');
-
-const ClientCommon=require('../models/clientCommon');
-const ClientJur=require('../models/clientJur');
-const ClientFiz=require('../models/clientFiz');
-
+const { Op } = require("sequelize");
+const {ClientCommonArchive,
+	   ClientJurArchive,
+  	   ClientFizArchive,
+       ClientCommon,
+ 	   ClientJur,
+       ClientFiz,
+} = require('../models')
 const {myupsert} = require('../helpers');
-const sequelize=require('../models/dbconnection'); 
+
+
 const client=()=>{
 	const create=async(event, {c, d, type})=>{
 		
 		const commonArchive=c.id?await ClientCommonArchive.upsert({...c, SYSTEM_TYPE:type})
 										 :await ClientCommonArchive.create({...c, SYSTEM_TYPE:type});
 
-		const common=await ClientCommon.create({...c, SYSTEM_TYPE:type});
+		const common=await ClientCommon.create({...c, SYSTEM_TYPE:type, ARCHIVE_ID: commonArchive.id});
+
+
 
 		const dp={...d, ClientCommonId:common.id};
 		const dpa={...d, ClientCommonArchiveId:commonArchive.id};
@@ -29,12 +32,18 @@ const client=()=>{
 					
 		event.reply('client-saved', {
 			name:type?detail.TB_ORGNAME:detail.TB_NAME+" "+detail.TB_SURNAME,
-			id:common.id
+			id:common.id,
+			archive_id: common.ARCHIVE_ID
 		});
 	}
-	const list=async (event)=>{
+	const list=async (event, restricted)=>{
 		const clients=await ClientCommonArchive.findAll(
 			{
+				where:{
+					id:{
+						[Op.not]: restricted
+					}
+				},
 				include:[
 					{
 						model:ClientFizArchive
@@ -59,6 +68,7 @@ const client=()=>{
 
 	const remove=async (event, id, role)=>{
 		const common=await ClientCommon.findByPk(id);	
+		console.log(common);
 		await common.destroy();
 		event.reply('remove-client', id, role);
 	}
@@ -79,6 +89,7 @@ const client=()=>{
 																					:await commonPayload.ClientFizArchive.dataValues;
 		delete commonPayload.ClientFizArchive;
 		delete commonPayload.ClientJurArchive;
+		commonPayload={...commonPayload, ARCHIVE_ID:commonPayload.id}
 		delete commonPayload.id;
 
 		const common=await ClientCommon.create(commonPayload);
@@ -87,8 +98,9 @@ const client=()=>{
 		const detail=common.SYSTEM_TYPE?
 					   await ClientJur.create(dp)
 					  :await ClientFiz.create(dp); 
+
 		event.reply('insert-client-from-archive', common.SYSTEM_TYPE?detail.TB_ORGNAME
-					:detail.TB_NAME+" "+detail.TB_SURNAME, common.id);
+					:detail.TB_NAME+" "+detail.TB_SURNAME, common.id, common.ARCHIVE_ID);
 	}
 
 	return {
