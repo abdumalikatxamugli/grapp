@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import {useSelector} from 'react-redux';
 import addImage from '../assets/icons/add.svg';
 import editImg from '../assets/icons/edit.svg';
 import VoditelCreate from './VoditelCreate';
@@ -10,39 +11,45 @@ import { transportRemove } from '../redux/actions/transport';
 const { ipcRenderer } = window.require("electron");
 
 const TransportList = (props) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
+
+	const anketa=useSelector(state=>state.anketaReducer);
+	const [transports, setTransports] = useState([]);
 	const [voditelModalShow, setVoditelModalShow] = useState({
 		status: false,
 		index: 0
 	});
 	useEffect(() => {
 		ipcRenderer.on('transport-deleted', remove2);
-		ipcRenderer.send("get-transports",props.anketa_id);
+		ipcRenderer.send("get-transports",anketa.id);
 	    ipcRenderer.on("get-transports", list);
+	    console.log("mount");
 	    return ()=>{
-	      ipcRenderer.removeListener('get-transports', list);
+		   ipcRenderer.removeListener('get-transports', list);
+	       ipcRenderer.removeListener('transport-deleted', remove2);
 	    } 
 	}, []);
 	const list=(event, payload)=>{
-	  console.log(payload);
+		console.log(payload)
+        setTransports(payload);
 	}
 	const remove = (id) => {
-		ipcRenderer.send('transport-delete', id)
+		ipcRenderer.send('transport-delete', id);
+
 	}
 	const remove2 = (event, deleted_id) => {
-		dispatch(transportRemove(deleted_id))
-		ipcRenderer.removeListener('transport-deleted', remove2)
-	}
+		ipcRenderer.send("get-transports",anketa.id);
+	}	
 	const drop = (ev) => {
 		ev.currentTarget.parentNode.parentNode.classList.toggle("open");
 	}
-	if (props.data.length) {
+	if (transports.length) {
 		return (
 			<>
 				<Modal show={voditelModalShow.status} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })}>
 					<VoditelList changedAttribute="VODITEL">
-						<VoditelTable transportIndex={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
-						<VoditelCreate transportIndex={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
+						<VoditelTable transport_id={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
+						<VoditelCreate transport_id={voditelModalShow.index} setShow={() => setVoditelModalShow({ ...voditelModalShow, status: false })} />
 					</VoditelList>
 				</Modal>
 				<table className="transportTable bordered-table" border="1">
@@ -66,7 +73,7 @@ const TransportList = (props) => {
 						</tr>
 					</thead>
 					<tbody>
-						{props.data.map((item, idx) => {
+						{transports.map((item, idx) => {
 							return (
 								<Fragment key={`transportlist${idx}`}>
 									<tr className="closed">
@@ -140,7 +147,7 @@ const TransportList = (props) => {
 													<div className="col-md-12 attrs">
 														<div className="v-center">
 															Водители № доверенности, прав (категория):
-											  <button onClick={() => setVoditelModalShow({ ...voditelModalShow, status: true, index: idx })} className="bg-skyblue p-0">
+											  				<button onClick={() => setVoditelModalShow({status: true, index: item.id })} className="bg-skyblue p-0">
 																<img src={addImage}
 																	className="cursor-pointer"
 																	alt="expand"
@@ -148,11 +155,16 @@ const TransportList = (props) => {
 															</button>
 														</div>
 														<ul>
-															<li>
-																{item.voditels.map((item, indx) => (<button key={`t${idx}${indx}`}>
+															{item.Voditels.map((item, indx) => 
+																<li>
 																	{item.TB_NAME}
-																</button>))}
-															</li>
+																	<button className="remove">
+																		remove
+																	</button>
+																</li>
+																)
+															}	
+																
 														</ul>
 													</div>
 													<div className="col-md-12 attrs">

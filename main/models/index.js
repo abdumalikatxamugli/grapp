@@ -14,10 +14,10 @@ const ClientJurArchive = require('./clientJurArchive');
 const Anketa = require('./anketa');
 const Transch = require('./transch');
 const Contract = require('./contract');
-const Premiya = require('./premiya');
 const Payment = require('./payment');
 
-
+const Voditel = require('./voditel');
+const VoditelArchive = require('./voditelArchive');
 
 ClientCommon.hasOne(ClientJur,{
     onDelete:'CASCADE',
@@ -76,7 +76,26 @@ Transport.hasOne(Contract);
 
 Contract.belongsTo(Transport);
 
-Premiya.belongsTo(Transport, {foreignKey: 'OBJECT_ID'});
+
+Transport.hasMany(Voditel,{
+    foreignKey: 'TRANSPORT_ID'
+});
+
+Voditel.belongsTo(Transport);
+
+VoditelArchive.hasOne(Voditel,{
+    foreignKey: 'ARCHIVE_ID'
+});
+
+Voditel.belongsTo(VoditelArchive);
+
+Anketa.hasMany(Contract, {
+    as: 'contract',
+    foreignKey: 'ANKETA_ID'
+});
+
+Contract.belongsTo(Anketa);
+
 
 
 
@@ -94,7 +113,8 @@ module.exports = {
     Anketa ,
     Transch,
     Contract ,
-    Premiya,
     Payment,
-    Transport
+    Transport,
+    Voditel,
+    VoditelArchive
 }   

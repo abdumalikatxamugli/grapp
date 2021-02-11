@@ -6,6 +6,9 @@ const sequelize=require('./dbconnection');
 
 
 const Transport = sequelize.define('Transport', {
+    ANKETA_ID: {
+        type: DataTypes.INTEGER
+    },
     ZALOGADATEL_ID: {
         type: DataTypes.INTEGER
     },

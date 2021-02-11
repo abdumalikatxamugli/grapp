@@ -4,15 +4,19 @@ import { Transh, PaymentForm, MyTable } from '../../components/';
 import currencies from '../../constants/currencies';
 import { summation } from "../../helpers/summation";
 import { transhesUpdate } from '../../redux/actions/transh';
+const { ipcRenderer } = window.require('electron');
 
 const Payment = (props) => {
 	const dispatch = useDispatch();
-	const globalContracts = useSelector(state => state.contractReducer);
-	const globalAnketa = useSelector(state => state.anketaReducer);
-	const globalOplata = useSelector(state => state.oplataReducer);
-	const globalTransh = useSelector(state => state.transhReducer);
+	// const contracts = useSelector(state => state.contractReducer);
+	// const globalAnketa = useSelector(state => state.anketaReducer);
+	// const oplatas = useSelector(state => state.oplataReducer);
+	// const globalTransh = useSelector(state => state.transhReducer);
 
+	const anketa = useSelector(state => state.anketaReducer);
 	const [transh, setTranshState] = useState(false);
+	const [contracts, setContracts] = useState([]);
+	const [oplatas, setOplatas] = useState([]);
 	const controlTransh = (val) => {
 		setTranshState(val);
 		if (!val) {
@@ -20,10 +24,19 @@ const Payment = (props) => {
 		}
 	}
 	useEffect(() => {
-		if (globalTransh.length !== 0) {
-			setTranshState(true);
+		ipcRenderer.send("get-payment", anketa.id);
+		ipcRenderer.on("get-payment", load);
+		return ()=>{
+			ipcRenderer.removeListener('get-payment', load);
 		}
 	}, [])
+
+	const load=(event, payload)=>{
+		const contracts=payload.contracts.map(item=>item.dataValues);
+        const oplatas=payload.oplatas.map(item=>item.dataValues);
+		setContracts(contracts)
+		setOplatas(oplatas)
+	}
 	return (
 		<>
 			<div className="row">
@@ -36,7 +49,7 @@ const Payment = (props) => {
 							<input type="radio"
 								onClick={() => controlTransh(false)}
 								id="once" name="oplata" defaultChecked={!transh}
-								disabled={globalOplata.length !== 0}
+								disabled={oplatas.length !== 0}
 							/>
 							<label htmlFor="once">
 								Единовременная оплата
@@ -46,7 +59,7 @@ const Payment = (props) => {
 							<input type="radio"
 								onClick={() => controlTransh(true)}
 								id="transh" name="oplata" defaultChecked={transh}
-								disabled={globalOplata.length !== 0}
+								disabled={oplatas.length !== 0}
 							/>
 							<label htmlFor="transh">
 								Оплата траншами
@@ -56,16 +69,16 @@ const Payment = (props) => {
 				</div>
 				<div className="col-md-6">
 					<div className="mb-10">
-						Страховая сумма: {summation([...globalContracts.map(item => item.insuranceAmount)])}
+						Страховая сумма: {summation([...contracts.map(item => item.insuranceAmount)])}
 					</div>
 					<div className="mb-10">
-						Премия:	{summation([...globalContracts.map(item => item.premiyaAmount)])}
+						Премия:	{summation([...contracts.map(item => item.premiyaAmount)])}
 					</div>
 					<div className="mb-10">
-						Учет: {currencies[globalAnketa.VAL_TYPE] ?? ""}
+						Учет: {currencies[anketa.VAL_TYPE] ?? ""}
 					</div>
 					<div className="mb-10">
-						Оплата:	{currencies[globalAnketa.VAL_TYPE] ?? ""}
+						Оплата:	{currencies[anketa.VAL_TYPE] ?? ""}
 					</div>
 				</div>
 			</div>
@@ -113,10 +126,10 @@ const Payment = (props) => {
 						}
 					]
 				}
-					data={globalOplata}
+					data={oplatas}
 				/>
-				{globalOplata.length === 0 && <div>Оплата не произведена</div>}
-				<div className="mt-4">Остаток:	<b>{summation([...globalContracts.map(item => item.premiyaAmount)])}</b></div>
+				{oplatas.length === 0 && <div>Оплата не произведена</div>}
+				<div className="mt-4">Остаток:	<b>{summation([...contracts.map(item => item.premiyaAmount)])}</b></div>
 			</div>
 			<PaymentForm />
 		</>

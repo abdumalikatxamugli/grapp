@@ -36,8 +36,15 @@ const contract = () => {
         }
 
     }
-    const get=async (event)=>{
-        const contracts=await Contract.findAll();
+    const get=async (event, id)=>{
+        if(!id){
+            return;
+        }
+        const contracts=await Contract.findAll({
+            where:{
+                ANKETA_ID: id
+            }
+        });
         event.reply('get-contracts', contracts);
     }
     return {

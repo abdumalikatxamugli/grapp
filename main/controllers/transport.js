@@ -1,11 +1,12 @@
-const {Contract, Transport, ClientCommon} = require('../models');
+const {Contract, Transport, ClientCommon, Voditel} = require('../models');
 
 const transport = () => {
     const create = async (event, data) => {
         const transport = await Transport.create({ ...data});
         const contract = await Contract.create({
             name: transport.TB_MARKA+" "+transport.TB_MODEL,
-            TransportId: transport.id
+            TRANSPORT_ID: transport.id,
+            ANKETA_ID: transport.ANKETA_ID
         });
         event.reply('transport-saved', transport.dataValues);
     }
@@ -30,14 +31,27 @@ const transport = () => {
         event.reply('transport-deleted', id);
     }
     const get=async (event, id)=>{
+        console.log(id)
         if(!id){
             return;
         }
-        const transports=Transport.findAll({
+        var transports=await Transport.findAll({
             where:{
                 ANKETA_ID:id
-            }
+            },
+            include:Voditel
+        });
+        transports=await Promise.all(transports.map(async (item)=>{
+            item.voditels=await Promise.all(item.Voditels.map(async (item)=>{
+                return await item.dataValues;
+            })
+            )
+            delete item.Voditels;
+            return item.dataValues;
         })
+        )
+       
+        event.reply('get-transports', transports)
     }
     return {
         transport: {

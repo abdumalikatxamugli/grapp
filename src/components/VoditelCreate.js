@@ -8,18 +8,20 @@ const VoditelCreate = (props) => {
 	const [voditelForm, setVoditelForm] = useState({})
 	useEffect(() => {
 		ipcRenderer.on('voditel-saved', save2);
+		return ()=>{
+			ipcRenderer.removeListener('voditel-saved', save2);
+		}
 	}, [])
 	const changeHandler = (e) => {
 		setVoditelForm({ ...voditelForm, [e.target.name]: e.target.value })
 	}
+	
 	const save = () => {
-		ipcRenderer.send('voditel-create', voditelForm);
+		ipcRenderer.send('voditel-create', {...voditelForm, TRANSPORT_ID:props.transport_id});
 	}
 	const save2 = (event, args) => {
-		const { id, TB_NAME } = args
-		dispatch(voditelAdd(props.transportIndex, id, TB_NAME))
-		props.setShow()
-		ipcRenderer.removeListener('voditel-saved', save2);
+		props.setShow(false)
+		alert("Voditel saved");
 	}
 	return (
 		<form className="voditel">

@@ -1,16 +1,21 @@
 import React, { Fragment} from 'react';
 import {deletePayment} from '../redux/actions/oplata';
-import {useDispatch} from 'react-redux';
+const { ipcRenderer } = window.require('electron');
 
 const MyTable = ({
     columns = [],
     data = [],
     onRowClick = () => { }
 }) => {
-    const dispatch=useDispatch();
+    
     const deleteItem = (id) =>{
-        dispatch(deletePayment(id))
+        ipcRenderer.send("delete-oplata", id);
+        ipcRenderer.on('delete-oplata', deleted);
     }
+    const deleted=(event)=>{
+        ipcRenderer.removeListener("delete-oplata",deleted);
+    }
+    console.log(data);
     return (
         <table className="bordered-table" border="1">
             <thead>

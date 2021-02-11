@@ -7,7 +7,7 @@ const Payment = sequelize.define('Payment', {
         allowNull: true
     },
     OPL_DATA: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     OPL_SUMMA: {

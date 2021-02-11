@@ -7,7 +7,7 @@ import { voditelAdd } from "../redux/actions/transport";
 const VoditelTable = (props) => {
     const dispatch = useDispatch()
     const appendVoditel = (id, TB_NAME) => {
-        dispatch(voditelAdd(props.transportIndex, id, TB_NAME))
+        
         props.setShow()
     }
     return (
