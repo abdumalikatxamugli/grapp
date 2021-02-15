@@ -15,18 +15,21 @@ const TransportList = (props) => {
 
 	const anketa=useSelector(state=>state.anketaReducer);
 	const [transports, setTransports] = useState([]);
+	const [u, forceUpdate]=useState([]);
 	const [voditelModalShow, setVoditelModalShow] = useState({
 		status: false,
 		index: 0
 	});
 	useEffect(() => {
-		ipcRenderer.on('transport-deleted', remove2);
 		ipcRenderer.send("get-transports",anketa.id);
+		ipcRenderer.on('transport-deleted', remove2);
 	    ipcRenderer.on("get-transports", list);
+	    ipcRenderer.on("delete-voditel",removeVoditel2);
 	    console.log("mount");
 	    return ()=>{
 		   ipcRenderer.removeListener('get-transports', list);
 	       ipcRenderer.removeListener('transport-deleted', remove2);
+	       ipcRenderer.removeListener("delete-voditel",removeVoditel2);
 	    } 
 	}, []);
 	const list=(event, payload)=>{
@@ -42,6 +45,12 @@ const TransportList = (props) => {
 	}	
 	const drop = (ev) => {
 		ev.currentTarget.parentNode.parentNode.classList.toggle("open");
+	}
+	const removeVoditel=(id)=>{
+		ipcRenderer.send("delete-voditel",id);
+	}
+	const removeVoditel2=(event)=>{
+		forceUpdate([]);
 	}
 	if (transports.length) {
 		return (
@@ -147,7 +156,7 @@ const TransportList = (props) => {
 													<div className="col-md-12 attrs">
 														<div className="v-center">
 															Водители № доверенности, прав (категория):
-											  				<button onClick={() => setVoditelModalShow({status: true, index: item.id })} className="bg-skyblue p-0">
+											  				<button onClick={() => setVoditelModalShow({status: true, index: item.id})} className="bg-skyblue p-0">
 																<img src={addImage}
 																	className="cursor-pointer"
 																	alt="expand"
@@ -155,10 +164,13 @@ const TransportList = (props) => {
 															</button>
 														</div>
 														<ul>
-															{item.Voditels.map((item, indx) => 
+															{item.Voditels.map((voditel, indx) => 
 																<li>
-																	{item.TB_NAME}
-																	<button className="remove">
+																	{voditel.dataValues.TB_NAME}
+																	<button 
+																		className="remove"
+																		onClick={e=>removeVoditel(voditel.dataValues.id)}
+																	>
 																		remove
 																	</button>
 																</li>

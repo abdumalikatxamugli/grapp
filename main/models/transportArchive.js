@@ -5,13 +5,7 @@ const { DataTypes } = require('sequelize');
 const sequelize=require('./dbconnection');
 
 
-const Transport = sequelize.define('Transport', {
-    ANKETA_ID: {
-        type: DataTypes.INTEGER
-    },
-    ARCHIVE_ID:{
-        type: DataTypes.INTEGER
-    },
+const TransportArchive = sequelize.define('TransportArchive', {
     ZALOGADATEL_ID: {
         type: DataTypes.INTEGER
     },
@@ -195,4 +189,4 @@ const Transport = sequelize.define('Transport', {
 
 
 
-module.exports = Transport;
+module.exports = TransportArchive;

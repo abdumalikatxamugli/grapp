@@ -1,14 +1,30 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import leftArrow from '../assets/icons/arrow-left.svg';
 import { voditelAdd } from "../redux/actions/transport";
-
+const { ipcRenderer } = window.require("electron");
 
 const VoditelTable = (props) => {
-    const dispatch = useDispatch()
-    const appendVoditel = (id, TB_NAME) => {
-        
-        props.setShow()
+    const [voditels, setVoditels]=useState([]);
+    const anketa=useSelector(state=>state.anketaReducer);
+
+    useEffect(()=>{
+        ipcRenderer.send('get-voditels', props.transport_id)
+        ipcRenderer.on("get-voditels", populate);
+        ipcRenderer.on("choose-voditel", choose);
+        return ()=>{
+            ipcRenderer.removeListener("get-voditels", populate);
+        }
+    }, []);
+    const appendVoditel = (id) => {
+        ipcRenderer.send('choose-voditel', id, props.transport_id);
+    }
+    const choose=(event)=>{
+        props.setShow(false);
+    }
+    const populate=(event, payload)=>{
+        payload=payload.map(item=>item.dataValues);
+        setVoditels(payload);
     }
     return (
         <>
@@ -24,18 +40,20 @@ const VoditelTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                {voditels.map((item, index)=>
+                    <tr key={index}>
                         <td width="5%">
-                            <button onClick={() => appendVoditel(1, 'Mannop')}>
+                            <button onClick={() => appendVoditel(item.id)}>
                                 <img src={leftArrow} alt="leftArrow" />
                             </button>
                         </td>
-                        <td>Lorem</td>
-                        <td>Ispum</td>
-                        <td>Dolar</td>
-                        <td>AA</td>
-                        <td>1231234</td>
+                        <td>{item.TB_NAME}</td>
+                        <td>{item.TB_SURNAME}</td>
+                        <td>{item.TB_PATRONYM}</td>
+                        <td>{item.TB_PASPSERY}</td>
+                        <td>{item.TB_PASPNUMBER}</td>
                     </tr>
+                )}
                 </tbody>
             </table>
         </>

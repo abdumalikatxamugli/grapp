@@ -48,6 +48,9 @@ ipcMain.on('get-contracts', contract.get);
 ipcMain.on('get-transports', transport.get);
 ipcMain.on('get-payment', payment.get);
 ipcMain.on('delete-oplata', payment.deleteP);
+ipcMain.on('delete-voditel', voditel.deleteV);
+ipcMain.on('get-voditels', voditel.getV);
+ipcMain.on('choose-voditel', voditel.choose);
 
 
 // Shoh functions

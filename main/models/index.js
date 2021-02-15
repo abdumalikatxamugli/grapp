@@ -1,6 +1,7 @@
 'use strict';
 const sequelize = require('./dbconnection');
 const Transport = require('./transport');
+const TransportArchive = require('./transportArchive');
 
 const ClientCommon = require('./clientCommon');
 const ClientFiz = require('./clientFiz');
@@ -97,6 +98,11 @@ Anketa.hasMany(Contract, {
 Contract.belongsTo(Anketa);
 
 
+TransportArchive.hasOne(Transport,{
+    foreignKey:'ARCHIVE_ID'
+});
+
+Transport.belongsTo(TransportArchive);
 
 
 sequelize.sync({force: true}).then(function () {
@@ -116,5 +122,6 @@ module.exports = {
     Payment,
     Transport,
     Voditel,
-    VoditelArchive
+    VoditelArchive,
+    TransportArchive
 }   

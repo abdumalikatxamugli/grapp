@@ -1,8 +1,14 @@
-const {Contract, Transport, ClientCommon, Voditel} = require('../models');
+const {Contract, Transport,
+       ClientCommon, Voditel,
+       TransportArchive
+   } = require('../models');
 
 const transport = () => {
     const create = async (event, data) => {
-        const transport = await Transport.create({ ...data});
+        const transportArchive = await TransportArchive.create({ ...data});
+        
+        const transport= await Transport.create({ ...data, ARCHIVE_ID: transportArchive.id});
+        
         const contract = await Contract.create({
             name: transport.TB_MARKA+" "+transport.TB_MODEL,
             TRANSPORT_ID: transport.id,
