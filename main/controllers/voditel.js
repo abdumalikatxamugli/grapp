@@ -8,6 +8,7 @@ const voditel = () => {
     	const voditelArchive=data.id?await myupsert(VoditelArchive, {...data})
 									:await VoditelArchive.create({...data});
 
+        delete data.id;
 		const voditel=data.id?await myupsert(Voditel,{...data})
 							 :await Voditel.create({...data, ARCHIVE_ID: voditelArchive.id});
         
@@ -32,7 +33,7 @@ const voditel = () => {
         event.reply("delete-voditel");
     }
     const getV=async (event, transport_id) =>{
-        const payload=await sequelize.query("SELECT * FROM VoditelArchives where id not in (select id from Voditels where TRANSPORT_ID="+transport_id+")", { type: QueryTypes.SELECT });
+        const payload=await sequelize.query("SELECT * FROM VoditelArchives where id not in (select ARCHIVE_ID from Voditels where TRANSPORT_ID="+transport_id+")", { type: QueryTypes.SELECT });
             
         event.reply("get-voditels", payload);
     }

@@ -17,7 +17,6 @@ const transch = () => {
                                 }
                             }
                         )
-                        sended.push(oldTransch.dataValues)
                     } else {
                         // const newTransch = await Transch.create(element)
                         anketa = await Anketa.findOne({
@@ -35,9 +34,21 @@ const transch = () => {
         }
 
     }
+    const get=async (event, id)=>{
+        if(!id){
+            return;
+        }
+        const transhes=await Transch.findAll({
+            where:{
+                ANKETA_ID: id
+            }
+        });
+        event.reply('get-contracts', transhes);
+    }
     return {
         transch: {
-            create: create
+            create: create,
+            get:get
         }
     }
 }

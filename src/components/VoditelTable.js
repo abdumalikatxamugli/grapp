@@ -23,9 +23,9 @@ const VoditelTable = (props) => {
         props.setShow(false);
     }
     const populate=(event, payload)=>{
-        payload=payload.map(item=>item.dataValues);
-        setVoditels(payload);
+        setVoditels(payload);   
     }
+
     return (
         <>
             <table className="bordered-table" border="1">
@@ -37,6 +37,7 @@ const VoditelTable = (props) => {
                         <th>Patronymic</th>
                         <th>Passport Serie</th>
                         <th>Passport Number</th>
+                        <th>EDIT</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,7 @@ const VoditelTable = (props) => {
                         <td>{item.TB_PATRONYM}</td>
                         <td>{item.TB_PASPSERY}</td>
                         <td>{item.TB_PASPNUMBER}</td>
+                        <td><button onClick={()=>props.edit(item)}>EDIT</button></td>
                     </tr>
                 )}
                 </tbody>

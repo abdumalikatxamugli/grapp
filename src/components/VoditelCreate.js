@@ -8,6 +8,9 @@ const VoditelCreate = (props) => {
 	const [voditelForm, setVoditelForm] = useState({})
 	useEffect(() => {
 		ipcRenderer.on('voditel-saved', save2);
+		if(props.initialObject){
+			setVoditelForm(props.initialObject)
+		}
 		return ()=>{
 			ipcRenderer.removeListener('voditel-saved', save2);
 		}
@@ -30,7 +33,7 @@ const VoditelCreate = (props) => {
 					Фамилия:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_SURNAME" onChange={changeHandler} />
+					<input type="text" name="TB_SURNAME" onChange={changeHandler} value={voditelForm.TB_SURNAME}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -38,7 +41,7 @@ const VoditelCreate = (props) => {
 					Имя:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_NAME" onChange={changeHandler} />
+					<input type="text" name="TB_NAME" onChange={changeHandler}  value={voditelForm.TB_NAME}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -46,7 +49,7 @@ const VoditelCreate = (props) => {
 					Отчество:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_PATRONYM" onChange={changeHandler} />
+					<input type="text" name="TB_PATRONYM" onChange={changeHandler} value={voditelForm.TB_PATRONYM}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -54,7 +57,7 @@ const VoditelCreate = (props) => {
 					Дата рождения:
     		</div>
 				<div className="col-md-8">
-					<input type="date" name="TB_DATEBIRTH" onChange={changeHandler} />
+					<input type="date" name="TB_DATEBIRTH" onChange={changeHandler} value={voditelForm.TB_DATEBIRTH}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -62,7 +65,7 @@ const VoditelCreate = (props) => {
 					Стаж:
     		</div>
 				<div className="col-md-8">
-					<input type="number" name="TB_STAJ" onChange={changeHandler} />
+					<input type="number" name="TB_STAJ" onChange={changeHandler} value={voditelForm.TB_STAJ}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -71,8 +74,8 @@ const VoditelCreate = (props) => {
     		</div>
 				<div className="col-md-8">
 					<div className="passport">
-						<input type="text" name="TB_PRAVA_SERY" onChange={changeHandler} />
-						<input type="text" name="TB_PRAVA_NUMBER" onChange={changeHandler} />
+						<input type="text" name="TB_PRAVA_SERY" onChange={changeHandler} value={voditelForm.TB_PRAVA_SERY}/>
+						<input type="text" name="TB_PRAVA_NUMBER" onChange={changeHandler} value={voditelForm.TB_PRAVA_NUMBER}/>
 					</div>
 				</div>
 			</div>
@@ -81,7 +84,7 @@ const VoditelCreate = (props) => {
 					Права РЭО:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_PRAVA_REO" onChange={changeHandler} />
+					<input type="text" name="TB_PRAVA_REO" onChange={changeHandler} value={voditelForm.TB_PRAVA_REO}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -89,7 +92,7 @@ const VoditelCreate = (props) => {
 					Дата выдачи:
     		</div>
 				<div className="col-md-8">
-					<input type="date" name="TB_PRAVA_DATE" onChange={changeHandler} />
+					<input type="date" name="TB_PRAVA_DATE" onChange={changeHandler} value={voditelForm.TB_PRAVA_DATE}/>
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -97,7 +100,7 @@ const VoditelCreate = (props) => {
 					Дата:
     		</div>
 				<div className="col-md-8">
-					<input type="date" name="TB_DATE" onChange={changeHandler} />
+					<input type="date" name="TB_DATE" onChange={changeHandler} value={voditelForm.TB_DATE} />
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -106,8 +109,8 @@ const VoditelCreate = (props) => {
     		</div>
 				<div className="col-md-8">
 					<div className="passport">
-						<input type="text" name="TB_PASPSERY" onChange={changeHandler} />
-						<input type="text" name="TB_PASPNUMBER" onChange={changeHandler} />
+						<input type="text" name="TB_PASPSERY" onChange={changeHandler} value={voditelForm.TB_PASPSERY}  />
+						<input type="text" name="TB_PASPNUMBER" onChange={changeHandler} value={voditelForm.TB_PASPNUMBER} />
 					</div>
 				</div>
 			</div>
@@ -116,15 +119,15 @@ const VoditelCreate = (props) => {
 					Место выдачи:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_PASPVIDAN" onChange={changeHandler} />
+					<input type="text" name="TB_PASPVIDAN" onChange={changeHandler} value={voditelForm.TB_PASPVIDAN} />
 				</div>
 			</div>
 			<div className="row mb-10">
-				<div className="col-md-4 v-center-right">
+				<div className="col-md-4 v-center-right" >
 					Дата выдачи:
     		</div>
 				<div className="col-md-8">
-					<input type="date" name="TB_PASPDATE" onChange={changeHandler} />
+					<input type="date" name="TB_PASPDATE" onChange={changeHandler} value={voditelForm.TB_PASPDATE} />
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -132,7 +135,7 @@ const VoditelCreate = (props) => {
 					Дата преобритения:
     		</div>
 				<div className="col-md-8">
-					<input type="date" name="TB_PRAVA_DATE0" onChange={changeHandler} />
+					<input type="date" name="TB_PRAVA_DATE" onChange={changeHandler} value={voditelForm.TB_PRAVA_DATE} />
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -140,7 +143,7 @@ const VoditelCreate = (props) => {
 					Доверенность №:
     		</div>
 				<div className="col-md-8">
-					<input type="text" name="TB_DOVERENNOST_NUM" onChange={changeHandler} />
+					<input type="text" name="TB_DOVERENNOST_NUM" onChange={changeHandler} value={voditelForm.TB_DOVERENNOST_NUM} />
 				</div>
 			</div>
 			<div className="row mb-10">
@@ -148,7 +151,7 @@ const VoditelCreate = (props) => {
 					Пол:
     		</div>
 				<div className="col-md-8">
-					<select name="TB_SEX" onChange={changeHandler}>
+					<select name="TB_SEX" onChange={changeHandler} value={voditelForm.TB_SEX}>
 						<option value="1">Муж.</option>
 						<option value="0">Жен.</option>
 					</select>
@@ -160,15 +163,15 @@ const VoditelCreate = (props) => {
     		</div>
 				<div className="col-md-8 sparse">
 					<span>A</span>
-					<input value="A" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} />
+					<input value="A" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} value={voditelForm.TB_PRAVA_CATEGORY} />
 					<span>B</span>
-					<input value="B" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} />
+					<input value="B" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} value={voditelForm.TB_PRAVA_CATEGORY} />
 					<span>C</span>
-					<input value="C" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} />
+					<input value="C" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} value={voditelForm.TB_PRAVA_CATEGORY} />
 					<span>D</span>
-					<input value="D" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} />
+					<input value="D" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} value={voditelForm.TB_PRAVA_CATEGORY} />
 					<span>E</span>
-					<input value="E" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} />
+					<input value="E" type="checkbox" name="TB_PRAVA_CATEGORY" onChange={changeHandler} value={voditelForm.TB_PRAVA_CATEGORY} />
 				</div>
 			</div>
 			<div className="row">
