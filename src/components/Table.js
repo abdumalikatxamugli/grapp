@@ -15,7 +15,7 @@ const MyTable = ({
     const deleted=(event)=>{
         ipcRenderer.removeListener("delete-oplata",deleted);
     }
-    console.log(data);
+   
     return (
         <table className="bordered-table" border="1">
             <thead>

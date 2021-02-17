@@ -25,7 +25,7 @@ const TransportList = (props) => {
 		ipcRenderer.on('transport-deleted', remove2);
 	    ipcRenderer.on("get-transports", list);
 	    ipcRenderer.on("delete-voditel",removeVoditel2);
-	    console.log("mount");
+	   
 	    return ()=>{
 		   ipcRenderer.removeListener('get-transports', list);
 	       ipcRenderer.removeListener('transport-deleted', remove2);
@@ -33,7 +33,7 @@ const TransportList = (props) => {
 	    } 
 	}, []);
 	const list=(event, payload)=>{
-		console.log(payload)
+		
         setTransports(payload);
 	}
 	const remove = (id) => {

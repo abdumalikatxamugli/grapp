@@ -26,7 +26,6 @@ const contract = () => {
                         })
                         newContract.setTransport(transport)
                         sended.push(newContract.dataValues)
-                        console.log(newContract.dataValues)
                     }
                 }
                 event.reply('contract-saved', sended);
@@ -36,7 +35,8 @@ const contract = () => {
         }
 
     }
-    const get=async (event, id)=>{
+    const get=async (event, id, check)=>{
+    
         if(!id){
             return;
         }
@@ -45,6 +45,7 @@ const contract = () => {
                 ANKETA_ID: id
             }
         });
+        
         event.reply('get-contracts', contracts);
     }
     return {

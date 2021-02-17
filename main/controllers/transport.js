@@ -37,7 +37,7 @@ const transport = () => {
         event.reply('transport-deleted', id);
     }
     const get=async (event, id)=>{
-        console.log(id)
+       
         if(!id){
             return;
         }

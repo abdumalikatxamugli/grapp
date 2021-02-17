@@ -15,13 +15,31 @@ const Payment = (props) => {
 
 	const anketa = useSelector(state => state.anketaReducer);
 	const [transh, setTranshState] = useState(false);
+	const [transhes, setTranshes] = useState([]);
 	const [contracts, setContracts] = useState([]);
 	const [oplatas, setOplatas] = useState([]);
-	const controlTransh = (val) => {
-		setTranshState(val);
-		if (!val) {
-			dispatch(transhesUpdate([]));
+
+	useEffect(()=>{
+		ipcRenderer.send("get-transhes", anketa.id);
+		ipcRenderer.on("get-transhes", initTransh);
+		return ()=>{
+			 ipcRenderer.removeListener("get-transhes", initTransh);
 		}
+	}, []);
+	useEffect(()=>{
+		if(transhes.length>0){
+			setTranshState(true);
+		}
+	}, [transhes])
+	const initTransh=(event, payload)=>{
+		payload=payload.map(item=>{return {...item.dataValues}});
+    	setTranshes(payload);
+	}
+	const controlTransh = (val) => {
+		if(transhes.length>0){
+			alert("Please delete existing transhes to switch");
+		}
+		setTranshState(val);
 	}
 	useEffect(() => {
 		ipcRenderer.send("get-payment", anketa.id);

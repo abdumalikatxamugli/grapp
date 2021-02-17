@@ -19,8 +19,8 @@ const Transh = (props) => {
   
   
   useEffect(() => {
-    
-    ipcRenderer.send("get-contracts", anketa.id);
+    setInitialDate(anketa.INS_DATE);
+    ipcRenderer.send("get-contracts", anketa.id, 1);
     ipcRenderer.send("get-transhes", anketa.id);
     ipcRenderer.on('transch-saved', save2);
     ipcRenderer.on("get-contracts", initContract);
@@ -35,9 +35,8 @@ const Transh = (props) => {
   const initContract=(event, payload)=>{
     payload=payload.map(item=>item.dataValues);
     setContract(payload);
-    reset();
   }
-
+  
   const initTransh=(event, payload)=>{
     payload=payload.map(item=>{return {...item.dataValues, selected:false}});
     setTranshes(payload);
@@ -105,8 +104,12 @@ const Transh = (props) => {
   const deleteTransh = () => {
     setTranshes(
       [...transhes.filter(item => !item.selected)]
-    )
+    );
+    
   }
+   useEffect(()=>{
+      reseparateCount(transhes.length);
+  },[transhes.length]);
   const cancel = () => {
       reset();
   }
@@ -115,6 +118,7 @@ const Transh = (props) => {
       alert("Transh amount different than premiya");
       return 0;
     }
+    console.log(transhes);
     ipcRenderer.send('transch-create', {
       id: anketa.id,
       data: transhes,
@@ -126,7 +130,7 @@ const Transh = (props) => {
   }
 
   const reset = () => {
-    console.log("contract", contract);
+   
     const summa = summation(contract.map((item) => item.premiyaAmount));
     setTotalAmount(summa);
     setInitialDate(anketa.INS_DATE);
@@ -142,6 +146,10 @@ const Transh = (props) => {
       setTranshes(tempArray);
   
   }
+  useEffect(()=>{
+    const summa = summation(contract.map((item) => item.premiyaAmount));
+    setTotalAmount(summa);
+  },[contract]);
 
   return (
     <div className="transh">
