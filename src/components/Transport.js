@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import { transportCreate } from "../redux/actions";
 import { contractAdd } from "../redux/actions/contract";
@@ -10,6 +10,7 @@ const { ipcRenderer } = window.require('electron');
 const Transport = (props) => {
     const dispatch = useDispatch();
 
+    const anketa=useSelector(state=>state.anketaReducer);
     const [zagoladatelShowState, setZagoladatelShowState] = useState(false)
     const [transportForm, setTransportForm] = useState({});
     const validator = useRef(new SimpleReactValidator())
@@ -20,6 +21,7 @@ const Transport = (props) => {
         return ()=>{
             ipcRenderer.removeListener('transport-saved', save2);
             ipcRenderer.removeListener("remove-client",remove2);
+            props.setBlock(false);
         }
     }, [])
 
@@ -33,7 +35,7 @@ const Transport = (props) => {
     const save = (e) => {
         e.preventDefault()
         // if (validator.current.allValid()) {
-        ipcRenderer.send("transport-create", {...transportForm, ANKETA_ID:props.anketa_id})
+        ipcRenderer.send("transport-create", {...transportForm, ANKETA_ID:anketa.id})
         // } else {
         // validator.current.showMessages();
         // forceUpdate(1)

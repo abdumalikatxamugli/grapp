@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {useSelector} from 'react-redux';
 import { TopControls } from "../../components";
 import Anketa from "./Anketa";
 import Contract from "./Contract";
@@ -10,8 +9,7 @@ import "../../../node_modules/bootstrap-4-grid/css/grid.min.css";
 const { ipcRenderer } = window.require('electron');
 
 const Form = () => {
-
-    const anketa=useSelector(state=>state.anketaReducer);
+    
     useEffect(()=>{
         ipcRenderer.on("error_occured",function(came,error){
             alert(JSON.stringify(error))
@@ -66,7 +64,7 @@ const Form = () => {
                         {active !== 1 && <button onClick={() => activate(active+1)}>Далее</button>}
                     </div>
                     {active === 0 && <Anketa  permit={permit} />}
-                    {active === 1 && <TransportTable  permit={permit} anketa_id={anketa.id}/>}
+                    {active === 1 && <TransportTable  permit={permit}/>}
                     {active === 2 && <Contract  permit={permit} />}
                     {active === 3 && <Payment  permit={permit} />}
                     {active === 4 && <Polis />}

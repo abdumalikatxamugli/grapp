@@ -46,6 +46,12 @@ ipcMain.on('remove-client', client.remove);
 ipcMain.on('insert-client-from-archive', client.insertFromArchive);
 ipcMain.on('get-contracts', contract.get);
 ipcMain.on('get-transports', transport.get);
+ipcMain.on('get-payment', payment.get);
+ipcMain.on('delete-oplata', payment.deleteP);
+ipcMain.on('delete-voditel', voditel.deleteV);
+ipcMain.on('get-voditels', voditel.getV);
+ipcMain.on('choose-voditel', voditel.choose);
+ipcMain.on('get-transhes', transch.get);
 
 // Shoh functions
 ipcMain.on('anketa_save', anketa.create);

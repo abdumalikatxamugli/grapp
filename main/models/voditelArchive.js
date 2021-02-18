@@ -3,13 +3,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize=require('./dbconnection');
 
 
-const Voditel = sequelize.define('Voditel', {
-    ARCHIVE_ID:{
-        type: DataTypes.INTEGER
-    },
-    TRANSPORT_ID:{
-        type: DataTypes.INTEGER
-    },
+const VoditelArchive = sequelize.define('VoditelArchive', {
     TB_SURNAME: {
         type: DataTypes.STRING,
         allowNull: true
@@ -85,5 +79,5 @@ const Voditel = sequelize.define('Voditel', {
 });
 
 
-module.exports = Voditel;
+module.exports = VoditelArchive;
 

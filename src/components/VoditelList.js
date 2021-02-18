@@ -7,6 +7,11 @@ import React, { useState } from 'react';
 */
 const VoditelList = (props) => {
 	const [creating, setCreating] = useState(false);
+	const [initialObject, setInitialObj]=useState({});
+	const edit=(item)=>{
+		setCreating(true);
+  		setInitialObj(item)
+	}
 	return (
 		<div className="container-fluid">
 			<div className="row pb-10 pt-10 sticky border-bottom">
@@ -27,11 +32,11 @@ const VoditelList = (props) => {
 
 			{
 				!creating &&
-				React.cloneElement(props.children[0])
+				React.cloneElement(props.children[0], {edit:edit})
 			}
 			{
 				creating &&
-				React.cloneElement(props.children[1])
+				React.cloneElement(props.children[1], {initialObject:initialObject})
 			}
 		</div>
 

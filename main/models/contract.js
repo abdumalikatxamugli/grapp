@@ -3,6 +3,12 @@ const sequelize=require('./dbconnection');
 
 
 const Contract = sequelize.define('Contract', {
+  TRANSPORT_ID:{
+    type: DataTypes.INTEGER
+  },
+  ANKETA_ID:{
+    type: DataTypes.INTEGER
+  },
   insuranceAmount: {
     type: DataTypes.DECIMAL(15, 2),
     defaultValue: 0    

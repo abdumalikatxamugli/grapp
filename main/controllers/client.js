@@ -13,8 +13,9 @@ const client=()=>{
 	const create=async(event, {c, d, type})=>{
 		
 		const commonArchive=c.id?await ClientCommonArchive.upsert({...c, SYSTEM_TYPE:type})
-										 :await ClientCommonArchive.create({...c, SYSTEM_TYPE:type});
+								:await ClientCommonArchive.create({...c, SYSTEM_TYPE:type});
 
+		
 		const common=await ClientCommon.create({...c, SYSTEM_TYPE:type, ARCHIVE_ID: commonArchive.id});
 
 
@@ -68,7 +69,6 @@ const client=()=>{
 
 	const remove=async (event, id, role)=>{
 		const common=await ClientCommon.findByPk(id);	
-		console.log(common);
 		await common.destroy();
 		event.reply('remove-client', id, role);
 	}

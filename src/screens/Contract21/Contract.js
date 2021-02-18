@@ -5,16 +5,13 @@ import { contractCreate } from "../../redux/actions";
 const { ipcRenderer } = window.require('electron');
 const Dogovor = (props) => {
     const dispatch = useDispatch()
-    const globalContracts = useSelector(state => state.contractReducer);
-    const globalAnketa = useSelector(state => state.anketaReducer);
+    
+    const anketa = useSelector(state => state.anketaReducer);
     const [premiyas, setPremiyas] = useState([]);
-    useEffect(() => {
-        setPremiyas([...globalContracts])
-    }, [globalContracts])
     
     useEffect(() => {
         ipcRenderer.on("contract-saved", save2);
-        ipcRenderer.send("get-contracts");
+        ipcRenderer.send("get-contracts", anketa.id);
         ipcRenderer.on("get-contracts", get);
         return ()=>{
             ipcRenderer.removeListener("get-contracts", get);
@@ -27,7 +24,8 @@ const Dogovor = (props) => {
     }
 
     const save2 = (event, data) => {
-        dispatch(contractCreate([...data]))
+        // dispatch(contractCreate([...data]))
+        alert("Contract saved");
         ipcRenderer.removeListener('contract-saved', save2);
     }
 

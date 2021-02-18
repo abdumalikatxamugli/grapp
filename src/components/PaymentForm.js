@@ -13,7 +13,7 @@ const PaymentForm = (props) => {
 		OPL_TYPE: "",
 		DOC_NUM: ""
 	}
-	const globalAnketa = useSelector(state => state.anketaReducer);
+	const anketa = useSelector(state => state.anketaReducer);
 	const [paymentForm, setPaymentForm] = useState({ ...initialState })
 	const validator = useRef(new SimpleReactValidator());
 	const [, forceUpdate] = useState();
@@ -30,7 +30,7 @@ const PaymentForm = (props) => {
 	const save = (e) => {
 		e.preventDefault()
 		if (validator.current.allValid()) {
-			ipcRenderer.send('payment-create', { id: globalAnketa.id, data: paymentForm });
+			ipcRenderer.send('payment-create', { id: anketa.id, data: paymentForm });
 			setPaymentForm({ ...initialState });
 			validator.current.hideMessages();
 		} else {

@@ -11,26 +11,38 @@ const Transh = (props) => {
   const [initialDate, setInitialDate] = useState('');
   const [interval, setInterval] = useState(30);
   const [count, setCount] = useState(2);
+  const [contract, setContract] = useState([]);
   const [allSelected, setAllSelected] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [transhes, setTranshes] = useState([]);
-  const contract = useSelector(state => state.contractReducer);
   const anketa = useSelector(state => state.anketaReducer);
-  const reduxTranshes = useSelector(state => state.transhReducer);
-  const globalPayment = useSelector(state => state.oplataReducer);
+  
   
   useEffect(() => {
-    ipcRenderer.on('transch-saved', save2)
+    setInitialDate(anketa.INS_DATE);
+    ipcRenderer.send("get-contracts", anketa.id, 1);
+    ipcRenderer.send("get-transhes", anketa.id);
+    ipcRenderer.on('transch-saved', save2);
+    ipcRenderer.on("get-contracts", initContract);
+    ipcRenderer.on("get-transhes", initTransh);
+    return ()=>{
+      ipcRenderer.removeListener("get-contracts", initContract);
+      ipcRenderer.removeListener("transch-saved", save2);
+      ipcRenderer.removeListener("get-transhes", initTransh);
+    }
   }, [])
 
+  const initContract=(event, payload)=>{
+    payload=payload.map(item=>item.dataValues);
+    setContract(payload);
+  }
+  
+  const initTransh=(event, payload)=>{
+    payload=payload.map(item=>{return {...item.dataValues, selected:false}});
+    setTranshes(payload);
+  }
 
-  useEffect(() => {
-    if (globalPayment.length !== 0) {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  }, [globalPayment])
+
   const reseparateCount = (value) => {
     let newCount = value;
     setCount(newCount);
@@ -92,33 +104,37 @@ const Transh = (props) => {
   const deleteTransh = () => {
     setTranshes(
       [...transhes.filter(item => !item.selected)]
-    )
+    );
+    
   }
+   useEffect(()=>{
+      reseparateCount(transhes.length);
+  },[transhes.length]);
   const cancel = () => {
-    reset();
+      reset();
   }
   const save = () => {
     if (summation(transhes.map(item => item.amount)) !== summation(contract.map(item => item.premiyaAmount))) {
       alert("Transh amount different than premiya");
       return 0;
     }
+    console.log(transhes);
     ipcRenderer.send('transch-create', {
       id: anketa.id,
       data: transhes,
     });
   }
   const save2 = (event, data) => {
-    console.log(data)
-    dispatch(transhesUpdate(data));
+    alert("transhes saved");
     ipcRenderer.removeListener('transch-saved', save2);
   }
-  const reset = useCallback(() => {
+
+  const reset = () => {
+   
     const summa = summation(contract.map((item) => item.premiyaAmount));
     setTotalAmount(summa);
     setInitialDate(anketa.INS_DATE);
-    if (reduxTranshes && reduxTranshes.length !== 0) {
-      setTranshes([...reduxTranshes]);
-    } else {
+    
       const tempArray = [];
       for (let i = 0; i < count; i++) {
         tempArray.push({
@@ -128,11 +144,13 @@ const Transh = (props) => {
         });
       }
       setTranshes(tempArray);
-    }
-  }, [contract, anketa.INS_DATE, count, interval, reduxTranshes])
-  useEffect(() => {
-    reset();
-  }, [reset])
+  
+  }
+  useEffect(()=>{
+    const summa = summation(contract.map((item) => item.premiyaAmount));
+    setTotalAmount(summa);
+  },[contract]);
+
   return (
     <div className="transh">
       <div className="sparse">

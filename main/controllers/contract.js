@@ -26,7 +26,6 @@ const contract = () => {
                         })
                         newContract.setTransport(transport)
                         sended.push(newContract.dataValues)
-                        console.log(newContract.dataValues)
                     }
                 }
                 event.reply('contract-saved', sended);
@@ -36,8 +35,17 @@ const contract = () => {
         }
 
     }
-    const get=async (event)=>{
-        const contracts=await Contract.findAll();
+    const get=async (event, id, check)=>{
+    
+        if(!id){
+            return;
+        }
+        const contracts=await Contract.findAll({
+            where:{
+                ANKETA_ID: id
+            }
+        });
+        
         event.reply('get-contracts', contracts);
     }
     return {

@@ -6,7 +6,7 @@ import { Transport, TransportList } from '../../components';
 const { ipcRenderer } = window.require("electron");
 
 const TransportTable = (props, ref) => {
-  const [transports, setTransports] = useState([])
+  
   
   useEffect(() => {
     
@@ -17,9 +17,9 @@ const TransportTable = (props, ref) => {
   const addTransport = () => {
     setCreateState(!createState)
   }
-  
   const [createState, setCreateState] = useState(false);
   const [block, setBlock] = useState(false);
+  const anketa=useSelector(state=>state.anketaReducer);
 
   const warning=()=>{
     alert('Please remove Zalogadatel');
@@ -37,8 +37,8 @@ const TransportTable = (props, ref) => {
           {createState && 'Назад'}
         </button>
       </div>
-      {createState && <Transport addTransport={addTransport} setBlock={setBlock} anketa_id={props.anketa_id}/>}
-      {!createState && <TransportList data={transports} anketa_id={props.anketa_id}/>}
+      {createState && <Transport addTransport={addTransport} setBlock={setBlock} anketa_id={anketa.id}/>}
+      {!createState && <TransportList/>}
 
     </div>
   )
