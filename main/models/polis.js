@@ -37,6 +37,18 @@ const Polis = sequelize.define('Polis', {
 	"TB_STATUS": {
 		type: DataTypes.INTEGER,
     allowNull: true
+	},
+	"AVTO_ID":{
+		type: DataTypes.INTEGER,
+		allowNull: true
+	},
+	"TRANSCH_ID":{
+		type: DataTypes.INTEGER,
+		allowNull: true
+	},
+	"OPLATA_ID":{
+		type: DataTypes.INTEGER,
+		allowNull: true
 	}
 });
 

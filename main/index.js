@@ -55,6 +55,13 @@ ipcMain.on('get-voditels', voditel.getV);
 ipcMain.on('choose-voditel', voditel.choose);
 ipcMain.on('get-transhes', transch.get);
 ipcMain.on('get-polis', polis.get);
+ipcMain.on('polis-save', polis.save);
+
+ipcMain.on('get-paymentP', payment.getP);
+ipcMain.on('get-transhesP', transch.getP);
+
+ipcMain.on('get-anketas', anketa.get);
+
 
 // Shoh functions
 ipcMain.on('anketa_save', anketa.create);

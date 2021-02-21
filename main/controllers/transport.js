@@ -63,7 +63,7 @@ const transport = () => {
         transport: {
             create: create,
             delete: remove,
-            get:get
+            get:get,
         }
     }
 }

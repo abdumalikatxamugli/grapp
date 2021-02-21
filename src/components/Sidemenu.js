@@ -5,6 +5,7 @@ import exitImg from '../assets/icons/exit.svg';
 import contractImg from '../assets/icons/contracts.svg';
 
 
+
 const Sidemenu = (props) => {
     
     const drop = (ev) => {

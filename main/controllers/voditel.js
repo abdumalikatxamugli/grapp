@@ -33,7 +33,7 @@ const voditel = () => {
         event.reply("delete-voditel");
     }
     const getV=async (event, transport_id) =>{
-        const payload=await sequelize.query("SELECT * FROM VoditelArchives where id not in (select ARCHIVE_ID from Voditels where TRANSPORT_ID="+transport_id+")", { type: QueryTypes.SELECT });
+        const payload=await sequelize.query("SELECT * FROM VoditelArchives where id not in (select ARCHIVE_ID from Voditels where ARCHIVE_ID is not null and TRANSPORT_ID="+transport_id+")", { type: QueryTypes.SELECT });
             
         event.reply("get-voditels", payload);
     }
