@@ -1,4 +1,6 @@
 const {Payment, Anketa, Transch, Contract} = require('../models');
+const sequelize = require("../models/dbconnection");
+const { QueryTypes } = require('sequelize');
 
 const payment = () => {
     const create = async (event, { id, data }) => {
@@ -32,6 +34,24 @@ const payment = () => {
         }
         event.reply("get-payment", reply);
     }
+    const getP=async (event, id)=>{
+
+        if(!id){
+            return;
+        }
+        
+        const oplatas=
+            await sequelize.query(`SELECT * FROM Payments where id not in 
+                (select OPLATA_ID from Polis where OPLATA_ID is not null) and ANKETA_ID=`+id, 
+                { type: QueryTypes.SELECT }
+            );
+        
+        const reply={
+            contracts:[],
+            oplatas:oplatas
+        }
+        event.reply("get-paymentP", reply);
+    }
     const deleteP=async (event, id)=>{
         console.log(id)
         await Payment.destroy({
@@ -45,7 +65,8 @@ const payment = () => {
         payment: {
             create: create,
             get: get,
-            deleteP:deleteP
+            deleteP:deleteP,
+            getP:getP
         }
     }
 }

@@ -22,10 +22,16 @@ const anketa_controller = () => {
         });
         win.webContents.send('anketa_list_resp', anketas);
     }
+    const get = async (event)=>{
+        var anketas = await Anketa.findAll();
+        anketas=anketas.map(item=>item.dataValues);
+        event.reply("get-anketas", anketas);
+    }
     return {
         anketa: {
             create: create,
-            list: list
+            list: list,
+            get:get
         }
     }
 

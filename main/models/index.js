@@ -107,7 +107,7 @@ TransportArchive.hasOne(Transport,{
 Transport.belongsTo(TransportArchive);
 
 
-sequelize.sync().then(function () {
+sequelize.sync({force:true}).then(function () {
     console.log("Database Configured");
 });
 

@@ -11,7 +11,6 @@ const Polis = () => {
     const globalContracts = useSelector(state => state.contractReducer);
     const globalTransports = useSelector(state => state.transportReducer);
     const globalTransh = useSelector(state => state.transhReducer);
-    
     return (
         <div className="polis-main">
             <VidachaPolis/>

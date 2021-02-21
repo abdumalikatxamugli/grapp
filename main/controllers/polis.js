@@ -12,10 +12,14 @@ const polis = () => {
         });
         event.reply("get-polis", polises);
     }
-    
+    const save=async (event, payload)=>{
+        await myupsert(Polis, {...payload, TB_STATUS:2});
+        event.reply("polis-save");
+    }
     return {
         polis: {
-            get:get
+            get:get,
+            save:save
         }
     }
 }
