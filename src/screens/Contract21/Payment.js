@@ -51,7 +51,7 @@ const Payment = (props) => {
 
 	const load=(event, payload)=>{
 		const contracts=payload.contracts.map(item=>item.dataValues);
-        const oplatas=payload.oplatas.map(item=>item.dataValues);
+    const oplatas=payload.oplatas.map(item=>item.dataValues);
 		setContracts(contracts)
 		setOplatas(oplatas)
 	}
@@ -147,7 +147,15 @@ const Payment = (props) => {
 					data={oplatas}
 				/>
 				{oplatas.length === 0 && <div>Оплата не произведена</div>}
-				<div className="mt-4">Остаток:	<b>{summation([...contracts.map(item => item.premiyaAmount)])}</b></div>
+				<div className="mt-4">Остаток:
+					<b>
+					{
+						summation([...contracts.map(item => item.premiyaAmount)])
+							-
+						summation([...oplatas.map(item=>item.OPL_SUMMA)])
+					}
+					</b>
+				</div>
 			</div>
 			<PaymentForm />
 		</>

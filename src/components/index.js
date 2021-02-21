@@ -13,6 +13,7 @@ import Period from './Period';
 import TransportList from './TransportList';
 import ClientTable from './ClientTable';
 import MyTable from './Table.js';
+import VidachaPolis from './VidachaPolis';
 
 export {
 			TopControls, 
@@ -29,5 +30,6 @@ export {
 			TransportList,
 			ClientTable,
 			MyTable,
-			VoditelList
+			VoditelList,
+			VidachaPolis
 	   }

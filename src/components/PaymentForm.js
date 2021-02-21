@@ -19,6 +19,9 @@ const PaymentForm = (props) => {
 	const [, forceUpdate] = useState();
 	useEffect(() => {
 		ipcRenderer.on("payment-saved", save2);
+		return ()=>{
+			ipcRenderer.removeListener('payment-saved', save2);
+		}
 	}, [])
 	const changeHandler = (e) => {
 		setPaymentForm({
@@ -39,8 +42,8 @@ const PaymentForm = (props) => {
 		}
 	}
 	const save2 = (event, data) => {
-		dispatch(oplataAdd(data))
-		ipcRenderer.removeListener('payment-saved', save2);
+		alert("Oplata saved");
+
 	}
 	return (
 		<form className="paymentForm" id="create-oplata-form">

@@ -2,10 +2,11 @@ const {app, BrowserWindow, ipcMain,Notification } = require('electron');
 const { anketa } = require('./controllers/anketa');
 const { client } = require('./controllers/client');
 const { contract } = require('./controllers/contract');
-const {payment} = require('./controllers/payment');
-const {transch} = require('./controllers/transch');
+const { payment} = require('./controllers/payment');
+const { transch} = require('./controllers/transch');
 const { transport } = require('./controllers/transport');
 const { voditel } = require('./controllers/voditel');
+const { polis } = require('./controllers/polis');
 
 
 var mainWindow;
@@ -20,7 +21,7 @@ async function createWindow() {
   win.maximize();
   // win.removeMenu()
 
-  win.loadURL("http://localhost:3001");
+  win.loadURL("http://localhost:3000");
 
   mainWindow = win;
 }
@@ -52,6 +53,7 @@ ipcMain.on('delete-voditel', voditel.deleteV);
 ipcMain.on('get-voditels', voditel.getV);
 ipcMain.on('choose-voditel', voditel.choose);
 ipcMain.on('get-transhes', transch.get);
+ipcMain.on('get-polis', polis.get);
 
 // Shoh functions
 ipcMain.on('anketa_save', anketa.create);

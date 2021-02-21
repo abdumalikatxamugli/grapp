@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react';
+import React, { Fragment, useEffect} from 'react';
 import {deletePayment} from '../redux/actions/oplata';
 const { ipcRenderer } = window.require('electron');
 
@@ -7,13 +7,17 @@ const MyTable = ({
     data = [],
     onRowClick = () => { }
 }) => {
-    
+    useEffect(()=>{
+        ipcRenderer.on('delete-oplata', deleted);
+        return ()=>{
+             ipcRenderer.removeListener("delete-oplata",deleted);
+        }
+    },[])
     const deleteItem = (id) =>{
         ipcRenderer.send("delete-oplata", id);
-        ipcRenderer.on('delete-oplata', deleted);
     }
     const deleted=(event)=>{
-        ipcRenderer.removeListener("delete-oplata",deleted);
+        alert('oplata deleted');
     }
    
     return (
@@ -37,7 +41,7 @@ const MyTable = ({
                             </Fragment>
                         ))}
                         <td>
-                            <button onClick={()=>deleteItem(rowKey)}>
+                            <button onClick={()=>deleteItem(row.id)}>
                                 Delete
                             </button>
                         </td>

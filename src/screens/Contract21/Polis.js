@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
-import { MyTable } from '../../components/';
+import { MyTable, VidachaPolis } from '../../components/';
 import countries from "../../constants/countries";
 import currencies from "../../constants/currencies";
 import { summation } from "../../helpers/summation";
@@ -11,64 +11,10 @@ const Polis = () => {
     const globalContracts = useSelector(state => state.contractReducer);
     const globalTransports = useSelector(state => state.transportReducer);
     const globalTransh = useSelector(state => state.transhReducer);
-    const [givingMethod, setGivingMethod] = useState(1)
-    const [polisForm, setPolisForm] = useState({
-        TB_DATE_BEGIN: "",
-        TB_DATE_END: "",
-        TB_DATECONTROL:""
-    })
-    const addPolis = e => {
-        e.preventDefault()
-    }
-    const changeHandler = e => {
-        setPolisForm({ ...polisForm, [e.target.name]: e.target.value })
-    }
-    // const 
+    
     return (
         <div className="polis-main">
-            <div className="form-main">
-                <h4>Параметры</h4>
-                <div className="input-group sparse">
-                    <b>Выдача полиса:</b>
-                    <input type="radio" disabled checked={globalTransports.length === 1} />
-                    <label>один ко всем объектам</label>
-                    <input type="radio" disabled checked={globalTransports.length > 1} />
-                    <label>каждому по одному</label>
-                    <input type="radio" name="giving_method" value="1" onChange={() => setGivingMethod(1)} />
-                    <label>один на вес срок</label>
-                    <input type="radio" name="giving_method" value="2" onChange={() => setGivingMethod(2)} />
-                    <label>на каждый транш новый</label>
-                </div>
-                <div className="input-group sparse my-4">
-                    <label>Полис</label>
-                    <select>
-                        <option>Выберите</option>
-                    </select>
-                    &nbsp;
-                    {givingMethod === 2 && <Fragment>
-                        <label>Платежи</label>
-                        <select>
-                            <option value="">Выберите</option>
-                            {
-                                globalTransh.map((item, idx) => (<option value={idx}>{`${item.OPL_DATA} (${item.OPL_SUMMA})`}</option>))
-                            }
-                        </select>
-                    </Fragment>}
-                </div>
-                <form className="input-group sparse">
-                    <span><b>Период действия:</b></span>
-                    <label>c</label>
-                    <input type="date" name="TB_DATE_BEGIN" value={polisForm.TB_DATE_BEGIN} onChange={changeHandler} />
-                    <span>дня(ей)</span>&nbsp;
-                    <label>по</label>
-                    <input type="date" name="TB_DATE_END" value={polisForm.TB_DATE_END} onChange={changeHandler}/>
-                    <span>г.</span>
-                    <b>Дата выдачи:</b>
-                    <label>c</label>
-                    <input type="date" name="TB_DATECONTROL" value={polisForm.TB_DATECONTROL} onChange={changeHandler}/><br />
-                    <button className="big-btn" onClick={e => addPolis(e)}>Выдать полис</button>
-                </form>
-            </div>
+            <VidachaPolis/>
             <div className="row polis-info pt-3">
                 <div className="col-6">
                     <label>Страхователь:</label>

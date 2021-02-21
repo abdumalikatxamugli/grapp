@@ -15,6 +15,7 @@ const Transh = (props) => {
   const [allSelected, setAllSelected] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [transhes, setTranshes] = useState([]);
+  const [oplatas, setOplatas]=useState([]);
   const anketa = useSelector(state => state.anketaReducer);
   
   
@@ -22,15 +23,27 @@ const Transh = (props) => {
     setInitialDate(anketa.INS_DATE);
     ipcRenderer.send("get-contracts", anketa.id, 1);
     ipcRenderer.send("get-transhes", anketa.id);
+    ipcRenderer.send("get-payment", anketa.id);
     ipcRenderer.on('transch-saved', save2);
     ipcRenderer.on("get-contracts", initContract);
     ipcRenderer.on("get-transhes", initTransh);
+    ipcRenderer.on("get-payment", getPaymentInfo);
     return ()=>{
       ipcRenderer.removeListener("get-contracts", initContract);
       ipcRenderer.removeListener("transch-saved", save2);
       ipcRenderer.removeListener("get-transhes", initTransh);
+      ipcRenderer.removeListener('get-payment', getPaymentInfo);
     }
   }, [])
+  useEffect(()=>{
+    if(oplatas.length>0){
+      setDisabled(true);
+    }
+  },[oplatas])
+  const getPaymentInfo=(event, payload)=>{
+    const oplatas=payload.oplatas.map(item=>item.dataValues);
+    setOplatas(oplatas);
+  }
 
   const initContract=(event, payload)=>{
     payload=payload.map(item=>item.dataValues);
@@ -114,7 +127,7 @@ const Transh = (props) => {
       reset();
   }
   const save = () => {
-    if (summation(transhes.map(item => item.amount)) !== summation(contract.map(item => item.premiyaAmount))) {
+    if (!transhes.length==0 && summation(transhes.map(item => item.amount)) !== summation(contract.map(item => item.premiyaAmount))) {
       alert("Transh amount different than premiya");
       return 0;
     }
@@ -126,7 +139,7 @@ const Transh = (props) => {
   }
   const save2 = (event, data) => {
     alert("transhes saved");
-    ipcRenderer.removeListener('transch-saved', save2);
+    
   }
 
   const reset = () => {
@@ -156,6 +169,8 @@ const Transh = (props) => {
       <div className="sparse">
         <div className="head">
           <h4>Ожидаемые транши</h4>
+          {oplatas.length===0
+            &&
           <div className="sparse">
             <button onClick={cancel}>
               Отмена
@@ -167,7 +182,11 @@ const Transh = (props) => {
               Сохранить
 	    			</button>
           </div>
+          }
         </div>
+        {oplatas.length===0
+          &&
+        <>
         <span>Период оплат (в днях):</span>
         <input type="number"
           value={interval}
@@ -182,7 +201,8 @@ const Transh = (props) => {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        {/*<button>Распределить</button>*/}
+        </>
+        }
       </div>
       <table className="transh-table" border="1">
         <thead>
@@ -204,7 +224,7 @@ const Transh = (props) => {
           </tr>
         </thead>
         <tbody>
-          {transhes.map((item, index) =>
+          {transhes.map((item, index, t) =>
             <tr key={index}>
               <td>
                 <input type="checkbox"
@@ -227,6 +247,15 @@ const Transh = (props) => {
                   onChange={e => resetAmount(e.target.value, index)}
                   disabled={disabled}
                 />
+                {
+                  summation([...oplatas.map(item=>item.OPL_SUMMA)])
+                  -
+                  summation(t.slice(0, index+1).map(item=>item.amount))
+                  >=0
+                  ?
+                  ' done'
+                  :''
+                }
               </td>
             </tr>
           )}
