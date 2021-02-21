@@ -7,6 +7,7 @@ const { transch} = require('./controllers/transch');
 const { transport } = require('./controllers/transport');
 const { voditel } = require('./controllers/voditel');
 const { polis } = require('./controllers/polis');
+const auth = require('./controllers/auth');
 
 
 var mainWindow;
@@ -63,4 +64,9 @@ ipcMain.on('voditel-create', voditel.create);
 ipcMain.on('contract-create', contract.create);
 ipcMain.on('transch-create', transch.create);
 ipcMain.on('payment-create', payment.create);
+ipcMain.on('user-login', auth.login);
+ipcMain.on('set-local-password', auth.set_local_password);
+ipcMain.on('local-password-init', auth.local_password_init);
+ipcMain.on('check-local-pass', auth.check_local_pass);
+
 // setInterval(check_internet, 3000);
