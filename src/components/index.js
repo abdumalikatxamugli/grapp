@@ -14,6 +14,7 @@ import TransportList from './TransportList';
 import ClientTable from './ClientTable';
 import MyTable from './Table.js';
 import VidachaPolis from './VidachaPolis';
+import Presentable from './Presentable';
 
 export {
 			TopControls, 
@@ -31,5 +32,6 @@ export {
 			ClientTable,
 			MyTable,
 			VoditelList,
-			VidachaPolis
+			VidachaPolis,
+			Presentable
 	   }

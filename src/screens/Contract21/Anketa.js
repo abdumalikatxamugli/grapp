@@ -62,7 +62,7 @@ const Anketa = (props, ref) => {
     }
     const save2 = (event, args) => {
         dispatch(anketaCreate(args))
-        alert('ANKETA saved');
+        alert('ANKETA сохранен.');
     }
 
     const setB=(name,id, archive_id)=>{

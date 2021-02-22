@@ -548,3 +548,7 @@ select{
     background-color: crimson;
     color:white;
 }
+.padded{
+    padding:50px;
+    flex-grow: 1;
+}

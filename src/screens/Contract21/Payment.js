@@ -37,7 +37,7 @@ const Payment = (props) => {
 	}
 	const controlTransh = (val) => {
 		if(transhes.length>0){
-			alert("Please delete existing transhes to switch");
+			alert("Пожалуйста удалите существующие транши");
 		}
 		setTranshState(val);
 	}

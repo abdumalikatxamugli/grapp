@@ -59,7 +59,6 @@ const VidachaPolis=(props)=>{
         }
     },[transports, transhes])
     const initPolis=(event, payload)=>{
-        console.log(payload)
         payload=payload.map(item=>item.dataValues);
         setPolises(payload);
     }
@@ -79,29 +78,29 @@ const VidachaPolis=(props)=>{
     }
     const save = () => {
         if(!polisForm.id){
-            alert("Please select POLIS");
+            alert("Пожалуйста выберите POLIS");
             return;
         }
         if(!polisForm.OPLATA_ID){
-            alert("Please select OPLATA");
+            alert("Пожалуйста выберите OPLATA");
             return;
         }
         if(!polisForm.AVTO_ID && !all){
-            alert("Please select AVTO");
+            alert("Пожалуйста выберите AVTO");
             return;
         }
         if(!polisForm.TRANSCH_ID && !whole){
-            alert("Please select TRANSH");
+            alert("Пожалуйста выберите TRANSH");
             return;
         }
-        console.log("polis",polisForm);
+        
         setPolisForm({...polisForm, ANKETA_ID: anketa.id});
         
         ipcRenderer.send("polis-save", polisForm);
 
     }
     const saved=(event)=>{
-        alert("POLIS saved");
+        alert("Полис сохранен.");
         forceUpdate(1);
     }
 	return (

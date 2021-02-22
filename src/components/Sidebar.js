@@ -11,7 +11,7 @@ const Sidebar = (props) => {
         ipcRenderer.send("get-anketas");
         ipcRenderer.on("get-anketas", load);
         return ()=>{
-            ipcRenderer.removeListener(load);
+            ipcRenderer.removeListener("get-anketas", load);
         }
     },[])
     const load=(event, payload)=>{
@@ -25,7 +25,7 @@ const Sidebar = (props) => {
             <div className="sidebar">
                 <ul>
                     {anketas.map(item=>(
-                    <li>
+                    <li onClick={()=>props.setEdit(item.id)}>
                         <div className="ituri">
                             <div>
                                 21

@@ -128,10 +128,10 @@ const Transh = (props) => {
   }
   const save = () => {
     if (!transhes.length==0 && summation(transhes.map(item => item.amount)) !== summation(contract.map(item => item.premiyaAmount))) {
-      alert("Transh amount different than premiya");
+      alert("Сумма транша не совпадает сумму премии");
       return 0;
     }
-    console.log(transhes);
+    
     ipcRenderer.send('transch-create', {
       id: anketa.id,
       data: transhes,

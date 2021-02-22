@@ -124,7 +124,7 @@ const Transport = (props) => {
                                 <label className="required">Марка</label>
                                 <select name="TB_MARKA" onChange={transportChanger}>
                                     <option value="0">Выберите</option>
-                                    <option value="1">1</option>
+                                    <option value="Chevrolet">Chevrolet</option>
                                 </select>
                                 {validator.current.message('TB_MARKA', transportForm.TB_MARKA, 'required')}
                             </div>
@@ -132,7 +132,7 @@ const Transport = (props) => {
                                 <label>Модель </label>
                                 <select name="TB_MODEL" onChange={transportChanger}>
                                     <option value="0">Выберите</option>
-                                    <option value="1">1</option>
+                                    <option value="Matiz">Matiz</option>
                                 </select>
                                 <input type="text" name="TB_VMODEL" onChange={transportChanger} />
                                 {validator.current.message('TB_MODEL', transportForm.TB_MODEL, 'required')}

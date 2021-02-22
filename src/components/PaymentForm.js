@@ -42,8 +42,7 @@ const PaymentForm = (props) => {
 		}
 	}
 	const save2 = (event, data) => {
-		alert("Oplata saved");
-
+		alert("Оплата сохранен");
 	}
 	return (
 		<form className="paymentForm" id="create-oplata-form">
@@ -61,6 +60,7 @@ const PaymentForm = (props) => {
 				<div className="col-md-2 mb-10">
 					<div className="mb-10">Вид оплаты:</div>
 					<select name="OPL_TYPE" onChange={changeHandler} value={paymentForm.OPL_TYPE}>
+						<option value={null}>Выберите</option>
 						{PAYMENTTYPES.map(item =>
 							<option key={item.id} value={item.id}>{item.name}</option>
 						)}
