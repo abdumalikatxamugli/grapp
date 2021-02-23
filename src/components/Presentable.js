@@ -1,17 +1,29 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import "../../node_modules/bootstrap-4-grid/css/grid.min.css";
+import { useDispatch } from 'react-redux';
+import { anketaCreate } from "../redux/actions";
 const {ipcRenderer}=window.require("electron");
 
 const Presentable = (props) => {
+  const dispatch = useDispatch();
+  const [transports, setTransport]=useState([]);
+  const [anketa, setAnketa]=useState({});
   useEffect(()=>{
   	ipcRenderer.send("get-presentable", props.anketa_id);
   	ipcRenderer.on("get-presentable", load);
   	return ()=>{
   		ipcRenderer.removeListener("get-presentable", load);
   	}
-  })
-  const load=()=>{
-  	console.log("getter");
+  },[props.anketa_id])
+  const load=(event, payload)=>{
+  	const anketa=payload.anketa.dataValues;
+    const transports=payload.transports.map(item=>item.dataValues);
+    setAnketa(anketa);
+    setTransport(transports);
+    dispatch(anketaCreate(anketa))
+  }
+  const edit=()=>{
+  	props.setMenu(21);
   }
   return (
     <div className="padded">
@@ -19,31 +31,24 @@ const Presentable = (props) => {
     	<div className="row">
     		<div className="col-md-6">
     			<h3>ANKETA</h3>
+    			<button onClick={edit}>EDIT</button>
 	    		<table>
 		    		<tbody>
 		    			<tr>
 		    				<td>Дата заключения:</td>
-		    				<td></td>
+		    				<td>{anketa.INS_DATE??""}</td>
 		    			</tr>
 		    			<tr>
-		    				<td>Страхователь:</td>
-		    				<td></td>
+		    				<td>Рег.номер:</td>
+		    				<td>{anketa.INS_NUM??""}</td>
 		    			</tr>
 		    			<tr>
-		    				<td>Бенефициар:</td>
-		    				<td></td>
-		    			</tr>
-		    			<tr>
-		    				<td>Валютные условия:</td>
-		    				<td></td>
+		    				<td>Старый номер договора:</td>
+		    				<td>{anketa.OLD_DOGNUM??""}</td>
 		    			</tr>
 		    			<tr>
 		    				<td>Географическая зона:</td>
-		    				<td></td>
-		    			</tr>
-		    			<tr>
-		    				<td>Источник оплаты:</td>
-		    				<td></td>
+		    				<td>{anketa.INS_COUNTRY??""}</td>
 		    			</tr>
 		    		</tbody>
 		    	</table>	
@@ -65,17 +70,20 @@ const Presentable = (props) => {
 		    	    	</tr>
 		    	    </thead>
 		    		<tbody>
+		    		{transports.map(item=>
 		    			<tr>
 		    			    <td>
-		    	    		  MODEL
+		    	    		  {item.TB_MODEL}
 		    	    		</td>
 		    	    		<td>
-		    	    		  NOMER
+		    	    		  {item.TB_REGNUMBER}
 		    	    		</td>
 		    	    		<td>
-		    	    		  PREMIYA
+		    	    		  {item.premiyaAmount}
 		    	    		</td>
 		    			</tr>
+		    			)
+		    		}
 		    		</tbody>
 		    	</table>
     		</div>

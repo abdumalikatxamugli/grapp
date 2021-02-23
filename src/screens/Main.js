@@ -7,7 +7,7 @@ const Main=(props)=>{
 		
 		<div className="myrow">
 			<Sidebar setEdit={setEdit}/>
-			<Presentable anketa_id={edit}/>
+			<Presentable anketa_id={edit} setMenu={props.setMenu}/>
 		</div>
 	)
 }

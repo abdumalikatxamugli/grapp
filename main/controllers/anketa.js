@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron')
 const window = require('electron').BrowserWindow;
-const {Anketa} = require('../models');
+const {Anketa, Transport, Contract} = require('../models');
 
 const anketa_controller = () => {
 
@@ -27,11 +27,40 @@ const anketa_controller = () => {
         anketas=anketas.map(item=>item.dataValues);
         event.reply("get-anketas", anketas);
     }
+    const getForPresent = async (event, anketa_id) =>{
+        if(!anketa_id){
+            return {};
+        }
+        const anketa= await Anketa.findOne({
+            where:{
+                id:anketa_id
+            }
+        });
+        var transports= await Transport.findAll({
+            where:{
+                ANKETA_ID: anketa_id
+            }
+        });
+        const contracts= await Contract.findAll({
+            where:{
+                ANKETA_ID: anketa_id
+            }
+        });
+        transports=transports.map(item=>{
+            item.dataValues.premiyaAmount=contracts.find(x=>x.dataValues.TRANSPORT_ID=item.dataValues.id).premiyaAmount;
+            return item;
+        })
+        event.reply("get-presentable", {
+            anketa:anketa,
+            transports: transports
+        });
+    }
     return {
         anketa: {
             create: create,
             list: list,
-            get:get
+            get:get,
+            getForPresent:getForPresent
         }
     }
 

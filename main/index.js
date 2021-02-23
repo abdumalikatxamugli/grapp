@@ -22,7 +22,7 @@ async function createWindow() {
   win.maximize();
   // win.removeMenu()
 
-  win.loadURL("http://localhost:3001");
+  win.loadURL("http://localhost:3000");
 
   mainWindow = win;
 }
@@ -61,6 +61,7 @@ ipcMain.on('get-paymentP', payment.getP);
 ipcMain.on('get-transhesP', transch.getP);
 
 ipcMain.on('get-anketas', anketa.get);
+ipcMain.on('get-presentable', anketa.getForPresent);
 
 
 // Shoh functions

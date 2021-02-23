@@ -20,7 +20,7 @@ function App() {
     <Provider store={store}>
       <WithAuth>
         <Sidemenu setMenu={changeMenu} />
-        {menu === 0 && <Main />}
+        {menu === 0 && <Main  setMenu={setMenu}/>}
         {menu === 21 && <Contract21 />}
       </WithAuth>
     </Provider>
